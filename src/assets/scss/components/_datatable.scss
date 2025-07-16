@@ -342,7 +342,7 @@
   .checkbox-container {
 	display: inline-block;
 	position: relative;
-	padding-left: 25px;
+	  padding-inline-start: 25px;
 	cursor: pointer;
 	user-select: none;
   
@@ -373,7 +373,7 @@
 		content: "";
 		position: absolute;
 		display: none;
-		left: 6px;
+		inset-inline-start: 6px;
 		top: 2px;
 		width: 5px;
 		height: 10px;

@@ -37,10 +37,10 @@ a.sidebar-link {
   position: relative;
   text-decoration: none;
   cursor: pointer;
-  border-left-style: solid;
-  border-left-width: 3px;
+  border-inline-start-style: solid;
+  border-inline-start-width: 3px;
   color: $sidebar-link-color;
-  border-left-color: $sidebar-link-border-left-color;
+  border-inline-start-color: $sidebar-link-border-left-color;
 
   i,
   svg {
@@ -57,7 +57,7 @@ a.sidebar-link {
 .sidebar-link:hover {
   color: $sidebar-link-hover-color;
   background: $sidebar-link-hover-bg;
-  border-left-color: $sidebar-link-hover-border-left-color;
+  border-inline-start-color: $sidebar-link-hover-border-left-color;
 
   i,
   svg {
@@ -69,7 +69,7 @@ a.sidebar-link {
 .sidebar-item.active .sidebar-link:hover {
   color: $sidebar-link-active-color;
   background: $sidebar-link-active-bg;
-  border-left-color: $sidebar-link-active-border-left-color;
+  border-inline-start-color: $sidebar-link-active-border-left-color;
 
   i,
   svg {
@@ -82,7 +82,7 @@ a.sidebar-link {
   padding: $sidebar-link-child-padding;
   font-weight: $sidebar-link-child-font-weight;
   font-size: $sidebar-link-child-font-size;
-  border-left: 0;
+  border-inline-start: 0;
   color: $sidebar-link-child-color;
   background: $sidebar-link-child-bg;
 
@@ -90,7 +90,7 @@ a.sidebar-link {
     content: "→";
     display: inline-block;
     position: relative;
-    left: -14px;
+    inset-inline-start: -14px;
     transition: all .1s ease;
     transform: translateX(0);
   }
@@ -98,7 +98,7 @@ a.sidebar-link {
 
 .sidebar-dropdown .sidebar-item .sidebar-link:hover {
   font-weight: $sidebar-link-hover-font-weight;
-  border-left: 0;
+  border-inline-start: 0;
   color: $sidebar-link-child-hover-color;
   background: $sidebar-link-child-hover-bg;
 
@@ -111,7 +111,7 @@ a.sidebar-link {
 
 .sidebar-dropdown .sidebar-item.active .sidebar-link {
   font-weight: $sidebar-link-active-font-weight;
-  border-left: 0;
+  border-inline-start: 0;
 
   color: $sidebar-link-child-active-color;
   background: $sidebar-link-child-active-bg;
@@ -131,14 +131,14 @@ a.sidebar-link {
   transform: rotate(45deg);
   position: absolute;
   top: 1.2rem;
-  // right: 1.5rem;
+  // inset-inline-end: 1.5rem;
   transition: all .2s ease-out;
 }
 .sidebar[dir=ltr] [data-toggle="collapse"]:after  {
-  right: 1.5rem;
+  inset-inline-end: 1.5rem;
 }
 .sidebar[dir=rtl] [data-toggle="collapse"]:after  {
-  left: 1.5rem;
+  inset-inline-start: 1.5rem;
 }
 
 .sidebar [aria-expanded="true"]:after,
@@ -206,7 +206,7 @@ a.sidebar-link {
 // Badge
 .sidebar-badge {
   position: absolute;
-  right: 15px;
+  inset-inline-end: 15px;
   top: 14px;
   z-index: 1;
 }

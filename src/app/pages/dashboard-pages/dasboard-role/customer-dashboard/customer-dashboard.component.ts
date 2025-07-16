@@ -109,6 +109,8 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
     this.currentUser = this.authService.getAuthUser();
   }
 
+  private blockPageChangeOnNav = false;
+
   ngOnInit(): void {
     window.addEventListener("resize", this.checkScreen.bind(this));
     this.checkScreen();
@@ -117,6 +119,10 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
     combineLatest([this.route.queryParamMap])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([queryParamMap]) => {
+        if (this.blockPageChangeOnNav) {
+          this.blockPageChangeOnNav = false;
+          return;
+        }
         // Get view from query params
         const view = queryParamMap.get("view") as DashboardView;
         this.currentView =
@@ -368,9 +374,15 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
   }
 
   // Meter selection and chart functionality
+  onViewBalanceClick(meter: MeterSummery): void {
+    this.isLoading = true;
+    this.getAllMeterSummery();
+  }
+
   onMeterCardClick(meter: MeterSummery): void {
     this.selectedMeter = meter;
     this.loadMeterConsumptionData(meter.meterId, meter.type);
+    this.blockPageChangeOnNav = true;
     this.updateQueryParams({ meterId: meter.meterId.toString() });
     this.smoothScrollToChart();
   }

@@ -35,8 +35,8 @@
   align-items: center;
 }
 
-.meter-card .meter-header .meter-type i {
-  margin-right: 5px;
+  .meter-card .meter-header .meter-type i {
+  margin-inline-end: 5px;
 }
 
 .meter-card .meter-header .meter-id {
@@ -101,8 +101,8 @@
   font-size: 0.9em;
 }
 
-.meter-card .meter-footer .btn i {
-  margin-right: 5px;
+  .meter-card .meter-footer .btn i {
+  margin-inline-end: 5px;
 }
 
 .meter-card .meter-footer .btn-outline-primary {

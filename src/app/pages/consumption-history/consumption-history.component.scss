@@ -13,7 +13,7 @@
 // Enhanced card styling
 .consumption-card {
   transition: all 0.3s ease;
-  border-left: 4px solid var(--primary-blue);
+  border-inline-start: 4px solid var(--primary-blue);
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
@@ -103,8 +103,8 @@
 // Responsive improvements
 @media (max-width: 576px) {
   .container-fluid {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
   }
   .consumption-card {
     margin-bottom: 1rem;
@@ -206,8 +206,8 @@
 .pulse-ring {
   position: absolute;
   top: -12px;
-  left: -12px;
-  right: -12px;
+  inset-inline-start: -12px;
+  inset-inline-end: -12px;
   bottom: -12px;
   border-radius: 1.5rem;
   pointer-events: none;
@@ -254,8 +254,8 @@
 .pulse-ring {
   position: absolute;
   top: -10px;
-  left: -10px;
-  right: -10px;
+  inset-inline-start: -10px;
+  inset-inline-end: -10px;
   bottom: -10px;
   border-radius: 1.5rem;
   pointer-events: none;
@@ -280,7 +280,7 @@
   box-shadow: 0 2px 8px #0d6efd44;
   position: absolute;
   top: 14px;
-  right: 18px;
+  inset-inline-end: 18px;
   display: flex;
   align-items: center;
   font-size: 1.1em;
@@ -288,7 +288,7 @@
 
   i {
     color: #fff;
-    margin-right: 0.5em;
+    margin-inline-end: 0.5em;
   }
 }
 

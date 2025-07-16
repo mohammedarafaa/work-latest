@@ -40,7 +40,7 @@
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 4px;
     background: $primary;
@@ -194,7 +194,7 @@
         font-size: 1.1rem;
   
         i {
-          margin-right: 0.5rem;
+          margin-inline-end: 0.5rem;
         }
       }
   
@@ -265,11 +265,11 @@
         flex: 1;
   
         &:first-child {
-          margin-right: 0.5rem;
+          margin-inline-end: 0.5rem;
         }
   
         i {
-          margin-right: 0.5rem;
+          margin-inline-end: 0.5rem;
         }
       }
     }

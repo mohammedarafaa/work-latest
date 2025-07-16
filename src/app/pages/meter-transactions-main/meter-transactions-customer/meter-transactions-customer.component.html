@@ -63,7 +63,7 @@
                     {{ getPaymentMethodType(transaction.paymentMethodType).name | translate }}
                   </span>
                 </p>
-                <p class="card-text mb-1"><strong>{{ 'Location' | translate }}:</strong> {{ transaction.propertyNo }} - {{ transaction.compoundName }}</p>
+                <p class="card-text mb-1"><strong>{{ 'dashboardThree.Location' | translate }}:</strong> {{ transaction.propertyNo }} - {{ transaction.compoundName }}</p>
                 <p class="card-text mb-1"><strong>{{ 'Meter_Type' | translate }}:</strong> {{ transaction.meterType | translate }}</p>
                 <p class="card-text"><strong>{{ 'Created_At' | translate }}:</strong> {{ transaction.createdAt | date:'medium' }}</p>
               </div>

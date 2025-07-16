@@ -89,7 +89,7 @@ _isLoading: boolean = false;
         console.log(value);
 
         if (value.code === 200) {
-          this.notificationService.SuccessNotification(this.translate.instant('Update_Profile_msg'));
+          this.notificationService.SuccessNotification(this.translate.instant(value.message));
               // this.form.reset();
         } else {
           this.notificationService.ErrorNotification(value.code);
@@ -97,7 +97,7 @@ _isLoading: boolean = false;
         }
       },
       error: (err) => {
-        this.notificationService.ErrorNotification(this.translate.instant('Update_Profile_Error'));
+        this.notificationService.ErrorNotification(this.translate.instant(err.message));
 
         this.isLoading = false;
       },

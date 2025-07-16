@@ -21,7 +21,7 @@
   .error-message {
     color: #f44336;
     padding: 20px;
-    text-align: center;
+    text-align: start;
     background-color: #ffebee;
     border-radius: 4px;
     margin-bottom: 20px;
@@ -47,8 +47,8 @@
     .card-img-top {
       height: 200px;
       object-fit: cover;
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
+      border-start-start-radius: 0.5rem;
+      border-start-end-radius: 0.5rem;
     }
 
     .card-title {

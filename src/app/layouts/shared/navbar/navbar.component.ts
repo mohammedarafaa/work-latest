@@ -12,7 +12,8 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "@service/auth/authentication.service";
 
 import { AuthToken, User } from "@model/auth/auth.model";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject, Subject, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { APP_LINK, App_Navigation } from "@model/Utils/APP_LINK";
 import { TranslateService } from "@ngx-translate/core";
 import { LanguageServiceService } from "@service/shared/language-service.service";
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   appLink: App_Navigation[] = APP_LINK;
   allLinks: any[] = [];
   isMobile = false;
-  private subscriptions = new Subscription();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -58,6 +59,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.mqttService.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   ngOnInit(): void {
     this.checkScreenSize();
@@ -79,16 +82,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
         : menu.isAuthorize === userAccountType;
     });
     this.currentLanguage = this.LanguageService.activeCurrentLanguage;
+
+    this.LanguageService.getLanguageChangedObservable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((newLang) => {
+        this.currentLanguage = newLang;
+      });
   }
   collapse() {
     this.isCollapseChanged.emit({ isCollapsed: !this.isCollapsed });
   }
   changeLanguage(language: string) {
     console.log(language);
-    setTimeout(() => {
-      window.location.reload();
-      this.LanguageService.toggleLanguage(language);
-    }, 1000);
+    this.LanguageService.toggleLanguage(language);
   }
 
   logout() {

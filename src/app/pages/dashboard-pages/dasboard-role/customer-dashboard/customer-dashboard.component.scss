@@ -21,8 +21,8 @@
 .pulse-ring {
   position: absolute;
   top: -10px;
-  left: -10px;
-  right: -10px;
+  inset-inline-start: -10px;
+  inset-inline-end: -10px;
   bottom: -10px;
   border-radius: 1.5rem;
   pointer-events: none;
@@ -47,7 +47,7 @@
   box-shadow: 0 2px 8px #0d6efd44;
   position: absolute;
   top: 14px;
-  right: 18px;
+  inset-inline-end: 18px;
   display: flex;
   align-items: center;
   font-size: 1.1em;
@@ -55,7 +55,7 @@
 
   i {
     color: #fff;
-    margin-right: 0.5em;
+    margin-inline-end: 0.5em;
   }
 }
 

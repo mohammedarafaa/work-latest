@@ -1,6 +1,5 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<nav class="navbar navbar-expand navbar-light navbar-bg"
-  [dir]="LanguageService.currentLang === 'en' ? 'ltr' : 'rtl'">
+<nav class="navbar navbar-expand navbar-light navbar-bg">
 <div class="container-fluid mx-1 mx-md-2 flex-column   justify-content-between w-100 flex-md-row">
  
 
@@ -51,7 +50,7 @@
               <span class="indicator">{{notificationList.length}}</span>
             </div>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="notificationsDropdown" ngbDropdownMenu>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="notificationsDropdown" ngbDropdownMenu>
             <div class="dropdown-menu-header">
               {{notificationList.length}} {{'New Notifications' | translate}}
             </div>
@@ -126,7 +125,7 @@
             {{ "Change_Password" | translate }}
           </a>
           <a class="dropdown-item" (click)="logout()">
-            <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
+            <i class="fa-solid fa-arrow-right-from-bracket margin-inline-start-2 flip-on-rtl"></i>
             {{ 'Logout' | translate }}
           </a>
         </div>

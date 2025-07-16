@@ -18,9 +18,9 @@
 
 body[dir=ltr] .dropdown-menu {
   text-align: start !important;
-  float: right !important;
-  left: initial !important;
-  right: 0 !important;
+  float: inline-end !important;
+  inset-inline-start: initial !important;
+  inset-inline-end: 0 !important;
 }
 
 footer {
@@ -29,21 +29,21 @@ footer {
 
 body[dir=rtl] .dropdown-menu {
   text-align: start !important;
-  float: left !important;
-  right: initial !important;
-  left: 0 !important;
+  float: inline-start !important;
+  inset-inline-end: initial !important;
+  inset-inline-start: 0 !important;
 }
 
 body[dir=rtl] .breadcrumb-item+.breadcrumb-item::before {
-  float: right !important;
-  padding-right: var(--bs-breadcrumb-item-padding-x);
+  float: inline-end !important;
+  padding-inline-end: var(--bs-breadcrumb-item-padding-x);
 }
 
 body[dir=rtl] .dropdown-mega {
   text-align: start !important;
-  float: right !important;
-  left: initial !important;
-  right: 0 !important;
+  float: inline-end !important;
+  inset-inline-start: initial !important;
+  inset-inline-end: 0 !important;
 }
 
 body[dir=ltr] .dropdown-mega {
@@ -62,14 +62,14 @@ body[dir=ltr] .mdir-auto {
 }
 
 .has-search .form-control {
-  padding-left: 2.375rem;
+  padding-inline-start: 2.375rem;
 }
 
 .has-search .form-control.padding-right {
-  padding-right: 2.375rem;
+  padding-inline-end: 2.375rem;
   /* Padding for Arabic (RTL) */
-  padding-left: inherit;
-  /* Reset padding-left */
+  padding-inline-start: inherit;
+  /* Reset padding-inline-start */
 }
 
 .has-search .form-control-feedback {
@@ -93,13 +93,13 @@ body[dir=ltr] .mdir-auto {
     position: relative;
     text-decoration: none;
     cursor: pointer;
-    border-left-style: solid;
-    border-left-width: 3px;
+    border-inline-start-style: solid;
+    border-inline-start-width: 3px;
     color: #222E3C;
-    border-left-color: transparent;
+    border-inline-start-color: transparent;
 
     i {
-      margin-right: .25rem !important;
+      margin-inline-end: .25rem !important;
       font-size: 13px;
     }
   }
@@ -313,7 +313,7 @@ a {
     .span-or {
       background-color: var(--bs-white);
       display: block;
-      left: 50%;
+      inset-inline-start: 50%;
       margin-inline-start: -20px;
       position: absolute;
       text-align: center;
@@ -325,7 +325,7 @@ a {
 
     .toggle-password {
       position: absolute;
-      right: 17px;
+      inset-inline-end: 17px;
       top: 50%;
       transform: translateY(-50%);
       color: #757575;
@@ -396,7 +396,7 @@ a {
   margin: 0.2rem;
 
   .btn-close {
-    margin-left: .25rem;
+    margin-inline-start: .25rem;
     color: inherit;
     font-size: 0.5rem;
     text-shadow: 0 1px 0 rgba(#000, .5);

@@ -1,7 +1,7 @@
 <section class="main-content">
   <div class="header">
     <div class="header-title">
-      <h3>{{ 'Charging' | translate }}</h3>
+      <h3>{{ 'app_link.Charging' | translate }}</h3>
     </div>
     <div class="header-actions">
       <div class="btn-group">
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody *ngIf="meterList">
-            <tr *ngFor="let meter of meterList.content">
+            <tr *ngFor="let meter of meterList?.content">
   
               <td>{{meter.propertyNo}}</td>
               <td>{{meter.block}}</td>
@@ -63,7 +63,7 @@
 
       <div class="d-block d-md-none">
         <div class="row">
-          <div class="col-12 mb-3" *ngFor="let meter of meterList.content">
+          <div class="col-12 mb-3" *ngFor="let meter of meterList?.content">
             <div class="card meter-summary-card">
               <div class="card-body">
                 <p class="card-text"><strong>{{ 'Property_Number' | translate }}:</strong> {{ meter.propertyNo }}</p>

@@ -35,7 +35,7 @@
 }
 
 .card .card-body .profile-personal-info .row h5 .pull-right {
-  margin-left: 5px;
+  margin-inline-start: 5px;
 }
 
 .card .card-body .profile-personal-info .row span {

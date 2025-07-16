@@ -16,6 +16,8 @@ import { LoadingInterceptor } from '@service/_helpers/loading.interceptor';
 import { environment } from '@environments/environment';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { MqttService } from '@service/shared/mqtt.service';
+import { LanguageServiceService } from '@service/shared/language-service.service';
+import { DirectionService } from '@service/shared/direction.service';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -35,10 +37,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,12 +45,12 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     NgbModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: "en",
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
   ],
   providers: [
@@ -60,8 +59,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: Window, useValue: window },
-    MqttService
+    MqttService,
+    LanguageServiceService,
+    DirectionService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
