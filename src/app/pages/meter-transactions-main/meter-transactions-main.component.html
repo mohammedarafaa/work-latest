@@ -1,0 +1,2 @@
+<app-meter-transactions-customer *ngIf="authService.isAuthAccount(AccountType.CUSTOMER)"></app-meter-transactions-customer>
+<app-meter-transactions-admin *ngIf="authService.isAuthAccount(AccountType.ADMIN) || authService.isAuthAccount(AccountType.SYSTEM)"></app-meter-transactions-admin>

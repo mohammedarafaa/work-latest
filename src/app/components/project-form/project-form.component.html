@@ -1,0 +1,88 @@
+<div class="project-form-container">
+  <h2>{{ isEditMode ? ('Edit_Project' | translate) : ('Add_New_Project' | translate) }}</h2>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'Loading' | translate }}...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="card">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="name" class="form-label">{{ 'Project_Name' | translate }}</label>
+          <input type="text" class="form-control" id="name" formControlName="name" required>
+          <div class="invalid-feedback" *ngIf="projectForm.get('name')?.hasError('required')">
+            {{ 'Project_Name_Required' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">{{ 'Address' | translate }}</label>
+          <input type="text" class="form-control" id="address" formControlName="address" required>
+          <div class="invalid-feedback" *ngIf="projectForm.get('address')?.hasError('required')">
+            {{ 'Address_Required' | translate }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">{{ 'Image_URL' | translate }}</label>
+          <input type="text" class="form-control" id="image" formControlName="image" required>
+          <div class="invalid-feedback" *ngIf="projectForm.get('image')?.hasError('required')">
+            {{ 'Image_URL_Required' | translate }}
+          </div>
+        </div>
+
+        <div formGroupName="area">
+          <h3>{{ 'Area_Information' | translate }}</h3>
+          
+          <div class="mb-3">
+            <label for="nameAr" class="form-label">{{ 'Area_Name_Arabic' | translate }}</label>
+            <input type="text" class="form-control" id="nameAr" formControlName="nameAr" required>
+            <div class="invalid-feedback" *ngIf="projectForm.get('area.nameAr')?.hasError('required')">
+              {{ 'Arabic_Name_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="areaName" class="form-label">{{ 'Area_Name_English' | translate }}</label>
+            <input type="text" class="form-control" id="areaName" formControlName="name" required>
+            <div class="invalid-feedback" *ngIf="projectForm.get('area.name')?.hasError('required')">
+              {{ 'English_Name_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="areaCode" class="form-label">{{ 'Area_Code' | translate }}</label>
+            <input type="number" class="form-control" id="areaCode" formControlName="code" required>
+            <div class="invalid-feedback" *ngIf="projectForm.get('area.code')?.hasError('required')">
+              {{ 'Area_Code_Required' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="zone" class="form-label">{{ 'Zone' | translate }}</label>
+          <input type="text" class="form-control" id="zone" formControlName="zone" required>
+          <div class="invalid-feedback" *ngIf="projectForm.get('zone')?.hasError('required')">
+            {{ 'Zone_Required' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent">
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" routerLink="/projects">{{ 'Cancel' | translate }}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading">
+            {{ isEditMode ? ('Update_Project' | translate) : ('Create_Project' | translate) }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div> 

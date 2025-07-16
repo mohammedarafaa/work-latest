@@ -1,0 +1,25 @@
+<!-- <div class="error-box mt-5">
+  <h1>{{currentError.id}}</h1>
+  <h3 class="mb-3">
+    <i class="fas fa-exclamation-circle text-primary mx-3"></i>{{ currentError.title | translate }}
+  </h3>
+  <p class="h4 font-weight-normal">{{  currentError.message | translate }}</p>
+  <a [routerLink]="'/'" class="btn btn-primary">{{ "Bk_Home" | translate }}</a>
+</div> -->
+
+<section class="error">
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-12 col-12 ">
+       <div class="image-container mx-auto">
+        <img class="img-error" [src]="currentError.image" alt="Not Found">
+       </div>
+        <div class="text-center">
+            <h1 class="error-title">{{  currentError.title | translate }}</h1>
+            <p class="fs-5 text-gray-600">{{  currentError.message | translate }}</p>
+            <a [routerLink]="'/'"  class="btn btn-lg btn-outline-primary mt-3">{{ "Bk_Home" | translate }}</a>
+        </div>
+    </div>
+  </div>
+</div>
+</section>

@@ -1,0 +1,130 @@
+<section class="main-content">
+  <div class="header">
+    <div class="header-title">
+      <h3>{{ 'Charging' | translate }}</h3>
+    </div>
+    <div class="header-actions">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="isFilter = !isFilter" *ngIf="!currentMeter">
+          <i class="fa-solid fa-filter"></i>
+          {{'Filter' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Show meter list only when no specific meter is selected -->
+  <div id="service-content" *ngIf="!currentMeter">
+    <section class="bulk-charging-section">
+      <form [formGroup]="form" autocomplete="off" *ngIf="isFilter">
+        <div class="limit-form">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="meterType">{{'charge.meterType' | translate}}</label>
+                <ng-select [items]="meterTypes" class="custom" placeholder="{{ 'meterType_place' | translate}}"
+                  [ngClass]="{ 'is-invalid': f['meterType'].touched && f['meterType'].errors, 'is-valid': f['meterType'].valid }"
+                  formControlName="meterType" (change)="onMeterTypeChange($event)">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive d-none d-md-block">
+        <table class="meters-table">
+          <thead>
+            <tr>
+  
+              <th>{{'Property_Number' | translate}}</th>
+              <th>{{'Block' | translate}}</th>
+              <th>{{'Type' | translate}}</th>
+              <th>{{'consumption' | translate}}</th>
+              <th>{{'Available_Credit' | translate}}</th>
+              <th>{{'Action' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="meterList">
+            <tr *ngFor="let meter of meterList.content">
+  
+              <td>{{meter.propertyNo}}</td>
+              <td>{{meter.block}}</td>
+              <td>{{meter.type | translate}}</td>
+              <td>{{meter.consumption | number}}</td>
+              <td>{{meter.availableCredit | number}}</td>
+              <td>
+                <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-block d-md-none">
+        <div class="row">
+          <div class="col-12 mb-3" *ngFor="let meter of meterList.content">
+            <div class="card meter-summary-card">
+              <div class="card-body">
+                <p class="card-text"><strong>{{ 'Property_Number' | translate }}:</strong> {{ meter.propertyNo }}</p>
+                <p class="card-text"><strong>{{ 'Block' | translate }}:</strong> {{ meter.block }}</p>
+                <p class="card-text"><strong>{{ 'Type' | translate }}:</strong> {{ meter.type | translate }}</p>
+                <p class="card-text"><strong>{{ 'consumption' | translate }}:</strong> {{ meter.consumption | number }}</p>
+                <p class="card-text"><strong>{{ 'Available_Credit' | translate }}:</strong> {{ meter.availableCredit | number }}</p>
+                <div class="d-flex justify-content-between mt-3">
+                  <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-2" *ngIf="meterList">
+        <div class="dataTable-info">
+          <span>
+            {{ 'DataTable_info' |
+            translate : {
+            from: (meterList.pageable.pageNumber * meterList.pageable.pageSize) +1 ,
+            to: Math.min(((meterList.pageable.pageNumber+1) * meterList.pageable.pageSize),meterList.totalElements) ,
+            Total:meterList.totalElements }
+            }}
+          </span>
+          <ngb-pagination *ngIf="!isLoading" [collectionSize]="meterList.totalElements" [(page)]="paging.page"
+            [maxSize]="3" [pageSize]="paging.size" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Charging section - show when meter is selected -->
+  <section class="bulk-charging-section" *ngIf="currentMeter">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <button class="btn btn-outline-secondary" (click)="goBackToMeterList()">
+        <i class="fa-solid fa-table"></i>
+        {{'View_All_Meters' | translate}}
+      </button>
+    </div>
+
+    <div class="row py-3 border-bottom meter-row align-items-center" [ngClass]="'meter-' + currentMeter.type">
+      <div class="col-md-3">
+        <i [ngClass]="getIcons(currentMeter.type)"></i>
+        <strong>{{currentMeter.meterSerial}}</strong>
+
+      </div>
+      <div class="col-md-3">
+        <span class="badge" [ngClass]="currentMeter.type">{{currentMeter.type | translate}}</span>
+      </div>
+      <div class="col-md-3">
+        {{currentMeter.propertyNo}} - {{currentMeter.block}}
+      </div>
+      <div class="col-md-3">
+        <span class="fw-bold">{{currentMeter.availableCredit | number}} {{'EGP' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="row pt-3">
+      <app-cib-payment [currentMeter]="currentMeter" [currentMeterInfo]="currentMeterInfo"></app-cib-payment>
+    </div>
+  </section>
+</section>

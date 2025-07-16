@@ -1,0 +1,117 @@
+<section class="main-content">
+  <div class="header ">
+    <div class="header-title">
+      <h3>{{ 'Payment' | translate }}</h3>
+    </div>
+
+  </div>
+
+ 
+  <!-- Customer Service Tab Content -->
+  <div id="service-content">
+    <!-- Client Charging Limit Section -->
+    <section class="charging-limit-section">
+      <div class="section-header">
+        <h2 class="section-title">{{'Charge_Meter' | translate}}</h2>
+      </div>
+      <form [formGroup]="form" autocomplete="off">
+      <div class="limit-form">
+        <div class="form-group">
+          <label for="compoundId">{{'compound' | translate}} </label>
+          <ng-select [items]="projectList | async" bindValue="id" bindLabel="name" class="custom"
+          placeholder="{{ 'compound_place' | translate}}"
+          [ngClass]="{ 'is-invalid': f['compoundId'].touched && f['compoundId'].errors, 'is-valid': f['compoundId'].valid }"
+          formControlName="compoundId">
+        </ng-select>
+        </div>
+        <div class="form-group">
+          <label for="propertyId">{{'property' | translate}} </label>
+          <ng-select [items]="propertyList | async" bindValue="id" bindLabel="name" class="custom"
+          placeholder="{{ 'property_place' | translate}}"
+          [ngClass]="{ 'is-invalid': f['propertyId'].touched && f['propertyId'].errors, 'is-valid': f['propertyId'].valid }"
+          formControlName="propertyId">
+          </ng-select>
+        </div>
+        <div class="form-group">
+          <label for="meterType">{{'charge.meterType' | translate}}</label>
+          <ng-select [items]="meterTypes"  class="custom"
+          placeholder="{{ 'meterType_place' | translate}}"
+          [ngClass]="{ 'is-invalid': f['meterType'].touched && f['meterType'].errors, 'is-valid': f['meterType'].valid }"
+          formControlName="meterType">
+          </ng-select>
+        </div>
+      </div>
+  </form>
+
+    </section>
+    <section class="bulk-charging-section">
+     
+      <div class="table-responsive d-none d-md-block">
+        <table class="meters-table">
+          <thead>
+            <tr>
+
+              <th>{{'meter_Code' | translate}}</th>
+              <th>{{'Customer' | translate}} (kWh / m³)</th>
+              <th>{{'Address' | translate}}</th>
+              <th>{{'Type' | translate}}</th>
+              <th>{{'Action' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="meterList">
+            <tr *ngFor="let meter of meterList.content">
+              <td>{{meter.code}}</td>
+              <td>{{meter.customer?.fullName}}</td>
+              <td>{{meter.property?.propertyNo}} - {{meter.property.address?.block}}</td>
+              <td>{{meter.type | translate}}</td>
+              <!-- <td>{{meter.availableCredit | number}} {{'EGP' | translate}}</td> -->
+              <td>
+                <button class="btn btn-success text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-block d-md-none">
+        <div class="row">
+          <div class="col-12 mb-3" *ngFor="let meter of meterList.content">
+            <div class="card meter-summary-card">
+              <div class="card-body">
+                <h5 class="card-title">{{ 'meter_Code' | translate }}: {{ meter.code }}</h5>
+                <p class="card-text"><strong>{{ 'Customer' | translate }}:</strong> {{ meter.customer?.fullName }}</p>
+                <p class="card-text"><strong>{{ 'Address' | translate }}:</strong> {{ meter.property?.propertyNo }} - {{ meter.property.address?.block }}</p>
+                <p class="card-text"><strong>{{ 'Type' | translate }}:</strong> {{ meter.type | translate }}</p>
+                <div class="d-flex justify-content-between mt-3">
+                  <button class="btn btn-success text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-2" *ngIf="meterList">
+        <div class="dataTable-info">
+          <span>
+            {{ 'DataTable_info' |
+            translate : {
+            from: (meterList.pageable.pageNumber * meterList.pageable.pageSize) +1 ,
+            to: Math.min(((meterList.pageable.pageNumber+1) * meterList.pageable.pageSize),meterList.totalElements) ,
+            Total:meterList.totalElements }
+            }}
+          </span>
+          <ngb-pagination *ngIf="!isLoading" [collectionSize]="meterList.totalElements" [(page)]="paging.page"
+            [maxSize]="3" [pageSize]="paging.size" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+      </div>
+    </section>
+    <section class="bulk-charging-section" *ngIf="currentMeter">
+      <app-recharge-form [currentMeter]="currentMeter"></app-recharge-form>
+   
+    </section>
+
+
+  </div>
+  </section>

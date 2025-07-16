@@ -1,0 +1,129 @@
+<!-- Hero Section -->
+<section class="hero bg-light-gradient">
+  <div class="container">
+    <div class="row align-items-center min-vh-100 py-5">
+      <div class="col-lg-6 order-lg-1 order-2">
+        <h1 class="display-4 fw-bold mb-4" translate>home.hero.title</h1>
+        <p class="lead mb-4" translate>home.hero.description</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a routerLink="/Dashboard" class="btn btn-primary btn-lg px-4" translate>home.hero.getStarted</a>
+          <button (click)="scrollToSection('features')" class="btn btn-outline-primary btn-lg px-4" translate>home.hero.learnMore</button>
+        </div>
+      </div>
+      <div class="col-lg-6 order-lg-2 order-1 mb-5 mb-lg-0">
+        <img src="assets/img/Pricing-Dashboard-Hero-Image.png" alt="Dashboard Preview" class="img-fluid hero-image animate-float">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-md-4" *ngFor="let stat of stats">
+        <div class="stat-item">
+          <div class="stat-value display-4 fw-bold">{{stat.value}}</div>
+          <div class="stat-label h5">{{stat.label | translate}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section-padding bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold" translate>home.features.title</h2>
+      <p class="lead mx-auto" style="max-width: 700px;" translate>home.features.description</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let feature of features">
+        <div class="feature-card">
+          <div class="card-body text-center p-4">
+            <i [class]="feature.icon + 'feature-icon mb-4 '"></i>
+            <h3 class="h4 mb-3 fw-bold">{{feature.title | translate}}</h3>
+            <p class="text-muted mb-0">{{feature.description | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section-padding">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <img src="assets/img/company-employees-planning-task-brainstorming_74855-6316.avif" alt="About Us" class="img-fluid rounded-3 shadow about-image">
+      </div>
+      <div class="col-lg-6">
+        <h2 class="display-5 fw-bold mb-4" translate>home.about.title</h2>
+        <div class="feature-list">
+          <div class="feature-item">
+            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+            <div>
+              <h3 class="h5 fw-bold mb-2">{{ 'home.about.reliable' | translate }}</h3>
+              <p class="text-muted mb-0">{{ 'home.about.reliableDescription' | translate }}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+            <div>
+              <h3 class="h5 fw-bold mb-2">{{ 'home.about.userFriendly' | translate }}</h3>
+              <p class="text-muted mb-0">{{ 'home.about.userFriendlyDescription' | translate }}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+            <div>
+              <h3 class="h5 fw-bold mb-2">{{ 'home.about.support' | translate }}</h3>
+              <p class="text-muted mb-0">{{ 'home.about.supportDescription' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section-padding bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="display-5 fw-bold mb-4" translate>home.contact.title</h2>
+        <p class="lead mb-5 mx-auto" style="max-width: 700px;" translate>home.contact.description</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-lg overflow-hidden">
+          <div class="card-body p-4 p-md-5">
+            <form class="contact-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="name" class="form-label fw-bold" translate>home.contact.nameLabel</label>
+                  <input type="text" id="name" class="form-control" placeholder="{{ 'home.contact.namePlaceholder' | translate }}">
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label fw-bold" translate>home.contact.emailLabel</label>
+                  <input type="email" id="email" class="form-control" placeholder="{{ 'home.contact.emailPlaceholder' | translate }}">
+                </div>
+                <div class="col-12">
+                  <label for="message" class="form-label fw-bold" translate>home.contact.messageLabel</label>
+                  <textarea id="message" class="form-control" rows="5" placeholder="{{ 'home.contact.messagePlaceholder' | translate }}"></textarea>
+                </div>
+                <div class="col-12 mt-4">
+                  <button type="submit" class="btn btn-primary btn-lg w-100 py-3" translate>home.contact.sendMessage</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

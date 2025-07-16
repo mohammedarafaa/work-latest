@@ -1,0 +1,124 @@
+.project-form-container {
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: #276db5; // Blue color for headings
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem;
+  }
+
+  .card {
+    border: 1px solid #e0e0e0; // Subtle border
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); // Light shadow
+    border-radius: 0.5rem; // Rounded corners
+    transition: all 0.3s ease-in-out; // Smooth transition for hover
+
+    &:hover {
+      transform: translateY(-3px); // Lift card slightly on hover
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Stronger shadow on hover
+    }
+  }
+
+  h3 {
+    margin: 1.5rem 0 1rem;
+    color: #276db5; // Blue color for subheadings
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #495057; // Darker text for labels
+  }
+
+  .form-control,
+  .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:focus {
+      border-color: #276db5; // Blue border on focus
+      box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25); // Blue shadow on focus
+      outline: none;
+    }
+  }
+
+  .invalid-feedback {
+    display: block;
+    color: #dc3545; // Red for invalid feedback
+    margin-top: 0.25rem;
+  }
+
+  .error-message {
+    color: #f44336;
+    padding: 1.5rem;
+    text-align: center;
+    background-color: #ffebee;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-footer {
+    background-color: #f8f9fa; // Light background for footer
+    border-top: 1px solid #e0e0e0; // Separator line
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .btn {
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05); // Slightly enlarge buttons on hover
+    }
+
+    &.btn-primary {
+      background-color: #276db5; // Blue primary button
+      border-color: #276db5;
+
+      &:hover {
+        background-color: #1a4e7c; // Darker blue on hover
+        border-color: #1a4e7c;
+      }
+    }
+
+    &.btn-secondary {
+      background-color: #6c757d; // Gray secondary button
+      border-color: #6c757d;
+
+      &:hover {
+        background-color: #5a6268; // Darker gray on hover
+        border-color: #545b62;
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    padding: 1rem;
+    max-width: 100%;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+  }
+} 

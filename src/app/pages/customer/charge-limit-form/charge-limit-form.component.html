@@ -1,0 +1,52 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">{{modelData._modelHeader | translate}}</h5>
+
+    </div>
+    <div class="modal-body m-3">
+        <form [formGroup]="form" autocomplete="off">
+            <div class="row">
+            
+                <div class="col-lg-12 col-md-12">
+                    <div class="form-group mb-3">
+                      <label class="form-label" for="minChargeLimit">{{'minChargeLimit' | translate}}<span class="text-danger">
+                          *</span></label>
+                      <input type="number" class="form-control" id="minChargeLimit" formControlName="minChargeLimit"
+                        placeholder="{{ 'minChargeLimit_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+                        [ngClass]="{ 'is-invalid': f['minChargeLimit'].touched && f['minChargeLimit'].errors, 'is-valid': f['minChargeLimit'].valid }">
+        
+                      <div *ngIf="f['minChargeLimit'].touched && f['minChargeLimit'].errors" class="invalid-feedback">
+                        <div *ngIf="f['minChargeLimit'].errors['required']">{{ 'minChargeLimit_Req' | translate}}</div>
+                      </div>
+                     
+                    </div>
+                  </div>
+                  
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="maxChargeLimit">{{'maxChargeLimit' | translate}}<span class="text-danger">
+                      *</span></label>
+                  <input type="number" class="form-control" id="maxChargeLimit" formControlName="maxChargeLimit"
+                    placeholder="{{ 'maxChargeLimit_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+                    [ngClass]="{ 'is-invalid': f['maxChargeLimit'].touched && f['maxChargeLimit'].errors, 'is-valid': f['maxChargeLimit'].valid }">
+    
+                  <div *ngIf="f['maxChargeLimit'].touched && f['maxChargeLimit'].errors" class="invalid-feedback">
+                    <div *ngIf="f['maxChargeLimit'].errors['required']">{{ 'maxChargeLimit_Req' | translate}}</div>
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-bs-dismiss="modal" (click)="onSubmitForms()"
+            class="btn btn-primary me-2" [attr.disabled]="!form.valid ? true : null">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status"
+                aria-hidden="true"></span>
+            {{modelData._isEdit ? 'Update' : 'Save' | translate}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" class="btn btn-outline-danger"
+            (click)="activeModal.close()">{{'Close' | translate}}</button>
+    </div>
+</div>

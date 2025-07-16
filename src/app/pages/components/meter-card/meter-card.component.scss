@@ -1,0 +1,164 @@
+.meter-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.meter-card .meter-header {
+  padding: 10px 15px;
+  color: #0093ce;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.meter-card .meter-header.water {
+  background-color: #3498db;
+}
+
+.meter-card .meter-header.electricity {
+  background-color: #f39c12;
+}
+
+.meter-card .meter-header.gas {
+  background-color: #1abc9c;
+}
+
+.meter-card .meter-header .meter-type {
+  display: flex;
+  align-items: center;
+}
+
+.meter-card .meter-header .meter-type i {
+  margin-right: 5px;
+}
+
+.meter-card .meter-header .meter-id {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.meter-card .meter-body {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.meter-card .meter-body .meter-location,
+.meter-card .meter-body .meter-balance,
+.meter-card .meter-body .meter-consumption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.meter-card .meter-body .meter-location:last-child,
+.meter-card .meter-body .meter-balance:last-child,
+.meter-card .meter-body .meter-consumption:last-child {
+  border-bottom: none;
+}
+
+.meter-card .meter-body .label {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.meter-card .meter-body .value {
+  font-weight: bold;
+}
+
+.meter-card .meter-body .balance-amount {
+  color: #0093ce;
+}
+
+.meter-card .meter-body .progress {
+  height: 5px;
+  border-radius: 5px;
+}
+
+.meter-card .meter-body .progress .progress-bar {
+  background-color: #007bff;
+}
+
+.meter-card .meter-footer {
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.meter-card .meter-footer .btn {
+  padding: 5px 10px;
+  font-size: 0.9em;
+}
+
+.meter-card .meter-footer .btn i {
+  margin-right: 5px;
+}
+
+.meter-card .meter-footer .btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.meter-card .meter-footer .btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.meter-card .meter-footer .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.meter-card .meter-footer .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .meter-card .meter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .meter-card .meter-header .meter-id {
+    align-self: flex-end;
+  }
+
+  .meter-card .meter-body .meter-location,
+  .meter-card .meter-body .meter-balance,
+  .meter-card .meter-body .meter-consumption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .meter-card .meter-body .label,
+  .meter-card .meter-body .value,
+  .meter-card .meter-body .balance-amount,
+  .meter-card .meter-body .consumption-amount {
+    width: 100%;
+    text-align: left;
+  }
+
+  .meter-card .meter-footer {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .meter-card .meter-footer .btn {
+    width: 100%;
+  }
+}

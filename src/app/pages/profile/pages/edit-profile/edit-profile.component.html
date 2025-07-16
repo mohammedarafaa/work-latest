@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">{{ "Edit_Profile" | translate }}</h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" autocomplete="off">
+      <div class="row form-group mb-3">
+        <label class="col-sm-3 col-form-label input-label" for="fullName">{{'Full_Name' | translate}}</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" readonly  id="fullName" formControlName="fullName"
+          placeholder="{{ 'Full_Name_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+          [ngClass]="{ 'is-invalid': f['fullName'].touched && f['fullName'].errors, 'is-valid': f['fullName'].valid }">
+      <div *ngIf="f['fullName'].touched && f['fullName'].errors" class="invalid-feedback">
+          <div *ngIf="f['fullName'].errors['required']">{{ 'Full_Name_Req' | translate}}</div>
+      </div>
+        </div>
+      </div>
+      <div class="row form-group mb-3">
+        <label class="col-sm-3 col-form-label input-label" for="username">{{'Username' | translate}}</label>
+        <div class="col-sm-9">
+          <input  type="text" class="form-control" readonly id="username"
+          formControlName="username" placeholder="{{ 'Username_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+          [ngClass]="{ 'is-invalid': f['username'].touched && f['username'].errors, 'is-valid': f['username'].valid }">
+      <div *ngIf="f['username'].touched && f['username'].errors" class="invalid-feedback">
+          <div *ngIf="f['username'].errors['required']">{{ 'Username_Req' | translate}}</div>
+      </div>
+        </div>
+      </div>
+      <div class="row form-group mb-3">
+        <label class="col-sm-3 col-form-label input-label" for="email">{{'E_Mail' | translate}}</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" readonly id="email" formControlName="email"
+                      placeholder="{{ 'E_Mail_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+                      [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors, 'is-valid': f['email'].valid }">
+                  <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
+                      <div *ngIf="f['email'].errors['required']">{{ 'E_Mail_Req' | translate}}</div>
+                      <div *ngIf="f['email'].errors['email']">{{ 'E_Mail_inValid' | translate}}</div>
+                  </div>
+        </div>
+      </div>
+      <div class="row form-group mb-3">
+        <label class="col-sm-3 col-form-label input-label" for="phoneNumber">{{'Phone_Number' | translate}}</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" readonly id="phoneNumber" formControlName="phoneNumber"
+          placeholder="{{ 'Phone_Number_Place' | translate}}"
+          onfocus="this.removeAttribute('readonly');"
+          [ngClass]="{ 'is-invalid': f['phoneNumber'].touched && f['phoneNumber'].errors, 'is-valid': f['phoneNumber'].valid }">
+      <div *ngIf="f['phoneNumber'].touched && f['phoneNumber'].errors" class="invalid-feedback">
+          <div *ngIf="f['phoneNumber'].errors['required']">{{ 'Phone_Number_Req' | translate}}</div>
+          <div *ngIf="f['phoneNumber'].errors['pattern']">{{ 'Phone_Number_inValid' | translate}}</div>
+      </div>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button class="btn btn-primary" type="button" (click)="onUpdateProfie()"
+
+         [attr.disabled]="!form.valid ? true : null">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        {{'Update' | translate}}
+      </button>
+      </div>
+    </form>
+  </div>
+</div>

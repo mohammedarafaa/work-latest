@@ -1,0 +1,81 @@
+<div class="Auth-wrapper pt-4">
+   <div class="container">
+      <div class="row justify-content-around align-items-center">
+         <div class="col-md-4 py-3">
+            <div class="auth-container">
+               <div class="auth-right">
+                  <div class="auth-right-wrap">
+                     <div class="head text-center">
+                        <img class="logo" src="assets/img/logo.png" alt="" class="w-50 m-2" />
+                     </div>
+                     <!-- Back to Home Button -->
+                     <div class="mb-3 text-center">
+                        <button class="btn btn-outline-primary" [routerLink]="['/']">
+                           <i class="fe fe-arrow-left"></i> Back to Home
+                        </button>
+                     </div>
+                     <h6 class="text-center text-danger">{{ loginError }}</h6>
+                     <form [formGroup]="loginForm" autocomplete="off">
+                        <div class="form-group mb-3">
+                           <label class="form-control-label" for="userName">{{ "userName" | translate }}</label>
+                           <input type="text" class="form-control" formControlName="userName"
+                              placeholder="{{ 'userName' | translate }}"
+                              readonly
+                              onfocus="this.removeAttribute('readonly');"
+                              [ngClass]="{ 'is-invalid':f['userName'].touched && f['userName'].errors}" />
+                           <div *ngIf="f['userName'].touched && f['userName'].errors" class="invalid-feedback">
+                              <div *ngIf="f['userName'].errors['required']">
+                                 {{ "userName" | translate }}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-group mb-3">
+                           <label class="form-control-label" for="Password">{{ "Password" | translate }}
+                           </label>
+                           <div class="pass-group">
+                              <input  type="{{ !passwordVisible ? 'password' : 'text' }}"
+                                  readonly
+                                 class="form-control pass-input" placeholder="{{ 'Password_place' | translate }}"
+                                 onfocus="this.removeAttribute('readonly');" formControlName="password"
+                                 [ngClass]="{ 'is-invalid':f['password'].touched && f['password'].errors}"
+                                 />
+                              <span >
+                                 <i (click)="viewPassword()" *ngIf="!passwordVisible" class="fe fe-eye-off toggle-password"></i>
+                                 <i (click)="viewPassword()" *ngIf="passwordVisible" class="fe fe-eye toggle-password"></i>
+                              </span>
+                            </div>
+                              <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
+                                <div *ngIf="f['password'].errors['required']">
+                                   {{ "Password_Req" | translate }}
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row align-items-end py-2">
+                           <div class="col-6">
+                              <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
+                                 <input type="checkbox" class="custom-control-input" id="cb1" />
+                                 <label class="custom-control-label" for="cb1">{{ "Remember_Me" | translate }}</label>
+                              </div>
+                           </div>
+                           <div class="col-6">
+                              <a class="text-primary" [routerLink]="['/Auth/Forget_Password']">{{'Forget_Password' |
+                                 translate}}</a>
+                           </div>
+                        </div>
+                        <button class="btn btn-lg btn-block btn-primary w-100 mt-2" (click)="Login()"
+                           [disabled]="!loginForm.valid">
+                           <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status"
+                              aria-hidden="true"></span>
+                           {{ "Login" | translate }}
+                        </button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-8">
+            <img class="img-fluid cover-100" src="assets/img/cover/undraw_city-girl_b84p.svg" alt="cover" />
+         </div>
+      </div>
+   </div>
+</div>

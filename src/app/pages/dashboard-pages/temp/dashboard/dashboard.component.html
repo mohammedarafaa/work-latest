@@ -1,0 +1,155 @@
+<section>
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">{{ 'dashboard.title' | translate }}</h1>
+    <button class="btn btn-primary"><i class="bi bi-arrow-repeat me-2"></i>{{ 'dashboard.refreshData' | translate }}</button>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-title">{{ 'dashboard.totalMeters' | translate }}</div>
+      <div class="stat-value">12</div>
+      <div class="stat-change change-up">
+        <i class="fas fa-arrow-up"></i>
+        <span>{{ 'dashboard.newThisMonth' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-title">{{ 'dashboard.totalBalance' | translate }}</div>
+      <div class="stat-value">450 EGP</div>
+      <div class="stat-change change-down">
+        <i class="fas fa-arrow-down"></i>
+        <span>{{ 'dashboard.balanceChange' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-title">{{ lowBalanceMeters' | translate }}</div>
+      <div class="stat-value">3</div>
+      <div class="stat-change change-up">
+        <i class="fas fa-arrow-up"></i>
+        <span>{{ 'dashboard.moreThanLastWeek' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-title">{{ 'dashboard.totalConsumption' | translate }}</div>
+      <div class="stat-value">340 kWh</div>
+      <div class="stat-change change-up">
+        <i class="fas fa-arrow-up"></i>
+        <span>{{ 'dashboard.consumptionChange' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="chart-title">{{ 'dashboard.consumptionHistory' | translate }}</div>
+        <div class="chart-tabs">
+          <div class="chart-tab">{{ 'dashboard.daily' | translate }}</div>
+          <div class="chart-tab active">{{ 'dashboard.monthly' | translate }}</div>
+          <div class="chart-tab">{{ 'dashboard.yearly' | translate }}</div>
+        </div>
+      </div>
+      <!-- <div class="placeholder-chart"> -->
+        <div class="align-self-center w-100" style="width: 100%; height: 400px; display: block;">
+          <!-- Daily/Weekly/Monthly Consumption Trends -->
+<highcharts-chart
+[Highcharts]="Highcharts"
+[options]="consumptionTrendsChartOptions"
+style="width: 100%; height: 100%; display: block;">
+</highcharts-chart>
+          <!-- </div> -->
+      </div>
+    </div>
+
+    <div class="notifications-container">
+      <div class="notification-header">
+        <h3>{{ 'dashboard.recentNotifications' | translate }}</h3>
+        <div class="view-all">{{ 'dashboard.viewAll' | translate }}</div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon-container alert">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="notification-content">
+          <div class="notification-title">{{ 'dashboard.lowBalanceAlert' | translate }}</div>
+          <div class="notification-message">{{ 'dashboard.lowBalanceMessage' | translate }}</div>
+          <div class="notification-time">{{ 'hours_ago' | translate : {hours_ago: '2'} }}</div>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon-container info">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="notification-content">
+          <div class="notification-title">{{ 'dashboard.systemUpdate' | translate }}</div>
+          <div class="notification-message">{{ 'dashboard.systemMaintenance' | translate }}</div>
+          <div class="notification-time">Yesterday</div>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon-container alert">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="notification-content">
+          <div class="notification-title">{{ 'dashboard.lowBalanceAlert' | translate }}</div>
+          <div class="notification-message">{{ 'dashboard.lowBalanceMessage' | translate }}</div>
+          <div class="notification-time">2 days ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-header">
+    <h2>{{ 'dashboard.yourMeters' | translate }}</h2>
+    <div>
+      <span style="margin-right: 10px">{{ 'dashboard.filterBy' | translate }}:</span>
+      <select style="padding: 6px; border-radius: 4px; border: 1px solid var(--medium-gray)">
+        <option value="all">{{ 'dashboard.allTypes' | translate }}</option>
+        <option value="water">{{ 'dashboard.water' | translate }}</option>
+        <option value="electricity">{{ 'dashboard.electricity' | translate }}</option>
+        <option value="gas">{{ 'dashboard.gas' | translate }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="meters-container">
+    <div class="meter-card">
+      <div class="meter-header">
+        <div class="meter-name">{{ 'dashboard.meterE45678' | translate }}</div>
+        <div class="meter-type electricity">{{ 'dashboard.electricity' | translate }}</div>
+      </div>
+      <div class="meter-details">
+        <div class="meter-detail">
+          <div class="detail-label">{{ 'dashboard.balance' | translate }}</div>
+          <div class="detail-value">8 EGP</div>
+          <div class="meter-warning">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ 'dashboard.lowBalance' | translate }}</span>
+          </div>
+        </div>
+        <div class="meter-detail">
+          <div class="detail-label">{{ 'dashboard.location' | translate }}</div>
+          <div class="detail-value">{{ 'dashboard.locationValue' | translate }}</div>
+        </div>
+      </div>
+      <div class="meter-actions">
+        <button class="meter-action">
+          <i class="fas fa-history"></i>
+          <span>{{ 'dashboard.history' | translate }}</span>
+        </button>
+        <button class="meter-action primary">
+          <i class="fas fa-bolt"></i>
+          <span>{{ 'dashboard.charge' | translate }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Repeat similar structure for other meters -->
+  </div>
+</section>

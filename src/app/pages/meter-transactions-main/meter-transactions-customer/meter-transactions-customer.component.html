@@ -1,0 +1,97 @@
+<section class="main-content pt-3 pt-md-4 pb-3 pb-md-4 px-2 px-md-3 px-lg-4">
+  <!-- Page Header -->
+  <div class="header mb-3 mb-md-4">
+    <div class="header-title">
+      <h3 class="h4 h-md-3 text-primary">{{ 'Meter_Transactions' | translate }}</h3>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div id="service-content">
+    <!-- Bulk Charging Section -->
+    <section class="bulk-charging-section">
+      <!-- Desktop Table (hidden on mobile) -->
+      <div class="table-responsive d-none d-md-block">
+        <table class="table table-hover meters-table" *ngIf="!isLoading">
+          <thead>
+            <tr>
+              <th *ngFor="let col of listOfColumns" (click)="onSort(col)" class="sortable">
+                {{ getColumnLabel(col) | translate }}
+                <i class="fas ms-1 {{ getSortIcon(col) }}"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of dataList?.content">
+              <td>{{ transaction.transactionNumber }}</td>
+              <td>{{ transaction.amount | number }} {{ 'LE' | translate }}</td>
+              <td>{{ transaction.amountCharged | number }} {{ 'LE' | translate }}</td>
+              <td>
+                <span class="badge" [ngClass]="getCurrentStatus(transaction.status).color">
+                  {{ getCurrentStatus(transaction.status).name | translate }}
+                </span>
+              </td>
+              <td class="text-center">
+                <span class="badge" [ngClass]="getPaymentMethodType(transaction.paymentMethodType).color">
+                  {{ getPaymentMethodType(transaction.paymentMethodType).name | translate }}
+                </span>
+              </td>
+              <td>{{ transaction.propertyNo }} - {{ transaction.compoundName }}</td>
+              <td>{{ transaction.meterType | translate }}</td>
+              <td>{{ transaction.createdAt | date:'medium' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Cards (visible only on mobile) -->
+      <div class="d-block d-md-none">
+        <div class="row g-3">
+          <div class="col-12" *ngFor="let transaction of dataList?.content">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ 'Transaction_Number' | translate }}: {{ transaction.transactionNumber }}</h5>
+                <p class="card-text mb-1"><strong>{{ 'Amount' | translate }}:</strong> {{ transaction.amount | number }} {{ 'LE' | translate }}</p>
+                <p class="card-text mb-1"><strong>{{ 'Amount_Charged' | translate }}:</strong> {{ transaction.amountCharged | number }} {{ 'LE' | translate }}</p>
+                <p class="card-text mb-1"><strong>{{ 'Status' | translate }}:</strong>
+                  <span class="badge" [ngClass]="getCurrentStatus(transaction.status).color">
+                    {{ getCurrentStatus(transaction.status).name | translate }}
+                  </span>
+                </p>
+                <p class="card-text mb-1"><strong>{{ 'Payment_Method' | translate }}:</strong>
+                  <span class="badge" [ngClass]="getPaymentMethodType(transaction.paymentMethodType).color">
+                    {{ getPaymentMethodType(transaction.paymentMethodType).name | translate }}
+                  </span>
+                </p>
+                <p class="card-text mb-1"><strong>{{ 'Location' | translate }}:</strong> {{ transaction.propertyNo }} - {{ transaction.compoundName }}</p>
+                <p class="card-text mb-1"><strong>{{ 'Meter_Type' | translate }}:</strong> {{ transaction.meterType | translate }}</p>
+                <p class="card-text"><strong>{{ 'Created_At' | translate }}:</strong> {{ transaction.createdAt | date:'medium' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pt-3 pt-md-4" *ngIf="!isLoading">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+          <div class="text-muted small">
+            <span>
+              {{ 'DataTable_info' |
+                translate : {
+                from: (dataList.pageable.pageNumber * dataList.pageable.pageSize) + 1,
+                to: Math.min(((dataList.pageable.pageNumber + 1) * dataList.pageable.pageSize), dataList.totalElements),
+                Total: dataList.totalElements }
+              }}
+            </span>
+          </div>
+          <div>
+            <ngb-pagination *ngIf="!isLoading" [collectionSize]="dataList.totalElements" [(page)]="paging.page"
+              [maxSize]="isMobile ? 3 : 5" [pageSize]="paging.size" (pageChange)="pageChange()" [rotate]="true" [boundaryLinks]="true">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

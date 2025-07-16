@@ -1,0 +1,214 @@
+<section class="dashboard-section">
+  <div class="welcome-bar">
+    <h1>{{ 'dashboardTemp.welcome' | translate }}, <span class="user-name">John Smith</span></h1>
+    <div class="date-time">{{ 'dashboardTemp.lastLogin' | translate }}: April 09, 2025, 10:30 AM</div>
+  </div>
+
+  <!-- Alert Notifications -->
+  <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
+    <div class="alert-text">
+      <strong><i class="fa fa-exclamation-triangle"></i> {{ 'dashboardTemp.lowBalanceAlert' | translate }}!</strong>
+    {{ 'dashboardTemp.lowBalanceMessage' | translate }}
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <!-- Dashboard Quick Stats -->
+  <div class="row stats-row">
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa fa-tachometer-alt"></i></div>
+        <div class="stat-info">
+          <h2>15</h2>
+          <p>{{ 'dashboardTemp.totalMeters' | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa fa-bolt"></i></div>
+        <div class="stat-info">
+          <h2>8</h2>
+          <p>{{ 'dashboardTemp.electricityMeters' | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fa fa-tint"></i></div>
+        <div class="stat-info">
+          <h2>7</h2>
+          <p>{{ 'dashboardTemp.waterMeters' | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card warning">
+        <div class="stat-icon"><i class="fa fa-exclamation-circle"></i></div>
+        <div class="stat-info">
+          <h2>3</h2>
+          <p>{{ 'dashboardTemp.lowBalance' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meter Filtering Section -->
+  <div class="filter-section">
+    <h2>{{ 'dashboardTemp.yourMeters' | translate }}</h2>
+    <div class="filter-controls">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="categoryFilter">{{ 'dashboardTemp.category' | translate }}</label>
+            <select class="form-control" id="categoryFilter">
+              <option value="all">{{ 'dashboardTemp.allMeters' | translate }}</option>
+              <option value="electricity">{{ 'dashboardThree.electricity' | translate }}</option>
+              <option value="water">{{ 'dashboardThree.water' | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="locationFilter">{{ 'location' | translate }}</label>
+            <select class="form-control" id="locationFilter">
+              <option value="all">{{ 'dashboardTemp.allLocations' | translate }}</option>
+              <option value="block-a">{{ 'Block A, Unit 104' | translate }}</option>
+              <option value="block-b">{{ 'Block B, Unit 204' | translate }}</option>
+              <option value="block-c">{{ 'Block C, Unit 304' | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="unitFilter">{{ 'dashboardTemp.unitNumber' | translate }}</label>
+            <input type="text" class="form-control" id="unitFilter" placeholder="{{ 'dashboardTemp.unitPlaceholder' | translate }}">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary btn-block">{{ 'dashboardTemp.applyFilters' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meters Display Section -->
+  <div class="meters-section">
+    <div class="row">
+      <!-- Electricity Meter Card -->
+      <div class="col-lg-4 col-md-6">
+        <div class="meter-card">
+          <div class="meter-header electricity">
+            <div class="meter-type"><i class="fa fa-bolt"></i> {{ 'dashboard.electricity' | translate }}</div>
+          </div>
+          <div class="meter-body">
+            <div class="meter-location">
+              <strong>{{ 'location' | translate }}:</strong> Block A, Unit 302
+            </div>
+            <div class="meter-balance">
+              <div class="balance-label">{{ 'currentBalance' | translate }}</div>
+              <div class="balance-amount">56.25 EGP</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 70%"
+                   aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="meter-consumption">
+              <div class="consumption-label">{{ 'lastMonthUsage' | translate }}</div>
+              <div class="consumption-amount">142 kWh</div>
+            </div>
+          </div>
+          <div class="meter-footer">
+            <button class="btn btn-outline-primary"><i class="fa fa-sync-alt"></i> {{ 'dashboardTemp.update' | translate }}</button>
+            <button class="btn btn-primary"><i class="fa fa-credit-card"></i> {{ 'dashboardTemp.recharge' | translate }}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Water Meter Card -->
+      <div class="col-lg-4 col-md-6">
+        <div class="meter-card">
+          <div class="meter-header water">
+            <div class="meter-type"><i class="fa fa-tint"></i> {{ 'dashboard.water' | translate }}</div>
+          </div>
+          <div class="meter-body">
+            <div class="meter-location">
+              <strong>{{ 'location' | translate }}:</strong> Block A, Unit 302
+            </div>
+            <div class="meter-balance">
+              <div class="balance-label">{{ 'currentBalance' | translate }}</div>
+              <div class="balance-amount">82.50 EGP</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 85%"
+                   aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="meter-consumption">
+              <div class="consumption-label">{{ 'lastMonthUsage' | translate }}</div>
+              <div class="consumption-amount">5.3 m³</div>
+            </div>
+          </div>
+          <div class="meter-footer">
+            <button class="btn btn-outline-primary"><i class="fa fa-sync-alt"></i> {{ 'dashboardTemp.update' | translate }}</button>
+            <button class="btn btn-primary"><i class="fa fa-credit-card"></i> {{ 'dashboardTemp.recharge' | translate }}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Low Balance Meter Card -->
+      <div class="col-lg-4 col-md-6">
+        <div class="meter-card low-balance">
+          <div class="meter-header electricity">
+            <div class="meter-type"><i class="fa fa-bolt"></i> {{ 'dashboard.electricity' | translate }}</div>
+          </div>
+          <div class="meter-body">
+            <div class="meter-location">
+              <strong>{{ 'location' | translate }}:</strong> Block B, Unit 105
+            </div>
+            <div class="meter-balance">
+              <div class="balance-label">{{ 'currentBalance' | translate }}</div>
+              <div class="balance-amount warning">8.15 EGP</div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: 10%"
+                   aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="meter-consumption">
+              <div class="consumption-label">{{ 'lastMonthUsage' | translate }}</div>
+              <div class="consumption-amount">186 kWh</div>
+            </div>
+          </div>
+          <div class="meter-footer">
+            <button class="btn btn-outline-primary"><i class="fa fa-sync-alt"></i> {{ 'dashboardTemp.update' | translate }}</button>
+            <button class="btn btn-danger"><i class="fa fa-credit-card"></i> {{ 'dashboardTemp.rechargeNow' | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consumption Chart Section -->
+  <div class="consumption-section">
+    <h2>{{ 'dashboardTemp.consumptionHistory' | translate }}</h2>
+    <div class="chart-controls">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary active">{{ 'dashboardTemp.last3Months' | translate }}</button>
+        <button type="button" class="btn btn-outline-primary">{{ 'dashboardTemp.last6Months' | translate }}</button>
+        <button type="button" class="btn btn-outline-primary">{{ 'dashboardTemp.lastYear' | translate }}</button>
+      </div>
+    </div>
+    <div class="chart-container">
+      <!-- Placeholder for actual chart component -->
+      <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="consumptionTrendsChartOptions"
+      style="width: 100%; height: 100%; display: block;">
+      </highcharts-chart>
+    </div>
+  </div>
+</section>

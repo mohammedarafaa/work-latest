@@ -1,0 +1,178 @@
+<div class="meter-form-container">
+  <h2>{{ isEditMode ? ('Edit_Meter' | translate) : ('Add_New_Meter' | translate) }}</h2>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'Loading' | translate }}...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="meterForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="card">
+      <div class="card-body">
+        <h3>{{ 'Meter_Information' | translate }}</h3>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="serial" class="form-label">{{ 'Serial_Number' | translate }}</label>
+            <input type="text" class="form-control" id="serial" formControlName="serial" required>
+            <div class="invalid-feedback" *ngIf="meterForm.get('serial')?.hasError('required')">
+              {{ 'Serial_Number_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="type" class="form-label">{{ 'Type' | translate }}</label>
+            <select class="form-select" id="type" formControlName="type" required>
+              <option value="">{{ 'Select_Type' | translate }}</option>
+              <option *ngFor="let type of meterTypes" [value]="type">{{ type | translate }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="meterForm.get('type')?.hasError('required')">
+              {{ 'Type_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="port" class="form-label">{{ 'Port' | translate }}</label>
+            <input type="number" class="form-control" id="port" formControlName="port" required>
+            <div class="invalid-feedback" *ngIf="meterForm.get('port')?.hasError('required')">
+              {{ 'Port_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="model" class="form-label">{{ 'Model' | translate }}</label>
+            <input type="text" class="form-control" id="model" formControlName="model" required>
+            <div class="invalid-feedback" *ngIf="meterForm.get('model')?.hasError('required')">
+              {{ 'Model_Required' | translate }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="erpCode" class="form-label">{{ 'ERP_Code' | translate }}</label>
+            <input type="text" class="form-control" id="erpCode" formControlName="erpCode" required>
+            <div class="invalid-feedback" *ngIf="meterForm.get('erpCode')?.hasError('required')">
+              {{ 'ERP_Code_Required' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-4">{{ 'Customer_Information' | translate }}</h3>
+        <div formGroupName="customer">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="fullName" class="form-label">{{ 'Full_Name' | translate }}</label>
+              <input type="text" class="form-control" id="fullName" formControlName="fullName" required>
+              <div class="invalid-feedback" *ngIf="meterForm.get('customer.fullName')?.hasError('required')">
+                {{ 'Full_Name_Required' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">{{ 'Email' | translate }}</label>
+              <input type="email" class="form-control" id="email" formControlName="email" required>
+              <div class="invalid-feedback" *ngIf="meterForm.get('customer.email')?.hasError('required')">
+                {{ 'Email_Required' | translate }}
+              </div>
+              <div class="invalid-feedback" *ngIf="meterForm.get('customer.email')?.hasError('email')">
+                {{ 'Valid_Email_Required' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="phoneNumber" class="form-label">{{ 'Phone_Number' | translate }}</label>
+              <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" required>
+              <div class="invalid-feedback" *ngIf="meterForm.get('customer.phoneNumber')?.hasError('required')">
+                {{ 'Phone_Number_Required' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="gender" class="form-label">{{ 'Gender' | translate }}</label>
+              <select class="form-select" id="gender" formControlName="gender" required>
+                <option value="">{{ 'Select_Gender' | translate }}</option>
+                <option value="MALE">{{ 'Male' | translate }}</option>
+                <option value="FEMALE">{{ 'Female' | translate }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="meterForm.get('customer.gender')?.hasError('required')">
+                {{ 'Gender_Required' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-4">{{ 'Property_Information' | translate }}</h3>
+        <div formGroupName="property">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="propertyNo" class="form-label">{{ 'Property_Number' | translate }}</label>
+              <input type="text" class="form-control" id="propertyNo" formControlName="propertyNo" required>
+              <div class="invalid-feedback" *ngIf="meterForm.get('property.propertyNo')?.hasError('required')">
+                {{ 'Property_Number_Required' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="number" class="form-label">{{ 'Number' | translate }}</label>
+              <input type="text" class="form-control" id="number" formControlName="number" required>
+              <div class="invalid-feedback" *ngIf="meterForm.get('property.number')?.hasError('required')">
+                {{ 'Number_Required' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-3">{{ 'Address' | translate }}</h4>
+          <div formGroupName="address">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="street" class="form-label">{{ 'Street' | translate }}</label>
+                <input type="text" class="form-control" id="street" formControlName="street" required>
+                <div class="invalid-feedback" *ngIf="meterForm.get('property.address.street')?.hasError('required')">
+                  {{ 'Street_Required' | translate }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="buildingNumber" class="form-label">{{ 'Building_Number' | translate }}</label>
+                <input type="text" class="form-control" id="buildingNumber" formControlName="buildingNumber" required>
+                <div class="invalid-feedback" *ngIf="meterForm.get('property.address.buildingNumber')?.hasError('required')">
+                  {{ 'Building_Number_Required' | translate }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="block" class="form-label">{{ 'Block' | translate }}</label>
+                <input type="text" class="form-control" id="block" formControlName="block" required>
+                <div class="invalid-feedback" *ngIf="meterForm.get('property.address.block')?.hasError('required')">
+                  {{ 'Block_Required' | translate }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="floor" class="form-label">{{ 'Floor' | translate }}</label>
+                <input type="text" class="form-control" id="floor" formControlName="floor">
+              </div>
+
+              <div class="col-12 mb-3">
+                <label for="additionalInfo" class="form-label">{{ 'Additional_Information' | translate }}</label>
+                <textarea class="form-control" id="additionalInfo" formControlName="additionalInfo" rows="2"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent">
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" routerLink="/meters">{{ 'Cancel' | translate }}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="meterForm.invalid || loading">
+            {{ isEditMode ? ('Update_Meter' | translate) : ('Create_Meter' | translate) }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div> 

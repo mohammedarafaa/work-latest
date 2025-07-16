@@ -1,0 +1,169 @@
+<div class="meter-details-container">
+  <!-- Header Section -->
+  <!-- <div class="section-header">
+    <h2 class="section-title">{{'Charge_Meter' | translate}}</h2>
+  </div> -->
+
+  <!-- Meter Information Cards -->
+  <div class="row g-4 mb-4">
+     <!-- Property Info Card -->
+     <div class="col-12">
+      <div class="card property-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-building me-2"></i>
+            {{'Property_Details' | translate}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="label">{{'Property_Number' | translate}}</span>
+                  <span class="value">{{currentMeter.property.propertyNo}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">{{'Block' | translate}}</span>
+                  <span class="value">{{currentMeter.property.address.block}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">{{'Floor' | translate}}</span>
+                  <span class="value">{{currentMeter.property.address.floor}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="label">{{'Street' | translate}}</span>
+                  <span class="value">{{currentMeter.property.address.street}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">{{'Building_Number' | translate}}</span>
+                  <span class="value">{{currentMeter.property.address.buildingNumber}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">{{'Additional_Info' | translate}}</span>
+                  <span class="value">{{currentMeter.property.address.additionalInfo}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Meter Basic Info Card -->
+    <div class="col-md-6">
+      <div class="card property-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-tachometer-alt me-2"></i>
+            {{'Meter_Details' | translate}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">{{'Serial_Number' | translate}}</span>
+              <span class="value">{{currentMeter.serial}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Type' | translate}}</span>
+              <span class="value">{{currentMeter.type}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Model' | translate}}</span>
+              <span class="value">{{currentMeter.model}}</span>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Info Card -->
+    <div class="col-md-6">
+      <div class="card customer-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-user me-2"></i>
+            {{'Customer_Details' | translate}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">{{'Full_Name' | translate}}</span>
+              <span class="value">{{currentMeter.customer.fullName}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Email' | translate}}</span>
+              <span class="value">{{currentMeter.customer.email}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Phone' | translate}}</span>
+              <span class="value">{{currentMeter.customer.phoneNumber}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Account_Type' | translate}}</span>
+              <span class="value">{{currentMeter.customer.accountType}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'National_ID' | translate}}</span>
+              <span class="value">{{currentMeter.customer.nationalId}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">{{'Job' | translate}}</span>
+              <span class="value">{{currentMeter.customer.job}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+  </div>
+
+  <!-- Charging Form -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card charge-card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-bolt me-2"></i>
+            {{'Charge_Meter' | translate}}
+          </h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" autocomplete="off" (ngSubmit)="chargeMeter()">
+            <div class="form-group">
+              <label for="amount">{{'Amount' | translate}}</label>
+              <div class="input-group">
+                <input type="number" id="amount" formControlName="amount" class="form-control" [min]="MIN_AMOUNT"
+                  [max]="MAX_AMOUNT" placeholder="{{'Enter_Amount' | translate}}" />
+                <span class="input-group-text">LE</span>
+              </div>
+              <small class="form-text text-muted">
+                {{'Amount_Hint' | translate: { min: MIN_AMOUNT, max: MAX_AMOUNT } }}
+              </small>
+              <div *ngIf="f['amount'].touched && f['amount'].errors" class="text-danger">
+                {{ amountErrorMessage }}
+              </div>
+            </div>
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!form.valid || isLoading">
+                <span *ngIf="!isLoading">{{'Charge_Now' | translate}}</span>
+                <span *ngIf="isLoading">
+                  <i class="fas fa-spinner fa-spin me-2"></i>
+                  {{'Processing' | translate}}
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+Business website name Eagle Meter Management and Monitor System- Web Portal
+
+the business requirements for the development of a web portal  for customers of the Eagle Utility Management System(MUMS). This platform will enable customers to manage their utility meters, monitor consumption, and receive notifications efficiently.
+
+Business Objectives
+•	Provide clients with a secure and user-friendly platform for managing their utility accounts.
+•	Enable near real-time monitoring of utility consumption.
+•	Enhance customer service efficiency through automated processes.
+•	Implement a notification system for important updates and alerts.
+•	Offer a structured approach to meter categorization and filtering.
+
+Business Requirements
+2.1 User Account Features
+•	Login: Clients authenticate using a unique username and password.
+•	Password Management:
+o	Clients can reset or change passwords.
+o	Validation occurs via email or phone number linked to the account.
+•	Sign-Up Process:
+o	Clients must register through customer service.
+o	Customer service validates email and phone number before activation.
+2.2 Meter Categorization and Filtering
+•	Clients with multiple meters can filter them by category (e.g., water, electricity).
+•	Additional filtering by unit number, block number, location, or area.
+2.4 Meter Charging Features
+•	Customer service can:
+o	Set a charging limit per client based on the number of meters.
+o	Perform bulk charging actions or select specific meters to charge.
+•	Clients can:
+o	Trigger a real-time balance update for a selected meter.
+o	View real-time consumption data.
+2.5 Notifications & Alerts
+•	Low Balance Alerts:
+o	Notify clients when balance falls below 10 EGP.
+o	Alerts sent via SMS, email, and system notifications.
+•	Informational Alerts:
+o	Provide updates related to Eagle Meters.
+o	Notifications delivered via dashboard, SMS, and email.
+2.6 Dashboard Overview
+•	Displays all meters linked to the client’s account.
+•	Shows current balance and consumption history (last month or last three months).
+•	Provides access to client profile data.
+
+

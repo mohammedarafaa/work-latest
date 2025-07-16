@@ -1,0 +1,267 @@
+<section>
+  <!-- Dashboard Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">{{ 'dashboardThree.title' | translate }}</h1>
+    <button class="btn btn-primary">
+      <i class="bi bi-arrow-repeat me-2"></i>{{ 'dashboardThree.refreshData' | translate }}
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-title">{{ 'dashboardThree.totalMeters' | translate }}</div>
+        <div class="stat-value">12</div>
+        <div class="stat-change text-success small">
+          <i class="bi bi-arrow-up"></i> {{ 'dashboardThree.newThisMonth' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-title">{{ 'dashboardThree.totalBalance' | translate }}</div>
+        <div class="stat-value">450 EGP</div>
+        <div class="stat-change text-danger small">
+          <i class="bi bi-arrow-down"></i> {{ 'dashboardThree.balanceChange' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-title">{{ 'lowBalanceMeters' | translate }}</div>
+        <div class="stat-value">3</div>
+        <div class="stat-change text-danger small">
+          <i class="bi bi-arrow-up"></i> {{ 'dashboardThree.moreThanLastWeek' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-title">{{ 'dashboardThree.totalConsumption' | translate }}</div>
+        <div class="stat-value">340 kWh</div>
+        <div class="stat-change text-success small">
+          <i class="bi bi-arrow-up"></i> {{ 'dashboardThree.consumptionChange' | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts & Notifications -->
+  <div class="row g-4 mb-4">
+    <!-- Consumption Chart -->
+    <div class="col-lg-8">
+      <div class="chart-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">{{ 'dashboardThree.consumptionHistory' | translate }}</h5>
+          <ul class="nav chart-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{ 'dashboardThree.daily' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">{{ 'dashboardThree.monthly' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{ 'dashboardThree.yearly' | translate }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="text-center">
+          <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="consumptionTrendsChartOptions"
+          style="width: 100%; height: 100%; display: block;">
+          </highcharts-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="col-lg-4">
+      <div class="notification-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">{{ 'dashboardThree.recentNotifications' | translate }}</h5>
+          <a href="#" class="text-primary small">{{ 'dashboardThree.viewAll' | translate }}</a>
+        </div>
+
+        <div class="notification-item d-flex gap-3">
+          <div class="notification-icon alert">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+          <div>
+            <h6 class="mb-1">{{ 'dashboard.lowBalanceAlert' | translate }}</h6>
+            <p class="mb-1 small">{{ 'dashboard.lowBalanceMessage' | translate }}</p>
+            <span class="notification-time">{{ 'hours_ago' | translate : {hours_ago: '2'} }}</span>
+          </div>
+        </div>
+
+        <div class="notification-item d-flex gap-3">
+          <div class="notification-icon info">
+            <i class="bi bi-info-circle"></i>
+          </div>
+          <div>
+            <h6 class="mb-1">{{ 'dashboardThree.systemUpdate' | translate }}</h6>
+            <p class="mb-1 small">{{ 'dashboardThree.systemMaintenance' | translate }}</p>
+            <span class="notification-time">Yesterday</span>
+          </div>
+        </div>
+
+        <div class="notification-item d-flex gap-3">
+          <div class="notification-icon alert">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+          <div>
+            <h6 class="mb-1">{{ 'dashboardThree.lowBalanceAlert' | translate }}</h6>
+            <p class="mb-1 small">{{ 'dashboardThree.lowBalanceMessage' | translate }}</p>
+            <span class="notification-time">2 days ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meters Section -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4">{{ 'dashboardThree.yourMeters' | translate }}</h2>
+    <div class="d-flex align-items-center">
+      <span class="me-2">{{ 'dashboardThree.filterBy' | translate }}:</span>
+      <select class="form-select form-select-sm" style="width: auto;">
+        <option value="all">{{ 'dashboardThree.allTypes' | translate }}</option>
+        <option value="water">{{ 'dashboardThree.water' | translate }}</option>
+        <option value="electricity">{{ 'dashboardThree.electricity' | translate }}</option>
+        <option value="gas">{{ 'dashboardThree.gas' | translate }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <!-- Electricity Meter 1 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="meter-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0">
+
+            {{ 'meter_no' | translate : {no: 'E45678' } }}
+          </h6>
+          <span class="badge meter-type electricity">{{ 'dashboardThree.electricity' | translate }}</span>
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.balance' | translate }}</div>
+            <div class="detail-value">8 EGP</div>
+            <div class="low-balance">
+              <i class="bi bi-exclamation-circle"></i> {{ 'lowBalance' | translate }}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.location' | translate }}</div>
+            <div class="detail-value">Block B, Unit 104</div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-clock-history me-1"></i>{{ 'dashboardThree.history' | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary">
+            <i class="bi bi-lightning me-1"></i>{{ 'dashboardThree.charge' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Water Meter 1 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="meter-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0">
+
+            {{ 'meter_no' | translate : {no: 'W78901' } }}
+          </h6>
+          <span class="badge meter-type water">{{ 'dashboardThree.water' | translate }}</span>
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.balance' | translate }}</div>
+            <div class="detail-value">5 EGP</div>
+            <div class="low-balance">
+              <i class="bi bi-exclamation-circle"></i> {{ 'lowBalance' | translate }}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.location' | translate }}</div>
+            <div class="detail-value">Block b, Unit 506</div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-clock-history me-1"></i>{{ 'dashboardThree.history' | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary">
+            <i class="bi bi-lightning me-1"></i>{{ 'dashboardThree.charge' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Electricity Meter 2 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="meter-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0">
+            {{ 'meter_no' | translate : {no: 'E12345' } }}
+          </h6>
+          <span class="badge meter-type electricity">{{ 'dashboardThree.electricity' | translate }}</span>
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.balance' | translate }}</div>
+            <div class="detail-value">120 EGP</div>
+          </div>
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.location' | translate }}</div>
+            <div class="detail-value">Block A, Unit 203</div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-clock-history me-1"></i>{{ 'dashboardThree.history' | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary">
+            <i class="bi bi-lightning me-1"></i>{{ 'dashboardThree.charge' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Water Meter 2 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="meter-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="mb-0">
+            {{ 'meter_no' | translate : {no: 'W56789' } }}
+
+          </h6>
+          <span class="badge meter-type water">{{ 'dashboardThree.water' | translate }}</span>
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.balance' | translate }}</div>
+            <div class="detail-value">85 EGP</div>
+          </div>
+          <div class="col-6">
+            <div class="detail-label">{{ 'dashboardThree.location' | translate }}</div>
+            <div class="detail-value">Block A, Unit 203</div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-clock-history me-1"></i>{{ 'dashboardThree.history' | translate }}
+          </button>
+          <button class="btn btn-sm btn-primary">
+            <i class="bi bi-lightning me-1"></i>{{ 'dashboardThree.charge' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

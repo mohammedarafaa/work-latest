@@ -1,0 +1,78 @@
+<section class="container-fluid my-4">
+  <!-- Header Section with Return Button -->
+  <div class="header-section mb-4 d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">{{ 'dashboardTemp.yourMeters' | translate }}</h2>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-section mb-4">
+    <form class="row g-3 align-items-end" [formGroup]="form" autocomplete="off">
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="compoundId" class="form-label">{{ 'compound' | translate }}</label>
+        <ng-select [items]="projectList | async" bindValue="id" bindLabel="name" class="custom"
+          placeholder="{{ 'compound_place' | translate }}"
+          [ngClass]="{ 'is-invalid': f['compoundId'].touched && f['compoundId'].errors, 'is-valid': f['compoundId'].valid }"
+          formControlName="compoundId">
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="propertyId" class="form-label">{{ 'property' | translate }}</label>
+        <ng-select [items]="propertyList | async" bindValue="id" bindLabel="name" class="custom"
+          placeholder="{{ 'property_place' | translate }}"
+          [ngClass]="{ 'is-invalid': f['propertyId'].touched && f['propertyId'].errors, 'is-valid': f['propertyId'].valid }"
+          formControlName="propertyId">
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="meterType" class="form-label">{{ 'charge.meterType' | translate }}</label>
+        <ng-select [items]="meterTypes" class="custom"
+          placeholder="{{ 'meterType_place' | translate }}"
+          [ngClass]="{ 'is-invalid': f['meterType'].touched && f['meterType'].errors, 'is-valid': f['meterType'].valid }"
+          formControlName="meterType">
+        </ng-select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 d-grid">
+        <label class="form-label">&nbsp;</label>
+        <button 
+          type="button" 
+          class="btn btn-primary btn-xl" 
+          (click)="applyFilters()"
+          [disabled]="isApplyingFilters">
+          {{ 'dashboardTemp.applyFilters' | translate }}
+          <span *ngIf="isApplyingFilters" class="spinner-border spinner-border-sm ms-2"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Meters Display Section -->
+  <div class="meters-section" *ngIf="meterList">
+    <div class="row g-3">
+      <div class="col-lg-4 col-md-6" *ngFor="let meter of meterList.content">
+        <app-meter-card [currentMeter]="meter"></app-meter-card>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row gy-2" *ngIf="meterList">
+      <div class="col">
+        <span>
+          {{ 'DataTable_info' |
+            translate : {
+              from: (meterList.pageable.pageNumber * meterList.pageable.pageSize) +1 ,
+              to: Math.min(((meterList.pageable.pageNumber+1) * meterList.pageable.pageSize),meterList.totalElements) ,
+              Total:meterList.totalElements }
+          }}
+        </span>
+        <ngb-pagination *ngIf="!isLoading" [collectionSize]="meterList.totalElements" [(page)]="paging.page"
+          [maxSize]="3" [pageSize]="paging.size" (pageChange)="pageChange()"></ngb-pagination>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-success mb-3" style="width:3rem;height:3rem;"></div>
+    <h5>{{ 'Loading' | translate }}…</h5>
+  </div>
+</section>

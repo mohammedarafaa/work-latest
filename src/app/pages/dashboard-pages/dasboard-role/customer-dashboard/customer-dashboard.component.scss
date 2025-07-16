@@ -1,0 +1,109 @@
+.meter-card {
+  transition: transform 0.22s, box-shadow 0.22s;
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(13, 110, 253, 0.06); // light blue shadow
+  border: 1.5px solid #e0e0e0;
+
+  &.meter-card-scaled {
+    transform: scale(1.04);
+    z-index: 2;
+    box-shadow: 0 6px 32px 0 rgba(13, 110, 253, 0.22);
+    border: 2.5px solid #0d6efd;
+    background: linear-gradient(105deg, #e7f1ff 0%, #f7fbfd 100%);
+  }
+
+  &.meter-card-selected {
+    border-color: #0d6efd !important;
+  }
+}
+
+.pulse-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 1.5rem;
+  pointer-events: none;
+  z-index: 1;
+  animation: pulse 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  border: 3px solid #0d6efd66; // blue with transparency
+  opacity: 0.7;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.13); opacity: 0.2; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+.selection-badge {
+  background: #0d6efd;
+  color: #fff;
+  border-radius: 1.5rem;
+  padding: 0.35em 1.1em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #0d6efd44;
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  z-index: 2;
+
+  i {
+    color: #fff;
+    margin-right: 0.5em;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 991.98px) {
+  .meter-card {
+    font-size: 0.96rem;
+    padding: 1.1rem 0.7rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .meter-card {
+    font-size: 0.92rem;
+    padding: 1rem 0.5rem;
+  }
+  .meter-card-container {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .meter-card {
+    font-size: 0.88rem;
+    padding: 0.7rem 0.3rem;
+  }
+
+  .meter-header,
+  .meter-footer,
+  .meter-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+}
+
+:host,
+button,
+span {
+  font-size: medium;
+}
+
+.card.border-success {
+  border-width: 2px;
+  border-color: #0d6efd !important;
+}
+
+.card .badge.bg-success {
+  background-color: #0d6efd !important;
+  font-size: 1.1em;
+}

@@ -1,0 +1,726 @@
+// United 5.0.1
+// Bootswatch
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+
+
+// Color system
+// Fonts
+$font-family-sans-serif: "Inter", "Helvetica Neue", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-size-root: 0.9rem !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * .475 !default;
+$font-size-lg: $font-size-base * .825 !default;
+
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: bolder !default;
+
+$font-weight-base: $font-weight-normal !default;
+
+$line-height-base: 1.5 !default;
+$line-height-sm: 1.25 !default;
+$line-height-lg: 2 !default;
+$h1-font-size: $font-size-base * 2.2 !default;
+$h2-font-size: $font-size-base * 1.8 !default;
+$h3-font-size: $font-size-base * 1.55 !default;
+$h4-font-size: $font-size-base * 1.2 !default;
+$h5-font-size: $font-size-base * 1 !default;
+$h6-font-size: $font-size-base !default;
+
+$input-btn-font-size: 0.9rem !default;
+$btn-font-size: $font-size-base !default;
+
+$input-btn-font-family: $font-family-sans-serif !default;
+// scss-docs-start font-sizes
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size) !default;
+
+// Spacer
+$spacer: 1rem !default;
+
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3),
+  6: ($spacer * 4.5),
+  7: ($spacer * 6)) !default;
+
+// Grid breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px) !default;
+
+// Grid gutter
+$grid-gutter-width: 24px;
+
+// Grid containers
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px) !default;
+
+$container-padding-x: .75rem !default;
+
+// Options
+$enable-validation-icons: false !default;
+
+// Transitions
+$transition-base: all .35s ease-in-out !default;
+
+// Options
+$enable-rfs: false !default;
+$enable-negative-margins: true !default;
+$white: #fff !default;
+$black: #000 !default;
+$blue: #276db5;
+$brown: #887456;
+$indigo: #9c62b8;
+$purple: #69247C; // Not a direct purple, but fitting based on palette
+$pink: #DA498D; // Vibrant pink with a slight red tint
+$red: #C62300; // Strong red with a warm hue
+$orange: #F14A00; // Bright, energetic orange
+$yellow: #f9f871; // Soft golden yellow
+$green: #0093ce; // Using light_blue for what was green
+$teal: #00d3ab; // Muted teal, balancing between blue and green
+$cyan: #00b6c8; // Fresh and bright cyan
+$dark_blue: #1a3a5f;
+$light_blue: #0093ce;
+
+
+$gray-100: #f8f9fa;
+$gray-200: #f6f9ff;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #404756;
+$gray-900: #212529;
+
+$primary: $blue; // Primary brand color (your provided blue)
+$secondary: $teal; // A neutral dark gray for secondary actions
+$success: $light_blue; // Using light_blue for success
+$info: $cyan; // Cyan for informational messages
+$warning: $yellow; // Bright yellow for warnings
+$danger: $red; // Strong red for danger alerts
+$dark: $gray-900; // Dark color for deep backgrounds
+$light: $light_blue; // Very light color for backgrounds
+
+$electricity-color: $orange;
+$water-color: $light_blue;
+$gas-color: $blue;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark) !default;
+
+// Social colors
+$social-colors: (
+  "facebook": #3b5998,
+  "twitter": #1da1f2,
+  "google": #dc4e41,
+  "youtube": #f00,
+  "vimeo": #1ab7ea,
+  "dribbble": #ea4c89,
+  "github": #181717,
+  "instagram": #e4405f,
+  "pinterest": #bd081c,
+  "flickr": #0063dc,
+  "bitbucket": #0052cc) !default;
+
+// Body
+$body-bg: #efefef !default;
+$body-color: $gray-700 !default;
+
+
+$btn-color: $white !default;
+$btn-link-color: $white !default;
+// Links
+$link-decoration: none !default;
+$link-hover-decoration: none !default;
+$link-shade-percentage: 20% !default;
+$link-color: $primary !default;
+$link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
+
+// Common
+$border-width: 1px !default;
+
+// Fonts
+$line-height-base: 1.5 !default;
+$line-height-lg: 1.5 !default;
+$line-height-sm: 1.5 !default;
+
+// Headings
+$h1-font-size: $font-size-base * 2 !default;
+$h2-font-size: $font-size-base * 1.75 !default;
+$h3-font-size: $font-size-base * 1.5 !default;
+$h4-font-size: $font-size-base * 1.25 !default;
+$h5-font-size: $font-size-base !default;
+$h6-font-size: $font-size-base !default;
+$headings-color: $dark_blue !default;
+$headings-font-weight: 700 !default;
+
+
+// Progress
+$progress-height: 1rem !default;
+$progress-height-sm: .5rem !default;
+$progress-height-lg: 1.5rem !default;
+
+// Shadows
+$box-shadow-sm: 0 0.05rem 0.2rem rgba($black, .05) !default;
+$box-shadow: 0 0.1rem 0.2rem rgba($black, .05) !default;
+$box-shadow-lg: 0 0.2rem 0.2rem rgba($black, .05) !default;
+
+// Border radius
+$border-radius-sm: .1rem !default;
+$border-radius: .2rem !default;
+$border-radius-lg: .3rem !default;
+
+// Navbar
+$navbar-padding-y: $spacer*0.875 !default;
+$navbar-padding-x: $spacer*1.375 !default;
+$navbar-nav-link-padding-x: .5rem !default;
+$navbar-border-bottom: 0 !default;
+$navbar-box-shadow: 0 0 2rem 0 rgba($dark, .1) !default;
+
+// Navbar brand
+$navbar-brand-padding-y: $spacer*0.875 !default;
+$navbar-brand-padding-x: 0 !default;
+$navbar-brand-color: $dark !default;
+$navbar-brand-font-weight: $font-weight-normal !default;
+$navbar-brand-font-size: 1.15rem !default;
+$navbar-brand-icon-color: $primary !default;
+
+$navbar-toggler-padding-y: 0.5rem;
+$navbar-toggler-padding-x: 1rem;
+$navbar-toggler-border-radius: 0.5rem;
+$navbar-toggler-border-color: rgba(255, 0, 0, 0.1); // Reddish border
+$navbar-bg: $white !default;
+
+// Footer
+$footer-bg: $white !default;
+
+// Alerts
+$alert-padding-y: .95rem !default;
+$alert-padding-x: .95rem !default;
+$alert-border-width: 0 !default;
+
+// List group
+$list-group-item-padding-y: .75rem !default;
+$list-group-item-padding-x: 1.25rem !default;
+$list-group-border-width: none !default;
+
+$list-group-bg: $white !default;
+
+$list-group-hover-bg: $primary !default;
+$list-group-active-color: $white !default;
+$list-group-active-bg: $primary !default;
+$list-group-active-border-color: $list-group-active-bg !default;
+
+
+$list-group-action-color: $gray-800 !default;
+$list-group-action-hover-color: $white !default;
+
+$list-group-action-active-color: $white !default;
+$list-group-action-active-bg: $primary !default;
+
+// Forms
+$input-bg: $white !default;
+$input-disabled-bg: $gray-200 !default;
+$input-color: $gray-700 !default;
+$input-btn-border-width: $border-width !default;
+$input-btn-line-height: $line-height-base !default;
+$input-btn-line-height-sm: $line-height-sm !default;
+$input-btn-line-height-lg: $line-height-lg !default;
+$input-btn-focus-width: .2rem !default;
+$input-btn-padding-y: .25rem !default;
+$input-btn-padding-y-sm: .15rem !default;
+$input-btn-padding-y-lg: .35rem !default;
+$input-btn-padding-x: .7rem !default;
+$input-border-width: $input-btn-border-width !default;
+$input-height-border: $input-border-width * 2 !default;
+$input-height-inner: (
+  $font-size-base * $input-btn-line-height) + ($input-btn-padding-y * 2) !default;
+$input-height: calc(#{$input-height-inner} + #{$input-height-border}) !default;
+$input-height-inner-sm: (
+  $font-size-sm * $input-btn-line-height-sm) + ($input-btn-padding-y-sm * 2) !default;
+$input-height-sm: calc(#{$input-height-inner-sm} + #{$input-height-border}) !default;
+$input-height-inner-lg: (
+  $font-size-lg * $input-btn-line-height-lg) + ($input-btn-padding-y-lg * 2) !default;
+$input-height-lg: calc(#{$input-height-inner-lg} + #{$input-height-border}) !default;
+
+// Dropdowns
+$dropdown-link-color: $gray-700 !default;
+$dropdown-link-hover-bg: $gray-100 !default;
+$dropdown-item-padding-y: .35rem !default;
+$dropdown-item-padding-x: 1.5rem !default;
+
+$dropdown-bg: $white !default;
+$dropdown-border-color: $white !default;
+$dropdown-divider-bg: $gray-100 !default;
+
+// Tooltips
+
+// scss-docs-start tooltip-variables
+$tooltip-font-size: $font-size-base * 0.8 !default;
+$tooltip-max-width: 200px !default;
+$tooltip-color: $gray-700 !default;
+$tooltip-bg: $gray-400 !default;
+$tooltip-border-radius: $border-radius-lg !default;
+$tooltip-opacity: .9 !default;
+$tooltip-padding-y: $spacer * .25 !default;
+$tooltip-padding-x: $spacer * .5 !default;
+$tooltip-margin: null !default; // TODO: remove this in v6
+
+$tooltip-arrow-width: .8rem !default;
+$tooltip-arrow-height: .4rem !default;
+$tooltip-arrow-color: $gray-400 !default;
+
+
+// Cards
+$card-bg: $white !default;
+$card-border-radius: .25rem !default;
+$card-inner-border-radius: $card-border-radius !default;
+$card-border-width: 0 !default;
+$card-border-color: transparent !default;
+$card-cap-bg: $white !default;
+$card-shadow: 0 0 .875rem 0 rgba($dark, 0.05) !default;
+$card-title-font-weight: $font-weight-normal !default;
+$card-spacer-y: 1.25rem !default;
+$card-spacer-x: 1.25rem !default;
+$card-cap-padding-y: 1rem !default;
+$card-cap-padding-x: $card-spacer-x !default;
+$card-box-shadow: -8px 12px 18px 0 rgba(25, 42, 70, .13
+);
+$card-title-font-size: 1.2rem;
+$modal-header-font-size: 1.1rem;
+// Tables
+$table-cell-padding-y: .75rem !default;
+$table-cell-padding-x: .75rem !default;
+$table-cell-padding-y-sm: .3rem !default;
+$table-cell-padding-x-sm: .3rem !default;
+$table-striped-bg: $gray-100 !default;
+$table-hover-bg: rgba($black, .0375) !default;
+// $table-cell-vertical-align:   center !default;
+// Sidebar general
+$sidebar-width: 210px !default;
+$sidebar-transition: margin-left .35s ease-in-out, left .35s ease-in-out, margin-right .35s ease-in-out, right .35s ease-in-out !default;
+$sidebar-bg: $dark_blue !default;
+
+// Sidebar brand
+$sidebar-brand-padding-y: 1.15rem !default;
+$sidebar-brand-padding-x: 0.8rem !default;
+$sidebar-brand-font-weight: $font-weight-bold !default;
+$sidebar-brand-font-size: 1.15rem !default;
+$sidebar-brand-color: $gray-100 !default;
+
+// Sidebar header
+$sidebar-header-padding: 1.5rem 1.5rem 0.375rem !default;
+$sidebar-header-font-size: $font-size-sm !default;
+$sidebar-header-color: $gray-400 !default;
+
+// Sidebar link
+$sidebar-link-padding:  .625rem  !default;
+$sidebar-link-font-weight: 400 !default;
+$sidebar-link-bg: $gray-100 !default;
+$sidebar-link-color: $white !default;
+$sidebar-link-border-left-color: transparent !default;
+
+$sidebar-link-hover-font-weight: $font-weight-normal !default;
+$sidebar-link-hover-bg: $white !default;
+$sidebar-link-hover-color: $dark_blue !default;
+$sidebar-link-hover-border-left-color: transparent !default;
+
+$sidebar-link-active-font-weight: $font-weight-normal !default;
+$sidebar-link-active-bg: #{linear-gradient(90deg, rgba($dark_blue,0.1) 0%, rgba($dark_blue,0.0875) 50%, rgba($black, 0) 100%)} !default;
+$sidebar-link-active-color: $dark_blue !default;
+$sidebar-link-active-border-left-color: $dark_blue !default;
+
+// Sidebar child link
+$sidebar-link-child-padding: .625rem 1.5rem .625rem 3.25rem !default;
+$sidebar-link-child-font-size: 90% !default;
+$sidebar-link-child-font-weight: 400 !default;
+
+$sidebar-link-child-color: $gray-500 !default;
+$sidebar-link-child-bg: transparent !default;
+$sidebar-link-child-hover-color: $gray-200 !default;
+$sidebar-link-child-hover-bg: transparent !default;
+$sidebar-link-child-active-color: #{lighten($primary, 5)} !default;
+$sidebar-link-child-active-bg: transparent !default;
+
+// Sidebar link icon
+$sidebar-link-icon-color: #{rgba($gray-200, 0.75)} !default;
+$sidebar-link-icon-hover-color: #{rgba($primary, 0.75)} !default;
+$sidebar-link-icon-active-color: $primary !default;
+
+// Sidebar bottom
+$sidebar-cta-color: $gray-200 !default;
+$sidebar-cta-bg: #2B3947 !default;
+$sidebar-cta-padding: $spacer*1.5 !default;
+$sidebar-cta-margin: $spacer*1.75 !default;
+$sidebar-cta-border-radius: $border-radius-lg !default;
+
+// Transitions
+$transition-appearance: background .4s ease-in-out, color .4s ease-in-out !default;
+$transition-appearance-slow: background .6s ease-in-out, color .6s ease-in-out !default;
+$transition-appearance-fast: background .1s ease-in-out, color .1s ease-in-out !default;
+
+// Modals
+$modal-content-border-width: 0 !default;
+$modal-header-border-width: 1px !default;
+$modal-footer-border-width: 1px !default;
+$modal-xl: 1140px !default;
+$modal-lg: 900px !default;
+$modal-md: 600px !default;
+$modal-sm: 400px !default;
+$modal-transition: transform .25s ease-out !default;
+
+// Tabs
+$tab-content-padding: $spacer * 1.25 !default;
+$tab-content-box-shadow: 0 0.2rem 0.1rem -0.1rem rgba(0, 0, 0, 0.15) !default;
+$tab-content-border-radius: 0 0 $border-radius $border-radius !default;
+$tab-link-color: $gray-800 !default;
+$tab-link-padding: (
+  $spacer * 0.75) $spacer !default;
+$tab-link-bg: transparent !default;
+$tab-link-active-color: $gray-800 !default;
+$tab-link-active-bg: $white !default;
+
+// Badges
+$badge-font-size: 80% !default;
+$badge-padding-y: .3em !default;
+$badge-padding-x: .45em !default;
+
+// Pagination
+$pagination-padding-y: .3rem !default;
+$pagination-padding-x: .75rem !default;
+$pagination-padding-y-sm: .15rem !default;
+$pagination-padding-x-sm: .5rem !default;
+$pagination-padding-y-lg: .35rem !default;
+$pagination-padding-x-lg: 1rem !default;
+$pagination-color: $gray-600 !default;
+$pagination-hover-color: $gray-800 !default;
+
+// Main
+$main-box-shadow: inset .75rem 0px 1.5rem 0px rgba($black, 0.075
+);
+
+
+// table
+$text-muted: #7c8db5 !default;
+$table-cell-padding-y: .5rem !default;
+$table-cell-padding-x: .5rem !default;
+$table-cell-padding-y-sm: .25rem !default;
+$table-cell-padding-x-sm: .25rem !default;
+
+$table-cell-vertical-align: top !default;
+
+$table-color: $body-color !default;
+$table-bg: transparent !default;
+
+$table-th-font-weight: null !default;
+
+$table-striped-color: $table-color !default;
+$table-striped-bg-factor: .05 !default;
+$table-striped-bg: rgba($black, $table-striped-bg-factor) !default;
+
+$table-active-color: $table-color !default;
+$table-active-bg-factor: .1 !default;
+$table-active-bg: rgba($black, $table-active-bg-factor) !default;
+
+$table-hover-color: $table-color !default;
+$table-hover-bg-factor: .075 !default;
+$table-hover-bg: rgba($black, $table-hover-bg-factor) !default;
+
+$table-border-factor: .1 !default;
+$table-border-width: $border-width !default;
+$table-border-color: #eee !default;
+
+$table-striped-order: odd !default;
+
+$table-group-separator-color: currentColor !default;
+
+$table-caption-color: $text-muted !default;
+
+$table-bg-scale: -80% !default;
+
+$table-variants: (
+  "primary": shift-color($primary, $table-bg-scale),
+  "secondary": shift-color($secondary, $table-bg-scale),
+  "success": shift-color($success, $table-bg-scale),
+  "info": shift-color($info, $table-bg-scale),
+  "warning": shift-color($warning, $table-bg-scale),
+  "danger": shift-color($danger, $table-bg-scale),
+  "light": $light,
+  "dark": $dark,
+  ) !default;
+// Content
+// Button Variables for Light Theme
+
+
+$content-padding-desktop: 1.5rem 2rem 0.9rem !default;
+$content-padding-mobile: 1.5rem 1.5rem .75rem !default;
+
+
+
+
+
+// Breadcrumbs
+
+// scss-docs-start breadcrumb-variables
+$breadcrumb-font-size: 1rem !default;
+$breadcrumb-padding-y: 0 !default;
+$breadcrumb-padding-x: 0 !default;
+$breadcrumb-item-padding-x: .5rem !default;
+$breadcrumb-margin-bottom: 1rem !default;
+$breadcrumb-bg: null !default;
+$breadcrumb-divider-color: $gray-700 !default;
+$breadcrumb-active-color: $gray-700 !default;
+$breadcrumb-divider: quote("/") !default;
+$breadcrumb-divider-flipped: $breadcrumb-divider !default;
+$breadcrumb-border-radius: null !default;
+.ms-6{
+  margin-inline-start:4rem !important;
+}
+.bg-brown {
+  background-color: $brown;
+}
+
+.bg-purple {
+  background-color: $purple;
+}
+
+.bg-pink {
+  background-color: $pink;
+}
+
+.bg-green {
+  background-color: $light_blue;
+}
+
+.bg-orange {
+  background-color: $orange;
+}
+
+.bg-blue {
+  background-color: $light_blue;
+}
+
+.bg-red {
+  background-color: $red;
+}
+
+/* styles.css or styles.scss */
+.btn.btn-default.pull-right {
+  /* Example: */
+  background-color: white;
+  border-color: black;
+  color: black;
+}
+
+.button-bar {
+  display: flex;
+  justify-content: space-between;
+}
+.ELECTRICITY {
+  background-color: $electricity-color;
+}
+
+.WATER {
+  background-color: $water-color;
+}
+.GAS {
+  background-color: $blue;
+}
+.meter-WATER {
+  border-left-color: $water-color !important;
+}
+.meter-ELECTRICITY {
+  border-left-color: $electricity-color !important;
+}
+.meter-GAS {
+  border-left-color: $blue !important;
+}
+@import 'bootstrap/scss/bootstrap';
+@import 'assets/scss/components/datatable';
+
+@import 'assets/scss/components/_navbar.scss';
+@import 'assets/scss/components/_content.scss';
+@import 'assets/scss/components/_footer.scss';
+@import 'assets/scss/components/_main.scss';
+@import 'assets/scss/components/_sidebar.scss';
+@import 'assets/scss/components/_dropdown';
+@import 'assets/scss/components/card';
+// @import 'assets/scss/components/_button';
+// @import 'assets/scss/components/switch';
+// @import 'assets/scss/components/forms';
+@import 'assets/scss/components/utils';
+@import 'assets/scss/components/dashboard';
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo&family=Poppins&display=swap');
+
+body[dir="ltr"] {
+  font-family: 'Poppins', sans-serif;
+  direction: ltr;
+}
+
+/* RTL - Cairo */
+body[dir="rtl"] {
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+// Custom global styles for spacing, blue theme, and micro-interactions
+
+body {
+  font-family: $font-family-sans-serif;
+  color: $body-color;
+  background-color: $body-bg;
+}
+
+// Headings (re-emphasize blue theme)
+h1, h2, h3, h4, h5, h6 {
+  color: $headings-color;
+}
+
+// Buttons - general micro-interactions
+.btn {
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // subtle lift and shadow
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25); // focus ring with primary color
+  }
+}
+
+// Cards - general micro-interactions and spacing
+.card {
+  border: 1px solid $gray-300;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: $spacer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $box-shadow-lg;
+  }
+
+  .card-header {
+    background-color: $gray-100;
+    border-bottom: 1px solid $gray-300;
+    padding: $spacer * 0.75 $spacer;
+  }
+
+  .card-body {
+    padding: $spacer;
+  }
+
+  .card-footer {
+    background-color: $gray-100;
+    border-top: 1px solid $gray-300;
+    padding: $spacer * 0.75 $spacer;
+  }
+}
+
+// Forms - consistent styling and focus
+.form-control,
+.form-select,
+.ng-select .ng-select-container {
+  border: 1px solid $gray-400;
+  border-radius: $border-radius-sm;
+  padding: $spacer * 0.5 $spacer * 0.75;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    outline: none;
+  }
+}
+
+// Tables - default styling (if not already handled by components)
+.table {
+  --bs-table-color: #{$gray-700};
+  --bs-table-bg: #{$white};
+  --bs-table-border-color: #{$gray-300};
+  --bs-table-striped-bg: #{$gray-100};
+  --bs-table-hover-bg: rgba($primary, 0.075);
+
+  thead {
+    th {
+      background-color: $primary;
+      color: $white;
+      font-weight: $font-weight-bold;
+      border-bottom: 2px solid $primary;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--bs-table-hover-bg);
+      }
+    }
+  }
+}
+
+// General spacing for sections/pages
+section {
+  padding: $spacer * 1.5 0;
+  margin-bottom: $spacer * 1.5;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Responsive adjustments for spacing (example)
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .container-fluid {
+    padding-left: $spacer * 0.5;
+    padding-right: $spacer * 0.5;
+  }
+
+  section {
+    padding: $spacer 0;
+    margin-bottom: $spacer;
+  }
+
+  .card {
+    margin-bottom: $spacer * 0.75;
+  }
+}

@@ -1,0 +1,11 @@
+<section class="dashboard-section">
+
+    <div class="welcome-bar">
+        <h1>{{ 'dashboardTemp.welcome' | translate }}, <span class="user-name">
+          <i  class="fe fe-solid-eye-off"></i>
+
+          {{currentUser ? currentUser.username : ""}}
+        </span></h1>
+        <div class="date-time">{{ 'dashboardTemp.lastLogin' | translate }}: {{now | date:'dd MMMM YYYY , h:mm a'}}</div>
+    </div>
+    </section>

@@ -1,0 +1,42 @@
+
+#local-spinner {
+    position: fixed;
+ 	 left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.spinner-img {
+    position: absolute;
+    top: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+@-webkit-keyframes spinner {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

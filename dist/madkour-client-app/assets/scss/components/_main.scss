@@ -1,0 +1,40 @@
+body, html, #root {
+  height: 100%;
+}
+
+body {
+  overflow-y: hidden;
+  opacity: 1 !important;
+background: $body-bg;
+position: relative;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
+.wrapper {
+  align-items: stretch;
+  display: flex;
+  width: 100vw;
+}
+
+
+.main {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  transition: $sidebar-transition;
+
+  flex-direction: column;
+  overflow: hidden;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  @include media-breakpoint-up(lg) {
+    // box-shadow: $main-box-shadow;
+  }
+}

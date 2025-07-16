@@ -1,0 +1,161 @@
+.meter-details-container {
+  padding: 15px;
+}
+
+.meter-details-container .section-header {
+  margin-bottom: 20px;
+}
+
+.meter-details-container .section-header .section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.meter-details-container .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  height: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.meter-details-container .card .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+}
+
+.meter-details-container .card .card-header .card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.meter-details-container .card .card-header .card-title i {
+  margin-right: 8px;
+  color: #007bff;
+}
+
+.meter-details-container .card .card-body {
+  padding: 15px;
+}
+
+.meter-details-container .info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.meter-details-container .info-grid .info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.meter-details-container .info-grid .info-item .label {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.meter-details-container .info-grid .info-item .value {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.meter-details-container .charge-card .form-group {
+  margin-bottom: 15px;
+}
+
+.meter-details-container .charge-card .form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.meter-details-container .charge-card .form-group .input-group .form-control {
+  border-radius: 4px 0 0 4px;
+  border: 1px solid #ced4da;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+.meter-details-container .charge-card .form-group .input-group .form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.meter-details-container .charge-card .form-group .input-group .input-group-text {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  color: #495057;
+  font-weight: 500;
+}
+
+.meter-details-container .charge-card .form-group .form-text {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.meter-details-container .charge-card .form-group .text-danger {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #dc3545;
+}
+
+.meter-details-container .charge-card .btn-primary {
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.meter-details-container .charge-card .btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.meter-details-container .charge-card .btn-primary:disabled {
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.meter-details-container .charge-card .btn-primary i {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .meter-details-container {
+    padding: 10px;
+  }
+
+  .meter-details-container .info-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .meter-details-container .card {
+    margin-bottom: 10px;
+  }
+}

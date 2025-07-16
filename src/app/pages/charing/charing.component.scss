@@ -1,0 +1,167 @@
+.main-content {
+  padding: 1.5rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin: 0;
+    }
+
+    .btn-group .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .bulk-charging-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+
+    .limit-form {
+      .form-group {
+        ng-select {
+          .ng-select-container {
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+            &:focus {
+              border-color: #276db5;
+              box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25);
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+
+    .meters-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .btn {
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  .meter-summary-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      color: #276db5;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #495057;
+      }
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .meter-row {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+    align-items: center;
+
+    .meter-icon {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.875rem;
+      padding: 0.5em 0.75em;
+
+      &.ELECTRICITY {
+        background-color: #F14A00; // Orange
+        color: #fff;
+      }
+
+      &.WATER {
+        background-color: #0093ce; // Light Blue
+        color: #fff;
+      }
+
+      &.GAS {
+        background-color: #69247C; // Purple
+        color: #fff;
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    .dataTable-info {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    ngb-pagination ::ng-deep {
+      .page-item.active .page-link {
+        background-color: #276db5; // Blue color
+        border-color: #276db5; // Blue color
+      }
+
+      .page-link {
+        color: #276db5; // Blue color
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+<app-admin-dashboard *ngIf="authService.isAuthAccount(AccountType.ADMIN)"></app-admin-dashboard>
+<app-user-dashboard *ngIf="authService.isAuthAccount(AccountType.SYSTEM)"></app-user-dashboard>
+<app-customer-dashboard *ngIf="authService.isAuthAccount(AccountType.CUSTOMER)"></app-customer-dashboard>

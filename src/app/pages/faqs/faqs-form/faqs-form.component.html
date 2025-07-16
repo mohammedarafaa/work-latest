@@ -1,0 +1,100 @@
+
+<section class="page-form">
+    <div class="card">
+  
+      <div class="card-body">
+        <form [formGroup]="form" autocomplete="off">
+          <div class="row">
+  
+            <div class="col-lg-12 col-md-12">
+              <div class="form-group mb-3">
+                <label class="form-label" for="questionEn">{{'questionEn' | translate}}<span class="text-danger">
+                    *</span></label>
+                <input type="text" class="form-control" id="questionEn" formControlName="questionEn"
+                  placeholder="{{ 'questionEn_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+                  [ngClass]="{ 'is-invalid': f['questionEn'].touched && f['questionEn'].errors, 'is-valid': f['questionEn'].valid }">
+  
+                <div *ngIf="f['questionEn'].touched && f['questionEn'].errors" class="invalid-feedback">
+                  <div *ngIf="f['questionEn'].errors['required']">{{ 'questionEn_Req' | translate}}</div>
+                </div>
+               
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="answerEn">{{ 'answerEn' | translate
+                    }}<span class="text-danger"> *</span></label>
+                  <textarea id="answerEn" formControlName="answerEn" class="form-control"
+                    placeholder="{{ 'answerEn_Place' | translate }}" rows="5" onfocus="this.removeAttribute('readonly');"
+                    [ngClass]="{
+                      'is-invalid': f['answerEn'].touched && f['answerEn'].errors,
+                      'is-valid': f['answerEn'].valid
+                    }"></textarea>
+                  <div *ngIf="f['answerEn'].touched && f['answerEn'].errors" class="invalid-feedback">
+                    <div *ngIf="f['answerEn'].errors['required']">
+                      {{ 'answerEn_Req' | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-lg-12 col-md-12">
+              <div class="form-group mb-3">
+                <label class="form-label" for="questionAr">{{'questionAr' | translate}}<span class="text-danger">
+                    *</span></label>
+                <input type="text" class="form-control" id="questionAr" formControlName="questionAr"
+                  placeholder="{{ 'questionAr_Place' | translate}}" onfocus="this.removeAttribute('readonly');"
+                  [ngClass]="{ 'is-invalid': f['questionAr'].touched && f['questionAr'].errors, 'is-valid': f['questionAr'].valid }">
+  
+                <div *ngIf="f['questionAr'].touched && f['questionAr'].errors" class="invalid-feedback">
+                  <div *ngIf="f['questionAr'].errors['required']">{{ 'questionAr_Req' | translate}}</div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="answerAr">{{ 'answerAr' | translate
+                    }}<span class="text-danger"> *</span></label>
+                  <textarea id="answerAr" formControlName="answerAr" class="form-control"
+                    placeholder="{{ 'answerAr_Place' | translate }}" rows="5" onfocus="this.removeAttribute('readonly');"
+                    [ngClass]="{
+                      'is-invalid': f['answerAr'].touched && f['answerAr'].errors,
+                      'is-valid': f['answerAr'].valid
+                    }"></textarea>
+                  <div *ngIf="f['answerAr'].touched && f['answerAr'].errors" class="invalid-feedback">
+                    <div *ngIf="f['answerAr'].errors['required']">
+                      {{ 'answerAr_Req' | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+  
+          <button *ngIf="!isUpdated" class="btn btn-primary" type="button" (click)="onAdd(true)"
+            [attr.disabled]="!form.valid ? true : null">
+            <span *ngIf="_isLoading" class="spinner-border spinner-border-sm me-1" role="status"
+              aria-hidden="true"></span>
+            {{'Save' | translate}}
+          </button>
+  
+          <button type="button" class="btn btn-lg btn-primary  mx-2" [attr.disabled]="!form.valid ? true : null"
+            *ngIf="!isUpdated" (click)="onAdd(false)">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            {{'Save & Continue' | translate}}
+          </button>
+  
+          <button class="btn btn-primary" type="button" (click)="onUpdate()" *ngIf="isUpdated"
+            [attr.disabled]="!form.valid ? true : null">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            {{'Update' | translate}}
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  
+  </section>

@@ -1,0 +1,148 @@
+.meter-form-container {
+  padding: 1.5rem;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: #276db5; // Applying blue color to headings
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  .card {
+    border: 1px solid #e0e0e0; // Subtle border
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); // Light shadow
+    border-radius: 0.5rem; // Rounded corners
+    transition: all 0.3s ease-in-out; // Smooth transition for hover
+
+    &:hover {
+      transform: translateY(-3px); // Lift card slightly on hover
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Stronger shadow on hover
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+
+    .card-footer {
+      padding: 1rem 2rem;
+      border-top: 1px solid #eee;
+    }
+  }
+
+  h3 {
+    color: #276db5; // Applying blue color to subheadings
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  h4 {
+    color: #276db5; // Applying blue color to sub-subheadings
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #495057; // Darker text for labels
+  }
+
+  .form-control, .form-select {
+    border: 1px solid #ced4da; // Consistent border
+    border-radius: 0.25rem; // Consistent border radius
+    padding: 0.75rem; // Consistent padding
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; // Smooth transition
+
+    &:focus {
+      border-color: #276db5; // Blue border on focus
+      box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25); // Blue shadow on focus
+      outline: none;
+    }
+  }
+
+  .invalid-feedback {
+    font-size: 0.875rem;
+    color: #dc3545; // Red for invalid feedback
+  }
+
+  .btn {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out; // General button micro-interaction
+
+    &:hover {
+      transform: translateY(-2px); // Lift button on hover
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Shadow on hover
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.25rem rgba(39, 109, 181, 0.25); // Focus ring
+    }
+
+    &.btn-primary {
+      background-color: #276db5; // Primary blue button
+      border-color: #276db5;
+
+      &:hover {
+        background-color: #1a4e7c;
+        border-color: #1a4e7c;
+      }
+
+      &:disabled {
+        background-color: #6c757d;
+        border-color: #6c757d;
+      }
+    }
+
+    &.btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+
+      &:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+      }
+    }
+  }
+
+  .alert {
+    margin-bottom: 1.5rem;
+  }
+
+  // Responsive adjustments for smaller screens
+  @media (max-width: 768px) {
+    padding: 1rem;
+    max-width: 100%;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-footer {
+      padding: 0.75rem 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem; // Adjust spacing for form groups on mobile
+    }
+  }
+} 

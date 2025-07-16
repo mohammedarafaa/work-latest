@@ -1,0 +1,102 @@
+.project-list-container {
+  padding: 1.5rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem;
+  }
+
+  .error-message {
+    color: #f44336;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffebee;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 1px solid #e0e0e0; // Subtle border
+    border-radius: 0.5rem; // Rounded corners
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); // Light shadow
+
+    &:hover {
+      transform: translateY(-5px); // Lift card on hover
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Stronger shadow on hover
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    .card-title {
+      margin-bottom: 1rem;
+      color: #276db5; // Blue color theme for titles
+    }
+
+    .card-text {
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #495057; // Darker text for labels
+      }
+    }
+
+    .card-footer {
+      background-color: #f8f9fa; // Light background for footer
+      border-top: 1px solid #e0e0e0; // Separator line
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05); // Slightly enlarge buttons on hover
+      }
+
+      &.btn-primary {
+        background-color: #276db5; // Blue primary button
+        border-color: #276db5;
+
+        &:hover {
+          background-color: #1a4e7c; // Darker blue on hover
+          border-color: #1a4e7c;
+        }
+      }
+
+      &.btn-danger {
+        background-color: #dc3545; // Red danger button
+        border-color: #dc3545;
+
+        &:hover {
+          background-color: #c82333; // Darker red on hover
+          border-color: #c82333;
+        }
+      }
+    }
+  }
+} 

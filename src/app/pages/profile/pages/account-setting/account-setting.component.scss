@@ -1,0 +1,139 @@
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 15px;
+}
+
+.card .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+}
+
+.card .card-header .card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card .card-body {
+  padding: 15px;
+}
+
+.card .card-body .settings-section {
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #eee;
+  margin-bottom: 15px;
+}
+
+.card .card-body .settings-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.card .card-body .settings-section h5 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.card .card-body .settings-section .form-group {
+  margin-bottom: 10px;
+}
+
+.card .card-body .settings-section .form-group label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.card .card-body .settings-section .form-group .form-select {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  color: #495057;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.card .card-body .settings-section .form-group .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  background-color: #fff;
+}
+
+.card .card-body .settings-section .form-check.form-switch {
+  margin-bottom: 10px;
+}
+
+.card .card-body .settings-section .form-check.form-switch .form-check-input {
+  width: 40px;
+  height: 24px;
+  margin-right: 5px;
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.card .card-body .settings-section .form-check.form-switch .form-check-input:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.card .card-body .settings-section .form-check.form-switch .form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.card .card-body .settings-section .form-check.form-switch .form-check-label {
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.card .card-body .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.85rem 1.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.card .card-body .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+.card .card-body .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.card .card-body .spinner-border {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 10px;
+  }
+
+  .card-body .settings-section {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card-body .settings-section h5 {
+    font-size: 16px;
+  }
+}

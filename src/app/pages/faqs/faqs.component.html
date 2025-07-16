@@ -1,0 +1,112 @@
+<div class="page-title">
+    <div class="d-flex heading-action pb-2 justify-content-between align-items-baseline">
+      <div class="d-flex flex-column">
+        <div class="heading-text pb-2">
+          <h2>{{ 'FAQ' | translate }}</h2>
+        </div>
+     
+      </div>
+   <div class="header-actions">
+        <button class="btn-primary btn " (click)="getCreationRoute()">
+            <i class="fa-solid fa-plus"></i>
+            {{'Create_New' | translate}}
+          </button>
+        
+      </div>
+    </div>
+  </div>
+<!-- <app-FAQ-filter *ngIf="isFilter" (searchSubject)="onSearch($event)"></app-FAQ-filter> -->
+
+<section class="dataTable">
+  <div class="card">
+    <!-- <div class="card-header d-flex">
+      <dataTable-filter class="flex-grow-1" [paging]="paging"
+        (filterEvent)="pagingItemChange($event)"></dataTable-filter>
+    </div> -->
+
+    <div class="card-body">
+      <!-- Filter By -->
+      <span class="row mb-2 ">
+        <span class="text-primary fw-bold" *ngIf="shared.isNotEmpty(filterParamString)">{{'Filter Data By' | translate}}:
+          <ng-container *ngFor="let param of filterParamString; let i = index">
+            <span class="fw-normal text-dark"> {{param[0]}} = {{param[1]}}{{ i < filterParamString.length - 1 ? ', '
+                : '' }}</span>
+          </ng-container>
+        </span>
+      </span>
+      <app-spinner></app-spinner>
+      <div *ngIf="!isLoading" class="table-responsive d-none d-md-block">
+        <table class="table table-striped" id="table1">
+          <thead>
+            <tr>
+              <th *ngFor="let col of listOfColumns" (click)="col !== 'Action' ?onSort(col) : null">
+                {{col | translate}}
+                <i *ngIf="col !== 'Action'" class="fas ms-1 {{getSortIcon(col)}}"></i>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let data of dataList.content">
+              <td>{{data.id}}</td>
+              <td>{{data.questionEn}}</td>
+              <td>{{data.answerEn}}</td>
+              <td>
+                <button (click)="navigateToEditPage(data.id)"
+                  ngbTooltip="{{ 'Update' | translate }}" class="btn  btn-primary mx-2">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </button> 
+                <button  (click)="DeleteModal(data)"
+                ngbTooltip="{{ 'Delete' | translate }}" class="btn btn-danger mx-2">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!isLoading" class="d-block d-md-none">
+        <div class="row">
+          <div class="col-12 mb-3" *ngFor="let data of dataList.content">
+            <div class="card meter-summary-card">
+              <div class="card-body">
+                <h5 class="card-title">{{ 'id' | translate }}: {{ data.id }}</h5>
+                <p class="card-text"><strong>{{ 'questionEn' | translate }}:</strong> {{ data.questionEn }}</p>
+                <p class="card-text"><strong>{{ 'answerEn' | translate }}:</strong> {{ data.answerEn }}</p>
+                <div class="d-flex justify-content-between mt-3">
+                  <button (click)="navigateToEditPage(data.id)"
+                    ngbTooltip="{{ 'Update' | translate }}" class="btn  btn-primary mx-2">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </button> 
+                  <button  (click)="DeleteModal(data)"
+                  ngbTooltip="{{ 'Delete' | translate }}" class="btn btn-danger mx-2">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  
+      <div class="pt-3" *ngIf="!isLoading">
+        <div class="dataTable-info">
+         <span>
+          {{ 'DataTable_info' |
+          translate : {
+          from: (dataList.pageable.pageNumber * dataList.pageable.pageSize) +1 ,
+          to: Math.min(((dataList.pageable.pageNumber+1) * dataList.pageable.pageSize),dataList.totalElements) ,
+          Total:dataList.totalElements }
+          }}
+         </span>
+          <ngb-pagination *ngIf="!isLoading" [collectionSize]="dataList.totalElements" [(page)]="paging.page"
+          [maxSize]="3" [pageSize]="paging.size" (pageChange)="pageChange()"></ngb-pagination>
+    </div>
+</div>
+    </div>
+  </div>
+
+</section>

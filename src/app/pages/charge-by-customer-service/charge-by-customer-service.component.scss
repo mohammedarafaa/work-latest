@@ -1,0 +1,468 @@
+.main-content {
+  padding: 1.5rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h3 {
+      margin: 0;
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .client-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+
+    .info-card {
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      flex: 1;
+      margin: 0.5rem;
+      min-width: 180px;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h3 {
+        color: #276db5;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #495057;
+      }
+    }
+  }
+
+  .charging-limit-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .section-title {
+        margin: 0;
+        color: #276db5;
+      }
+
+      .btn-group .btn {
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    .limit-form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+
+      .form-group {
+        flex: 1;
+        min-width: 250px;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: #495057;
+        }
+
+        input[type="number"],
+        select,
+        ng-select {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #ced4da;
+          border-radius: 0.25rem;
+          transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+          &:focus {
+            border-color: #276db5;
+            box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25);
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .card-selection-container {
+      padding-top: 1rem;
+
+      .card {
+        border: 1px solid #e0e0e0;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        &.selected {
+          border-color: #276db5;
+          box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25);
+        }
+
+        .card-image {
+          width: 100%;
+          height: 80px;
+          object-fit: contain;
+          padding: 10px;
+          border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card-details {
+          padding: 10px;
+          text-align: center;
+          font-weight: 500;
+          color: #495057;
+        }
+      }
+
+      .btn-success {
+        background-color: #0093ce; // Using light_blue for what was green
+        border-color: #0093ce;
+
+        &:hover {
+          background-color: #218838;
+          border-color: #1e7e34;
+        }
+      }
+    }
+  }
+
+  .payment-container {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+
+    .payment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      h2 {
+        margin: 0;
+        color: #276db5;
+      }
+
+      .security-badges img {
+        height: 30px;
+        margin-left: 10px;
+      }
+    }
+
+    .loading-container,
+    .error-container,
+    .success-container {
+      text-align: center;
+      padding: 3rem 0;
+
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #276db5;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      h3 {
+        color: #276db5;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+      }
+
+      .retry-button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+    }
+
+    .iframe-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 0.5rem;
+      overflow: hidden;
+
+      .payment-iframe {
+        display: block;
+      }
+    }
+  }
+
+  .bulk-charging-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .section-title {
+        margin: 0;
+        color: #276db5;
+      }
+
+      .btn-group .btn {
+        padding: 0.5rem 1rem;
+        margin-left: 0.5rem; // Add some spacing between buttons
+
+        svg {
+          margin-right: 0.5rem;
+        }
+
+        &.btn-outline {
+          background-color: transparent;
+          border: 1px solid #276db5;
+          color: #276db5;
+
+          &:hover {
+            background-color: #276db5;
+            color: #fff;
+          }
+        }
+
+        &.btn-success {
+          background-color: #0093ce; // Using light_blue for what was green
+          border-color: #0093ce;
+
+          &:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+          }
+        }
+      }
+    }
+
+    .meters-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .checkbox-container {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 0;
+        cursor: pointer;
+        font-size: 1rem;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+
+        .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 18px;
+          width: 18px;
+          background-color: #eee;
+          border-radius: 3px;
+        }
+
+        &:hover input ~ .checkmark {
+          background-color: #ccc;
+        }
+
+        input:checked ~ .checkmark {
+          background-color: #276db5;
+        }
+
+        .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+
+        input:checked ~ .checkmark:after {
+          display: block;
+        }
+
+        .checkmark:after {
+          left: 6px;
+          top: 2px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 0.35em 0.65em;
+        font-size: 0.75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+
+        &.status-active {
+          background-color: #0093ce; // Using light_blue for what was green
+        }
+
+        &.status-inactive {
+          background-color: #dc3545; // Red
+        }
+
+        &.status-low {
+          background-color: #ffc107; // Yellow
+          color: #212529;
+        }
+      }
+
+      .btn {
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  .meter-summary-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      color: #276db5;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #495057;
+      }
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+
+    .dataTable-info {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    ngb-pagination ::ng-deep {
+      .page-item.active .page-link {
+        background-color: #276db5; // Blue color
+        border-color: #276db5; // Blue color
+      }
+
+      .page-link {
+        color: #276db5; // Blue color
+      }
+    }
+  }
+}

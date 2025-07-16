@@ -1,0 +1,289 @@
+<section class="container-fluid my-4">
+  <!-- DASHBOARD MODE: Show all meter cards and allow selection -->
+  <div *ngIf="mode === 'dashboard'">
+    <!-- Filter Section -->
+    <div class="filter-section mb-4">
+      <h2 class="mb-3">{{ 'dashboardTemp.yourMeters' | translate }}</h2>
+      <form class="row g-3 align-items-end" [formGroup]="form" autocomplete="off">
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="compoundId" class="form-label">{{ 'compound' | translate }}</label>
+          <ng-select [items]="projectList | async" bindValue="id" bindLabel="name" class="custom"
+            placeholder="{{ 'compound_place' | translate }}"
+            [ngClass]="{ 'is-invalid': f['compoundId'].touched && f['compoundId'].errors, 'is-valid': f['compoundId'].valid }"
+            formControlName="compoundId">
+          </ng-select>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="propertyId" class="form-label">{{ 'property' | translate }}</label>
+          <ng-select [items]="propertyList | async" bindValue="id" bindLabel="name" class="custom"
+            placeholder="{{ 'property_place' | translate }}"
+            [ngClass]="{ 'is-invalid': f['propertyId'].touched && f['propertyId'].errors, 'is-valid': f['propertyId'].valid }"
+            formControlName="propertyId">
+          </ng-select>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <label for="meterType" class="form-label">{{ 'charge.meterType' | translate }}</label>
+          <ng-select [items]="meterTypes" class="custom"
+            placeholder="{{ 'meterType_place' | translate }}"
+            [ngClass]="{ 'is-invalid': f['meterType'].touched && f['meterType'].errors, 'is-valid': f['meterType'].valid }"
+            formControlName="meterType">
+          </ng-select>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-grid">
+          <label class="form-label">&nbsp;</label>
+          <button
+            type="button"
+            class="btn btn-primary btn-xl"
+            (click)="applyFilters()"
+            [disabled]="isApplyingFilters">
+            {{ 'dashboardTemp.applyFilters' | translate }}
+            <span *ngIf="isApplyingFilters" class="spinner-border spinner-border-sm ms-2"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Loading State for Filters -->
+    <div *ngIf="isLoading" class="text-center py-3 mb-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">{{ 'Loading' | translate }}...</span>
+      </div>
+      <p class="mt-2 text-muted">{{ 'Applying_Filters' | translate }}...</p>
+    </div>
+
+    <!-- Meter Cards -->
+    <div class="row gy-4 gx-3" *ngIf="!isLoading">
+      <div class="col-12 col-sm-6 col-lg-4"
+           *ngFor="let meter of meterList"
+           [class.selected-container]="isMeterSelected(meter)">
+        <div class="meter-card position-relative"
+             [class.meter-card-selected]="isMeterSelected(meter)"
+             [class.meter-card-scaled]="isMeterSelected(meter)"
+             (click)="onMeterCardClick(meter)"
+             tabindex="0">
+          <!-- Pulse Animation Ring -->
+          <div class="pulse-ring" *ngIf="isMeterSelected(meter)"></div>
+          <!-- Selection Badge -->
+          <div class="selection-badge" *ngIf="isMeterSelected(meter)">
+            <i class="fas text-white fa-check-circle"></i>
+            <span class="ms-1 text-white">{{ 'Selected' | translate }}</span>
+          </div>
+          <!-- Meter Header -->
+          <div class="meter-header mt-4 d-flex justify-content-between align-items-center mb-2">
+            <div class="meter-type d-flex align-items-center">
+              <i [ngClass]="getIcons(meter.type)" class="meter-icon me-2"></i>
+              <span class="type-text">{{ meter.type | translate }}</span>
+            </div>
+            <div class="small text-black">
+              {{ 'Serial' | translate }}: <span class="fw-bold">{{ meter.meterSerial }}</span>
+            </div>
+          </div>
+          <!-- Meter Body -->
+          <div class="meter-body mb-2">
+            <div class="meter-location mb-1">
+              <i class="fas fa-map-marker-alt text-primary me-2"></i>
+              <strong>{{ 'Location' | translate }}:</strong>
+              <span>{{ meter.block }}, {{ meter.propertyNo }}</span>
+            </div>
+            <div class="meter-balance mb-1">
+              <div>
+                <i class="fas fa-wallet text-primary me-1"></i>
+                {{ 'Current_Balance' | translate }}
+              </div>
+              <div class="fw-bold">
+                {{ meter.availableCredit | number:'1.0-2' }} {{ 'EGP' | translate }}
+              </div>
+            </div>
+            <div class="progress" style="height: 8px;">
+              <div class="progress-bar bg-primary"
+                   role="progressbar"
+                   [style.width.%]="((meter.availableCredit ?? 0) / 1000) * 100">
+              </div>
+            </div>
+            <div class="meter-consumption mt-1">
+              <div>
+                <i class="fas fa-chart-line text-primary me-1"></i>
+                {{ 'Last_Month_Usage' | translate }}
+              </div>
+              <div>
+                {{ meter.consumption | number:'1.0-2' }} kWh
+              </div>
+            </div>
+          </div>
+          <!-- Meter Footer -->
+          <div class="meter-footer d-flex justify-content-end gap-2">
+            <button class="btn btn-outline-primary btn-sm"
+                    (click)="$event.stopPropagation()">
+              <i class="fa fa-sync-alt"></i> {{ 'View_Balance' | translate }}
+            </button>
+            <button class="btn btn-primary btn-sm"
+                    [class.active]="isMeterSelected(meter)">
+              <i class="fa fa-chart-line"></i>
+              {{ isMeterSelected(meter) ? ('Selected' | translate) : ('View_History' | translate) }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div *ngIf="!isLoading && meterList.length === 0" class="text-center py-5">
+      <div class="empty-state">
+        <i class="fas fa-search fa-4x text-muted mb-4"></i>
+        <h4>{{ 'No_Meters_Found' | translate }}</h4>
+        <p class="text-muted">{{ 'Try_Different_Filters' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Table/chart for selected meter -->
+    <ng-container *ngIf="selectedMeter && !isLoading">
+      <div class="d-flex justify-content-between align-items-center mb-3 mt-4">
+        <h5 class="mb-0">{{ 'Consumption_History_For_Serial' | translate }}: {{ selectedMeter.meterSerial }}</h5>
+        <div class="btn-group btn-group-sm">
+          <button type="button" class="btn" [class.btn-primary]="!showTableView" [class.btn-outline-primary]="showTableView" (click)="toggleDataView('chart')">
+            <i class="fas fa-chart-line me-1"></i> {{ 'Chart_View' | translate }}
+          </button>
+          <button type="button" class="btn" [class.btn-primary]="showTableView" [class.btn-outline-primary]="!showTableView" (click)="toggleDataView('table')">
+            <i class="fas fa-table me-1"></i> {{ 'Table_View' | translate }}
+          </button>
+          </div>
+        </div>
+        <ng-container *ngIf="!isLoadingMeterChart && !meterChartError">
+          <div *ngIf="showTableView" class="d-none d-md-block">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                  <tr>
+                    <th>{{ 'Date' | translate }}</th>
+                    <th>{{ 'Meter_Reading' | translate }}</th>
+                    <th>{{ 'Available_Credit' | translate }}</th>
+                    <th>{{ 'Daily_Usage' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let record of dailyConsumptionTable; trackBy: trackByDate">
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.meterReading | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}</td>
+                    <td>{{ record.availableCredit | number:'1.2-2' }} {{ 'EGP' | translate }}</td>
+                    <td>
+                      <span [class]="getDailyUsageClass(record.dailyUsage)">
+                        {{ record.dailyUsage | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="showTableView" class="d-block d-md-none">
+            <div class="row">
+              <div class="col-12 mb-3" *ngFor="let record of dailyConsumptionTable; trackBy: trackByDate">
+                <div class="card meter-summary-card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ 'Date' | translate }}: {{ record.date }}</h5>
+                    <p class="card-text"><strong>{{ 'Meter_Reading' | translate }}:</strong> {{ record.meterReading | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}</p>
+                    <p class="card-text"><strong>{{ 'Available_Credit' | translate }}:</strong> {{ record.availableCredit | number:'1.2-2' }} {{ 'EGP' | translate }}</p>
+                    <p class="card-text"><strong>{{ 'Daily_Usage' | translate }}:</strong>
+                      <span [class]="getDailyUsageClass(record.dailyUsage)">
+                        {{ record.dailyUsage | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!showTableView">
+            <div class="chart-container" style="height: 450px; width: 100%;">
+              <highcharts-chart [Highcharts]="Highcharts" [options]="meterChartOptions" style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+            </div>
+          </div>
+        </ng-container>
+        <div *ngIf="isLoadingMeterChart" class="text-center py-5">
+          <div class="spinner-border text-primary mb-3" style="width:3rem;height:3rem;"></div>
+          <h5>{{ 'Loading' | translate }}…</h5>
+        </div>
+        <div *ngIf="meterChartError" class="alert alert-danger text-center">
+          <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+          <h5 class="alert-heading">{{ 'Error' | translate }}</h5>
+          <p class="mb-0">{{ meterChartError }}</p>
+        </div>
+    </ng-container>
+  </div>
+
+  <!-- SINGLE METER MODE: Show only the selected meter's history -->
+  <div *ngIf="mode === 'single'">
+    <button class="btn btn-secondary mt-2" (click)="goBackToAllMeters()">Back to Meters</button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="mb-0">{{ 'Consumption_History_For_Serial' | translate }}: {{ selectedMeter?.meterSerial }}</h5>
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn" [class.btn-primary]="!showTableView" [class.btn-outline-primary]="showTableView" (click)="toggleDataView('chart')">
+          <i class="fas fa-chart-line me-1"></i> {{ 'Chart_View' | translate }}
+        </button>
+        <button type="button" class="btn" [class.active]="showTableView" (click)="toggleDataView('table')">
+          <i class="fas fa-table me-1"></i> {{ 'Table_View' | translate }}
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="!isLoadingMeterChart && !meterChartError && selectedMeter">
+      <div *ngIf="showTableView" class="d-none d-md-block">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th>{{ 'Date' | translate }}</th>
+                <th>{{ 'Meter_Reading' | translate }}</th>
+                <th>{{ 'Available_Credit' | translate }}</th>
+                <th>{{ 'Daily_Usage' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of dailyConsumptionTable; trackBy: trackByDate">
+                <td>{{ record.date }}</td>
+                <td>{{ record.meterReading | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}</td>
+                <td>{{ record.availableCredit | number:'1.2-2' }} {{ 'EGP' | translate }}</td>
+                <td>
+                  <span [class]="getDailyUsageClass(record.dailyUsage)">
+                    {{ record.dailyUsage | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="showTableView" class="d-block d-md-none">
+        <div class="row">
+          <div class="col-12 mb-3" *ngFor="let record of dailyConsumptionTable; trackBy: trackByDate">
+            <div class="card meter-summary-card">
+              <div class="card-body">
+                <h5 class="card-title">{{ 'Date' | translate }}: {{ record.date }}</h5>
+                <p class="card-text"><strong>{{ 'Meter_Reading' | translate }}:</strong> {{ record.meterReading | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}</p>
+                <p class="card-text"><strong>{{ 'Available_Credit' | translate }}:</strong> {{ record.availableCredit | number:'1.2-2' }} {{ 'EGP' | translate }}</p>
+                <p class="card-text"><strong>{{ 'Daily_Usage' | translate }}:</strong>
+                  <span [class]="getDailyUsageClass(record.dailyUsage)">
+                    {{ record.dailyUsage | number:'1.2-2' }} {{ getConsumptionUnit(selectedMeter?.type || '') }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!showTableView">
+        <div class="chart-container" style="height: 450px; width: 100%;">
+          <highcharts-chart [Highcharts]="Highcharts" [options]="meterChartOptions" style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="isLoadingMeterChart" class="text-center py-5">
+      <div class="spinner-border text-primary mb-3" style="width:3rem;height:3rem;"></div>
+      <h5>{{ 'Loading' | translate }}…</h5>
+    </div>
+    <div *ngIf="meterChartError" class="alert alert-danger text-center">
+      <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+      <h5 class="alert-heading">{{ 'Error' | translate }}</h5>
+      <p class="mb-0">{{ meterChartError }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,87 @@
+.meter-list-container {
+  padding: 1.5rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem;
+  }
+
+  .table {
+    th {
+      font-weight: 600;
+      background-color: #f8f9fa;
+    }
+
+    .badge {
+      font-size: 0.875rem;
+      padding: 0.5em 0.75em;
+    }
+
+    .btn-group {
+      .btn {
+        padding: 0.25rem 0.5rem;
+        transition: all 0.3s ease-in-out; // Added transition
+        
+        &:hover {
+          transform: translateY(-2px); // Added micro-interaction
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Added micro-interaction
+        }
+
+        i {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+
+  .meter-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      color: #276db5; // Using the primary blue color
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #495057;
+      }
+    }
+
+    .badge {
+      font-size: 0.875rem;
+      padding: 0.5em 0.75em;
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+} 

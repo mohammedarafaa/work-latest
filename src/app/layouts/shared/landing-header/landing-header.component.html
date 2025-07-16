@@ -1,0 +1,26 @@
+<header class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <img src="assets/img/logo-white.png" alt="Madkour Logo" height="50">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" [attr.aria-expanded]="!isMenuCollapsed" aria-controls="navbarNav">
+      <i class="bi" [class.bi-list]="isMenuCollapsed" [class.bi-x]="!isMenuCollapsed"></i>
+    </button>
+    <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" (click)="scrollToSection('features'); isMenuCollapsed = true;">{{ 'navLanding.features' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="scrollToSection('about'); isMenuCollapsed = true;">{{ 'navLanding.about' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="scrollToSection('contact'); isMenuCollapsed = true;">{{ 'navLanding.contact' | translate }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/Auth/Login" (click)="isMenuCollapsed = true;">{{ 'navLanding.login' | translate }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

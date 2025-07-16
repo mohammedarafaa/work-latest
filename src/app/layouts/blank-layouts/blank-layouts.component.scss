@@ -1,0 +1,25 @@
+
+/* Footer margins */
+footer {
+  padding: 4rem 0;
+}
+
+footer .row {
+  margin-bottom: 3rem;
+}
+
+footer ul li {
+  margin-bottom: 1rem;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

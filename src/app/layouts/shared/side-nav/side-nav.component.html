@@ -1,0 +1,43 @@
+<nav style="height:100%" id="sidebar" class="sidebar" [ngClass]="isCollapsed ? 'collapsed' : ''"
+  [dir]="LanguageService.currentLang === 'en' ? 'ltr' : 'rtl'">
+
+  <div class="sidebar-content pt-2">
+    <ng-scrollbar #scrollable class="custom-scrollbar" visibility="hover">
+      <ul class="sidebar-nav me-0 p-0">
+        <ng-template ngFor let-nav [ngForOf]="appLink" let-i="index">
+          <!-- routerLinkActive="active" -->
+          <li class="sidebar-item" *ngIf="!nav.isSubMenu">
+            <a class="sidebar-link" routerLink="{{ nav.href }}">
+              <i class="align-middle" [ngClass]="nav?.icon"></i>
+              <span class="align-middle">{{ nav.name | translate }}</span>
+
+            </a>
+          </li>
+
+          <li class="sidebar-item" *ngIf="nav.isSubMenu">
+            <a (click)="toggleSubmenu(nav)" [attr.aria-expanded]="nav.isCollapse" data-toggle="collapse"
+              class="sidebar-link collapsed">
+              <i class="align-middle" [ngClass]="nav?.icon"></i>
+              <span class="align-middle">{{ nav.name | translate }}</span>
+            </a>
+            <ul id="{{nav.name}}" class="list-unstyled collapse" #nav.name="ngbCollapse"
+              [ngbCollapse]="!nav.isCollapse">
+              <li class="sidebar-item sidebar-subitem" *ngFor="let subMenu of nav.subMenu" routerLinkActive="active">
+                <a class="sidebar-link sidebar-sublink" routerLink="{{ subMenu.href }}">
+                  <i class="align-middle" [ngClass]="subMenu?.icon"></i>
+                  <span class="align-middle">{{ subMenu.name | translate }}</span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+        </ng-template>
+        <!-- sub menu-->
+        <!--  -->
+
+        <!-- End sub menu-->
+
+      </ul>
+    </ng-scrollbar>
+  </div>
+</nav>

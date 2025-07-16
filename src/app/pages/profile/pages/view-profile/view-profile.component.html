@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title text-primary">{{ "Profile_info" | translate }}</h2>
+  </div>
+  <div class="card-body" *ngIf="currentUser">
+    <div id="about-me">
+      <div class="profile-personal-info">
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "Fullname" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+           <span>{{ currentUser.fullName }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "userName" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+           <span>{{ currentUser.username }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "Phone_Number" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+            <span>{{ currentUser.phoneNumber }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "Email" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+            <span>{{ currentUser.email }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "street" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+            <span>{{ currentUser.street }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "buildingNumber" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+            <span>{{ currentUser.buildingNumber }}</span>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-3 col-5">
+            <h5 class="f-w-500">
+              {{ "AccountType" | translate }} <span class="pull-right">:</span>
+            </h5>
+          </div>
+          <div class="col-sm-9 col-7">
+            <span class="badge bg-info">{{ currentUser.accountType }}</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

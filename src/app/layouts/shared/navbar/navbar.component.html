@@ -1,0 +1,138 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<nav class="navbar navbar-expand navbar-light navbar-bg"
+  [dir]="LanguageService.currentLang === 'en' ? 'ltr' : 'rtl'">
+<div class="container-fluid mx-1 mx-md-2 flex-column   justify-content-between w-100 flex-md-row">
+ 
+
+<div class="flex-row  d-flex w-100 w-md-auto justify-content-between"> 
+  <a class="navbar-brand mx-2" (click)="onLogoClick()">
+    <img src="assets/img/logo.png" alt="Madkour" class=" w-100">
+  
+  </a>
+  <a class="sidebar-toggle d-flex ms-1 ms-md-5" (click)="collapse()">
+  
+    <i *ngIf="!isCollapsed" class="bi bi-list"></i>
+    <i *ngIf="isCollapsed" class="bi bi-x-lg"></i>
+  </a>
+</div>
+  
+
+  <div class="navbar-collapse  collapse">
+
+    <div class="w-25" *ngIf="!isMobile">
+      <ng-select [items]="allLinks" bindLabel="name" bindValue="name" (search)="onSearchPage($event)"
+        placeholder="{{'Search_Link' | translate}}" (change)="onSelectPage($event)" [clearable]="false"
+        [searchable]="true">
+  
+        <ng-template ng-option-tmp let-item="item">
+          <!-- <img [src]="item.icon" alt="icon" width="20" height="20" class="icon-class"> -->
+          <i [ngClass]="item.icon" alt="icon" width="20" height="20" class="icon-class"></i>
+          {{ item.name | translate }}
+        </ng-template>
+  
+        <ng-template ng-label-tmp let-item="item">
+          <i [ngClass]="item.icon" alt="icon" width="20" height="20" class="icon-class"></i>
+          {{ item.name | translate}}
+        </ng-template>
+      </ng-select>
+  
+  
+    </div>
+  
+    <ul class="navbar-nav fs-3 nav-justified navbar-align">
+
+
+      <!-- Notation-->
+
+      <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-icon dropdown-toggle"ngbDropdownToggle id="notificationsDropdown" data-toggle="dropdown">
+            <div class="position-relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell align-middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span class="indicator">{{notificationList.length}}</span>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="notificationsDropdown" ngbDropdownMenu>
+            <div class="dropdown-menu-header">
+              {{notificationList.length}} {{'New Notifications' | translate}}
+            </div>
+            <div class="list-group">
+              <a  class="list-group-item" ngbDropdownItem *ngFor="let notify of notificationList">
+                <div class="row g-0 align-items-start">
+                  <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  </div>
+                  <div class="col-11">
+                    <div class="text-dark">{{notify.title}}</div>
+                    <!-- <p class="text-muted small mt-1">{{notify.message}}</p> -->
+                    <div class="parent message mx-2">
+
+                      <p class="text-muted small">
+                        {{notify.message}}
+                      </p>
+
+                    </div>
+                    <div class="text-muted small mt-1">{{notify.timestamp }}</div>
+                  </div>
+                </div>
+              </a>
+
+            </div>
+            <div class="dropdown-menu-footer">
+              <a class="text-muted">{{'Show all notifications' | translate}}</a>
+            </div>
+          </div>
+        </li>
+      <!-- Notation-->
+      <!-- language -->
+      <li class="nav-item dropdown px-1" ngbDropdown>
+        <a class="nav-flag dropdown-toggle" ngbDropdownToggle id="languageDropdown" data-bs-toggle="dropdown"
+          aria-expanded="true">
+          <img src="assets/img/flags/{{ currentLanguage }}.png" alt="{{currentLanguage}}">
+        </a>
+        <div class="dropdown-menu dropdown-menu-start" aria-labelledby="languageDropdown" data-bs-popper="static"
+          ngbDropdownMenu>
+          <a ngbDropdownItem class="dropdown-item" *ngFor="let lang of languageList"
+            (click)="changeLanguage(lang.value)" [disabled]="currentLanguage === lang.value ? true : false">
+            <img [src]="lang.image" alt="{{ lang.name }}" width="30" class="align-middle me-1">
+            <span class="align-middle">{{lang.name | translate}}</span>
+            <h5 *ngIf="isMobile" class="align-middle d-inline-block text-black">{{lang.name}}</h5>
+          </a>
+        </div>
+      </li>
+
+
+      <!-- profile -->
+      <li class="nav-item dropdown px-1" ngbDropdown>
+        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" ngbDropdownToggle data-bs-toggle="dropdown">
+          <i class="fe fe-settings"></i>
+        </a>
+        <a class="nav-link dropdown-toggle d-none d-sm-inline-block" id="profile" ngbDropdownToggle
+          data-bs-toggle="dropdown">
+          <img src="assets/img/avatar/avatar.png" class="avatar img-fluid rounded mr-1" alt="profile" />
+          <span>{{currentUser ? currentUser.username : ""}}</span>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="profile">
+          <a class="dropdown-item" [routerLink]="'/Profile'" ngbDropdownItem>
+            <i class="fa-solid fa-address-card mx-2"></i>
+            {{ "View_Profile" | translate }}
+          </a>
+          <a class="dropdown-item" [routerLink]="'/Profile/Edit_Profile'" ngbDropdownItem>
+            <i class="fa-solid fa-user-pen mx-2"></i>
+            {{ "Edit_Profile" | translate }}
+          </a>
+          <a class="dropdown-item" [routerLink]="'/Profile/Change_Password'" ngbDropdownItem>
+            <i class="fa-solid fa-key mx-2"></i>
+            {{ "Change_Password" | translate }}
+          </a>
+          <a class="dropdown-item" (click)="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
+            {{ 'Logout' | translate }}
+          </a>
+        </div>
+      </li>
+      <!-- end profile -->
+    </ul>
+  </div>
+</div>
+</nav>

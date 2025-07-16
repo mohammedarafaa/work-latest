@@ -1,0 +1,116 @@
+.main-content {
+  padding: 1.5rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+    }
+
+    .btn-group .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .datatable-container {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    .datatable-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+
+      select {
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid #ced4da;
+      }
+    }
+
+    .table {
+      th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+      }
+
+      .btn {
+        padding: 0.25rem 0.5rem;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+
+      .dataTable-info {
+        font-size: 0.9rem;
+        color: #6c757d;
+      }
+
+      ngb-pagination ::ng-deep {
+        .page-item.active .page-link {
+          background-color: #276db5; // Blue color
+          border-color: #276db5; // Blue color
+        }
+
+        .page-link {
+          color: #276db5; // Blue color
+        }
+      }
+    }
+  }
+
+  .meter-summary-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      color: #276db5; // Primary blue color
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+      margin-bottom: 0.5rem;
+
+      strong {
+        color: #495057;
+      }
+    }
+
+    .btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
