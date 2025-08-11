@@ -1,25 +1,258 @@
+// Input group navbar with dark mode support
 .input-group-navbar {
+
   .form-control,
   .btn {
-    height: $input-height-lg;
-    background: $body-bg;
+    height: var(--input-height-lg, $input-height-lg);
+    background: var(--bs-body-bg, $body-bg);
     box-shadow: none;
     border: 0;
-    padding: $input-padding-y-lg $spacer*0.75;
+    padding: var(--input-padding-y-lg, $input-padding-y-lg) calc(var(--spacer, #{$spacer}) * 0.75);
+    transition: all 0.3s ease;
+    border-radius: 0.375rem;
 
     &:focus {
-      background: $body-bg;
-      box-shadow: none;
+      background: var(--bs-body-bg, $body-bg);
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25);
       outline: 0;
+      border-color: var(--custom-primary, #001559);
+    }
+  }
+
+  .form-control {
+    color: var(--bs-input-color, inherit);
+    border: 1px solid var(--bs-input-border-color, transparent);
+
+    &::placeholder {
+      color: var(--bs-text-muted, #6c757d);
+      opacity: 0.7;
+    }
+
+    &:hover {
+      border-color: var(--bs-input-border-color, #ced4da);
     }
   }
 
   .btn {
-    color: $gray-600;
+    color: var(--bs-text-muted, $gray-600);
+    border: 1px solid var(--bs-input-border-color, transparent);
+    transition: all 0.3s ease;
 
     .feather {
       width: 20px;
       height: 20px;
+      transition: color 0.3s ease;
+    }
+
+    &:hover {
+      color: var(--custom-primary, #001559);
+      background: var(--custom-hover-bg, rgba(0, 21, 89, 0.05));
+      border-color: var(--bs-input-border-color, #ced4da);
+
+      .feather {
+        color: var(--custom-primary, #001559);
+      }
+    }
+
+    &:focus {
+      color: var(--custom-primary, #001559);
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25);
+
+      .feather {
+        color: var(--custom-primary, #001559);
+      }
+    }
+
+    &:active {
+      background: var(--custom-primary, #001559);
+      color: white;
+      border-color: var(--custom-primary, #001559);
+
+      .feather {
+        color: white;
+      }
+    }
+  }
+
+  // Dark mode input group navbar
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+
+    .form-control,
+    .btn {
+      background: var(--bs-card-bg) !important;
+      border-color: var(--bs-card-border-color) !important;
+
+      &:focus {
+        background: var(--bs-card-bg) !important;
+        border-color: var(--custom-primary) !important;
+        box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25) !important;
+      }
+    }
+
+    .form-control {
+      color: var(--bs-input-color) !important;
+
+      &::placeholder {
+        color: var(--bs-text-muted) !important;
+      }
+
+      &:hover {
+        border-color: var(--bs-card-border-color) !important;
+      }
+    }
+
+    .btn {
+      color: var(--bs-text-muted) !important;
+
+      .feather {
+        color: var(--bs-text-muted) !important;
+      }
+
+      &:hover {
+        color: var(--custom-primary) !important;
+        background: var(--custom-hover-bg, rgba(0, 21, 89, 0.1)) !important;
+        border-color: var(--bs-card-border-color) !important;
+
+        .feather {
+          color: var(--custom-primary) !important;
+        }
+      }
+
+      &:focus {
+        color: var(--custom-primary) !important;
+        background: var(--bs-card-bg) !important;
+
+        .feather {
+          color: var(--custom-primary) !important;
+        }
+      }
+
+      &:active {
+        background: var(--custom-primary) !important;
+        color: white !important;
+        border-color: var(--custom-primary) !important;
+
+        .feather {
+          color: white !important;
+        }
+      }
+    }
+  }
+}
+
+// Enhanced input group variants
+.input-group-navbar-search {
+  @extend .input-group-navbar;
+
+  position: relative;
+  max-width: 400px;
+
+  .form-control {
+    padding-inline-start: 3rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .btn {
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 0 1rem;
+
+    &.search-trigger {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3rem;
+      z-index: 5;
+      background: transparent;
+      border: none;
+      border-radius: 0.5rem 0 0 0.5rem;
+
+      .feather {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        background: transparent !important;
+      }
+    }
+  }
+
+  // Dark mode search variant
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .btn.search-trigger {
+      background: transparent !important;
+
+      &:hover {
+        background: transparent !important;
+      }
+    }
+  }
+}
+
+// Compact navbar input group
+.input-group-navbar-compact {
+  @extend .input-group-navbar;
+
+  .form-control,
+  .btn {
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .btn {
+    .feather {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Rounded navbar input group
+.input-group-navbar-rounded {
+  @extend .input-group-navbar;
+
+  .form-control {
+    border-radius: 2rem 0 0 2rem;
+  }
+
+  .btn {
+    border-radius: 0 2rem 2rem 0;
+  }
+
+  &.input-group-navbar-search {
+    .btn.search-trigger {
+      border-radius: 2rem 0 0 2rem;
+    }
+  }
+}
+
+// Input group with multiple buttons
+.input-group-navbar-multi {
+  @extend .input-group-navbar;
+
+  .btn-group {
+    .btn {
+      border-radius: 0;
+      border-inline-start: 1px solid var(--bs-card-border-color, #dee2e6);
+
+      &:first-child {
+        border-inline-start: none;
+      }
+
+      &:last-child {
+        border-radius: 0 0.375rem 0.375rem 0;
+      }
+    }
+  }
+
+  // Dark mode multi-button variant
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .btn-group .btn {
+      border-inline-start-color: var(--bs-card-border-color) !important;
     }
   }
 }

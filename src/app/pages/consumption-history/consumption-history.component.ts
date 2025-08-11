@@ -4,6 +4,7 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { FormGroup, FormBuilder, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -14,23 +15,18 @@ import { TranslateService } from "@ngx-translate/core";
 import { LoaderService } from "@service/shared/loader.service";
 import { NotificationService } from "@service/shared/notifcation.service";
 import * as Highcharts from "highcharts";
-import { Subject, takeUntil, BehaviorSubject } from "rxjs";
-import { MeterDailyConsumption } from "@model/meter-consumption-history.model";
+import { Subject, takeUntil, BehaviorSubject, combineLatest } from "rxjs";
+import {
+  MeterDailyConsumptionDTO,
+  MeterDailyConsumption,
+  MeterPageableResponse,
+  ConsumptionRow,
+  TableRecord,
+  ApiResponseListDailyRecord,
+  ApiResponsePageableDailyRecord,
+} from "@model/meter-consumption-history.model";
+import { MeterSummery, MeterSummeryDTo } from "@model/meter.model";
 import { paging_$Searching } from "@model/Utils/Pagination";
-
-interface ConsumptionRow {
-  date: string;
-  consumption: number;
-  availableCredit: number;
-  meterType: string;
-}
-
-interface TableRecord {
-  date: string;
-  meterReading: number;
-  availableCredit: number;
-  dailyUsage: number;
-}
 
 @Component({
   selector: "app-consumption-history",
@@ -39,22 +35,55 @@ interface TableRecord {
 })
 export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
   @ViewChild("chartSection", { static: false }) chartSection!: ElementRef;
+
   Highcharts: typeof Highcharts = Highcharts;
 
   mode: "dashboard" | "single" = "dashboard";
   meterId!: number;
   meterType = "";
-  meterList: MeterDailyConsumption[] = [];
-  selectedMeter: MeterDailyConsumption | null = null;
+  meterList: MeterSummery[] = [];
+  selectedMeter: MeterSummery | null = null;
   meterChartData: ConsumptionRow[] = [];
   meterChartOptions: Highcharts.Options = {};
   isLoadingMeterChart = false;
   meterChartError = "";
-  showTableView = false;
+  showTableView = true;
   dailyConsumptionTable: TableRecord[] = [];
   private destroy$ = new Subject<void>();
+  private isApplyingFiltersFlag = false;
 
-  // Filter functionality for dashboard mode
+  // Months dropdown (1-3 months only)
+  monthsOptions = [
+    { value: 1, label: "1_Month" },
+    { value: 2, label: "2_Months" },
+    { value: 3, label: "3_Months" },
+  ];
+  selectedMonths = 1;
+
+  // METERS PAGINATION (for meter cards)
+  currentPage = 1;
+  pageSize = 8;
+  totalItems = 0;
+  maxSize = 5;
+  pageSizeOptions = [6, 8, 12, 18, 24];
+
+  // DATA PAGINATION (ONLY FOR TABLE VIEW)
+  dataCurrentPage = 1;
+  dataPageSize = 10;
+  dataTotalItems = 0;
+  dataMaxSize = 5;
+  dataPageSizeOptions = [5, 10, 15, 20, 25];
+
+  // Keep original variables for backward compatibility
+  tableCurrentPage = 1;
+  tablePageSize = 10;
+  tableTotalItems = 0;
+  paginatedTableData: TableRecord[] = [];
+
+  // Pagination object for data requests (ONLY FOR TABLE)
+  dataPaging: paging_$Searching = new paging_$Searching();
+
+  // Filter functionality
   form: FormGroup = this.fb.group({});
   paging: paging_$Searching = new paging_$Searching();
   filterParam: URLSearchParams = new URLSearchParams();
@@ -63,8 +92,12 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
   meterTypes = ["GAS", "WATER", "ELECTRICITY"];
   isLoading = false;
   isApplyingFilters = false;
+  isViewBalanceLoading = false;
+
+  private pendingScroll = false;
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -76,26 +109,55 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService
   ) {
     this.createForm();
+    this.paging.page = 1;
+    this.paging.size = 8;
+
+    // Initialize data pagination (ONLY FOR TABLE)
+    this.dataPaging.page = 1;
+    this.dataPaging.size = this.dataPageSize;
+
+    // Sync with legacy variables
+    this.tableCurrentPage = 1;
+    this.tablePageSize = this.dataPageSize;
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const meterIdParam = params.get("meterId");
-      if (meterIdParam) {
-        this.mode = "single";
-        this.meterId = +meterIdParam;
-        this.loadMeterConsumptionData(this.meterId);
-      } else {
-        this.mode = "dashboard";
-        this.getProjectData();
-        this.loadAllMetersConsumption();
-      }
-    });
+    combineLatest([this.route.paramMap, this.route.queryParamMap])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([paramMap, queryParamMap]) => {
+        const meterIdParam = paramMap.get("meterId");
+
+        if (meterIdParam) {
+          this.mode = "single";
+          this.meterId = +meterIdParam;
+          this.loadMeterConsumptionData(this.meterId);
+        } else {
+          this.mode = "dashboard";
+
+          const page = queryParamMap.get("page");
+          this.currentPage = page ? +page : 1;
+          this.paging.page = this.currentPage;
+
+          const size = queryParamMap.get("size");
+          this.pageSize = size ? +size : 8;
+          this.paging.size = this.pageSize;
+
+          this.getProjectData();
+          this.loadAllMetersConsumption();
+        }
+      });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.pendingScroll && this.chartSection?.nativeElement) {
+      setTimeout(() => this.smoothScrollToChart(), 0);
+      this.pendingScroll = false;
+    }
   }
 
   createForm(): void {
@@ -104,29 +166,35 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
       propertyId: [null],
       compoundId: [null],
     });
-    // Only update property dropdown on compound change
-    this.onChanges();
+
+    this.form.get("compoundId")?.valueChanges.subscribe((compoundId) => {
+      if (this.isApplyingFiltersFlag) {
+        this.isApplyingFiltersFlag = false;
+        return;
+      }
+
+      if (compoundId) {
+        this.getPropertyData(compoundId);
+      } else {
+        this.propertyList.next([]);
+        this.form.get("propertyId")?.setValue(null, { emitEvent: false });
+      }
+    });
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-  onChanges(): void {
-    this.form.valueChanges.subscribe((val) => {
-      if (val.compoundId) {
-        this.getPropertyData(val.compoundId);
-      }
-    });
-  }
-
-  // Apply filters only on button click
   applyFilters(): void {
+    this.isApplyingFiltersFlag = true;
     this.isApplyingFilters = true;
     this.isLoading = true;
     this.loaderService.setSpinner(true);
+    this.currentPage = 1;
+    this.paging.page = 1;
+    this.clearSelectedMeter();
 
-    // Prepare filter parameters
     const temp = Object.entries(this.form.value)
       .filter(
         ([_, value]) => value !== undefined && value !== null && value !== ""
@@ -134,8 +202,290 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
       .map(([key, value]) => [key, value]);
     this.filterParam = new URLSearchParams(temp as string[][]);
 
-    // Reload data
     this.loadAllMetersConsumption();
+  }
+
+  resetFilters(): void {
+    this.form.reset();
+    this.propertyList.next([]);
+    this.filterParam = new URLSearchParams();
+    this.currentPage = 1;
+    this.paging.page = 1;
+    this.pageSize = 8;
+    this.paging.size = 8;
+    this.clearSelectedMeter();
+    this.loadAllMetersConsumption();
+  }
+
+  private clearSelectedMeter(): void {
+    this.selectedMeter = null;
+    this.meterChartData = [];
+    this.dailyConsumptionTable = [];
+    this.meterChartError = "";
+
+    // Reset data pagination (ONLY FOR TABLE)
+    if (this.showTableView) {
+      this.dataCurrentPage = 1;
+      this.dataPaging.page = 1;
+      this.dataTotalItems = 0;
+    }
+
+    // Reset legacy variables
+    this.tableCurrentPage = 1;
+    this.tableTotalItems = 0;
+    this.paginatedTableData = [];
+  }
+
+  // MAIN METHOD: Load meter data with pagination ONLY for table view
+  private loadMeterData(): void {
+    if (!this.selectedMeter) return;
+
+    console.log("Loading meter data:", {
+      page: this.dataCurrentPage,
+      size: this.dataPageSize,
+      showTableView: this.showTableView,
+    });
+
+    this.isLoadingMeterChart = true;
+    this.meterChartError = "";
+
+    if (this.showTableView) {
+      // TABLE VIEW ONLY: Use backend pagination API
+      this.meterConsumptionService
+        .getDailyConsumptionV2(
+          this.selectedMeter.meterId,
+          this.selectedMonths,
+          this.dataCurrentPage - 1, // API uses 0-based pagination
+          this.dataPageSize
+        )
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response: ApiResponsePageableDailyRecord) => {
+            if (response.status === 200 && response.data.content) {
+              this.processBackendPaginatedData(response.data);
+            } else {
+              this.meterChartError = "No_Data_Available";
+            }
+            this.isLoadingMeterChart = false;
+          },
+          error: (error) => {
+            console.error("Table data loading error:", error);
+            this.meterChartError = "Error_Loading_Data";
+            this.isLoadingMeterChart = false;
+          },
+        });
+    } else {
+      // CHART VIEW: Load ALL data without pagination
+      this.meterConsumptionService
+        .getDailyConsumptionV2List(
+          this.selectedMeter.meterId,
+          this.selectedMonths
+        )
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response: ApiResponseListDailyRecord) => {
+            if (response.status === 200 && Array.isArray(response.data)) {
+              this.processFullDataForChart(response.data);
+            } else {
+              this.meterChartError = "No_Data_Available";
+            }
+            this.isLoadingMeterChart = false;
+          },
+          error: (error) => {
+            console.error("Chart data loading error:", error);
+            this.meterChartError = "Error_Loading_Data";
+            this.isLoadingMeterChart = false;
+          },
+        });
+    }
+  }
+
+  // Process backend paginated data (ONLY for table view)
+  private processBackendPaginatedData(data: any): void {
+    console.log("Processing backend paginated data for TABLE:", data);
+
+    const sortedRecords = [...data.content].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    this.meterChartData = sortedRecords.map((record) => ({
+      date: record.date,
+      consumption: record.meterReading,
+      availableCredit: record.availableCredit,
+      meterType: this.selectedMeter?.type || "ELECTRICITY",
+    }));
+
+    // Update pagination info from backend (ONLY FOR TABLE)
+    this.dataTotalItems = data.totalElements || 0;
+    this.dataCurrentPage = (data.number || 0) + 1;
+    this.dataPageSize = data.size || this.dataPageSize;
+
+    // Sync legacy variables
+    this.tableTotalItems = this.dataTotalItems;
+    this.tableCurrentPage = this.dataCurrentPage;
+    this.tablePageSize = this.dataPageSize;
+
+    this.createConsumptionTable();
+    this.meterChartError = "";
+
+    console.log("Table pagination updated:", {
+      totalItems: this.dataTotalItems,
+      currentPage: this.dataCurrentPage,
+      pageSize: this.dataPageSize,
+    });
+  }
+
+  // Process full data for chart (NO PAGINATION)
+  private processFullDataForChart(data: any[]): void {
+    console.log(
+      "Processing full data for CHART (no pagination):",
+      data.length,
+      "total records"
+    );
+
+    const sortedRecords = [...data].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    // Use ALL data for chart (no pagination)
+    this.meterChartData = sortedRecords.map((record) => ({
+      date: record.date,
+      consumption: record.meterReading,
+      availableCredit: record.availableCredit,
+      meterType: this.selectedMeter?.type || "ELECTRICITY",
+    }));
+
+    // Reset pagination info for chart view
+    this.dataTotalItems = 0;
+    this.tableTotalItems = 0;
+
+    this.createConsumptionTable();
+    this.transformMeterDataToChart();
+    this.meterChartError = "";
+
+    console.log(
+      "Chart loaded with ALL data:",
+      this.meterChartData.length,
+      "records"
+    );
+  }
+
+  // DATA PAGINATION HANDLERS (ONLY FOR TABLE VIEW)
+  onDataPageChange(page: number): void {
+    // Only allow pagination in table view
+    if (!this.showTableView) {
+      console.warn("Pagination is only available in table view");
+      return;
+    }
+
+    console.log("Data page change requested:", page);
+    this.dataCurrentPage = page;
+    this.dataPaging.page = page;
+    this.tableCurrentPage = page;
+
+    if (this.selectedMeter) {
+      this.loadMeterData();
+    }
+  }
+
+  onDataPageSizeChange(newSize: number): void {
+    // Only allow page size changes in table view
+    if (!this.showTableView) {
+      console.warn("Page size change is only available in table view");
+      return;
+    }
+
+    console.log("Data page size change requested:", newSize);
+    this.dataPageSize = newSize;
+    this.dataPaging.size = newSize;
+    this.dataCurrentPage = 1; // Reset to first page
+    this.dataPaging.page = 1;
+
+    // Sync legacy variables
+    this.tablePageSize = newSize;
+    this.tableCurrentPage = 1;
+
+    if (this.selectedMeter) {
+      this.loadMeterData();
+    }
+  }
+
+  // Legacy pagination handlers for backward compatibility
+  onTablePageChange(page: number): void {
+    this.onDataPageChange(page);
+  }
+
+  onTablePageSizeChange(newSize: number): void {
+    this.onDataPageSizeChange(newSize);
+  }
+
+  // Months change handler
+  onMonthsChange(months: number): void {
+    this.selectedMonths = months;
+    this.resetDataPagination();
+    if (this.selectedMeter) {
+      this.loadMeterData();
+    }
+  }
+
+  // View toggle method
+  toggleDataView(viewType: "chart" | "table"): void {
+    this.showTableView = viewType === "table";
+
+    if (this.showTableView) {
+      // Reset pagination when switching TO table view
+      this.dataCurrentPage = 1;
+      this.dataPaging.page = 1;
+      this.dataTotalItems = 0;
+      this.tableCurrentPage = 1;
+      this.tableTotalItems = 0;
+    } else {
+      // Clear pagination when switching TO chart view
+      this.dataTotalItems = 0;
+      this.tableTotalItems = 0;
+    }
+
+    if (this.selectedMeter) {
+      this.loadMeterData();
+    }
+  }
+
+  private resetDataPagination(): void {
+    // ONLY reset pagination for table view
+    if (this.showTableView) {
+      this.dataCurrentPage = 1;
+      this.dataPaging.page = 1;
+      this.dataTotalItems = 0;
+    }
+
+    // Sync legacy variables
+    this.tableCurrentPage = 1;
+    this.tableTotalItems = 0;
+  }
+
+  // Pagination methods for meters
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.paging.page = page;
+    this.updateQueryParams({ page: page.toString() });
+    this.loadAllMetersConsumption();
+  }
+
+  onPageSizeChange(newSize: number): void {
+    this.pageSize = newSize;
+    this.paging.size = newSize;
+    this.currentPage = 1;
+    this.paging.page = 1;
+    this.updateQueryParams({ page: "1", size: newSize.toString() });
+    this.loadAllMetersConsumption();
+  }
+
+  private updateQueryParams(params: { [key: string]: string }): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: params,
+      queryParamsHandling: "merge",
+    });
   }
 
   getProjectData(): void {
@@ -143,10 +493,6 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
       next: (list: any) => {
         if (list.status === 200) {
           this.projectList.next(list.data);
-        } else {
-          this.notificationService.WaringNotification(
-            this.translate.instant(`Get_Status_Warning`)
-          );
         }
       },
       error: () => {
@@ -158,14 +504,25 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
   }
 
   getPropertyData(compoundId: string): void {
+    const currentPropertyId = this.form.get("propertyId")?.value;
+
     this._sharedService.getAllPropertyByCompoundId(compoundId).subscribe({
       next: (list: any) => {
         if (list.status === 200) {
           this.propertyList.next(list.data);
-        } else {
-          this.notificationService.WaringNotification(
-            this.translate.instant(`Get_Status_Warning`)
-          );
+
+          if (currentPropertyId) {
+            const propertyExists = list.data.some(
+              (p: any) => p.id === currentPropertyId
+            );
+            if (propertyExists) {
+              setTimeout(() => {
+                this.form
+                  .get("propertyId")
+                  ?.setValue(currentPropertyId, { emitEvent: false });
+              }, 0);
+            }
+          }
         }
       },
       error: () => {
@@ -180,127 +537,78 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
     this.isLoadingMeterChart = true;
     this.isLoading = true;
 
-    if (this.filterParam) {
-      this.dashboardService
-        .getAllMeterFilter(this.paging, this.filterParam)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-            if (response.status === 200 && response.data?.content) {
-              this.loadConsumptionForMeters(response.data.content);
-            } else {
-              this.meterList = [];
-              this.selectedMeter = null;
-              this.meterChartError = "No_Meters_Found";
-              this.isLoadingMeterChart = false;
-              this.isLoading = false;
-              this.isApplyingFilters = false;
-            }
-          },
-          error: () => {
-            this.meterChartError = "Error_Loading_Data";
-            this.isLoadingMeterChart = false;
-            this.isLoading = false;
-            this.isApplyingFilters = false;
-          },
-        });
+    this.dashboardService
+      .getAllMeterFilter(this.paging, this.filterParam)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: any) => {
+          if (response.status === 200 && response.data?.content) {
+            this.totalItems = response.data.totalElements || 0;
+            this.currentPage = (response.data.number || 0) + 1;
+            this.meterList = response.data.content;
+            this.selectFirstMeter();
+          } else {
+            this.handleEmptyResponse();
+          }
+          this.finishLoading();
+        },
+        error: () => {
+          this.handleLoadingError();
+        },
+      });
+  }
+
+  private selectFirstMeter(): void {
+    if (this.meterList.length > 0) {
+      this.selectMeter(this.meterList[0]);
     } else {
-      this.meterConsumptionService
-        .getDailyConsumption(3)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (dto) => {
-            this.meterList = dto.data || [];
-            if (this.meterList.length > 0) {
-              this.selectMeter(this.meterList[0]);
-            } else {
-              this.selectedMeter = null;
-              this.meterChartData = [];
-              this.meterChartError = "No_Meters_Found";
-            }
-            this.isLoadingMeterChart = false;
-            this.isLoading = false;
-            this.isApplyingFilters = false;
-          },
-          error: () => {
-            this.meterChartError = "Error_Loading_Data";
-            this.isLoadingMeterChart = false;
-            this.isLoading = false;
-            this.isApplyingFilters = false;
-          },
-        });
+      this.selectedMeter = null;
+      this.meterChartData = [];
+      this.meterChartError = "No_Meters_Found";
     }
   }
 
-  private loadConsumptionForMeters(meterSummaries: any[]): void {
-    this.meterConsumptionService
-      .getDailyConsumption(3)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (dto) => {
-          const filteredMeterIds = meterSummaries.map((m) => m.meterId);
-          this.meterList = (dto.data || []).filter((meter) =>
-            filteredMeterIds.includes(meter.meterId)
-          );
+  private handleEmptyResponse(): void {
+    this.meterList = [];
+    this.selectedMeter = null;
+    this.meterChartError = "No_Meters_Found";
+    this.finishLoading();
+  }
 
-          if (this.meterList.length > 0) {
-            this.selectMeter(this.meterList[0]);
-          } else {
-            this.selectedMeter = null;
-            this.meterChartData = [];
-            this.meterChartError = "No_Meters_Found";
-          }
-          this.isLoadingMeterChart = false;
-          this.isLoading = false;
-          this.isApplyingFilters = false;
-        },
-        error: () => {
-          this.meterChartError = "Error_Loading_Data";
-          this.isLoadingMeterChart = false;
-          this.isLoading = false;
-          this.isApplyingFilters = false;
-        },
-      });
+  private handleLoadingError(): void {
+    this.meterChartError = "Error_Loading_Data";
+    this.finishLoading();
+  }
+
+  private finishLoading(): void {
+    this.isLoadingMeterChart = false;
+    this.isLoading = false;
+    this.isApplyingFilters = false;
+    this.isViewBalanceLoading = false;
+    this.isApplyingFiltersFlag = false;
+    this.loaderService.setSpinner(false);
   }
 
   loadMeterConsumptionData(meterId: number): void {
     this.isLoadingMeterChart = true;
-    this.meterConsumptionService
-      .getDailyConsumption(3)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (dto) => {
-          const meterData = dto.data?.find((m: any) => m.meterId === meterId);
-          if (meterData && meterData.dailyRecords) {
-            this.selectMeter(meterData);
-          } else {
-            this.selectedMeter = null;
-            this.meterChartData = [];
-            this.meterChartError = "No_Data_For_Selected_Meter";
-          }
-          this.isLoadingMeterChart = false;
-        },
-        error: () => {
-          this.meterChartError = "Error_Loading_Data";
-          this.isLoadingMeterChart = false;
-        },
-      });
+    this.meterChartError = "";
+
+    // Find and set the selected meter
+    const meter = this.meterList.find((m) => m.meterId === meterId);
+    if (meter) {
+      this.selectedMeter = meter;
+      this.meterType = meter.type;
+    }
+
+    // Load data based on current view
+    this.loadMeterData();
   }
 
-  selectMeter(meter: MeterDailyConsumption): void {
+  selectMeter(meter: MeterSummery): void {
     this.selectedMeter = meter;
     this.meterType = meter.type;
-    const sortedRecords = [...meter.dailyRecords].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-    this.meterChartData = sortedRecords.map((record) => ({
-      date: record.date,
-      consumption: record.meterReading,
-      availableCredit: record.availableCredit,
-      meterType: meter.type,
-    }));
-    this.transformMeterDataToChart();
-    this.createConsumptionTable();
+    this.resetDataPagination();
+    this.loadMeterData();
     this.meterChartError = "";
   }
 
@@ -311,6 +619,15 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
       availableCredit: record.availableCredit,
       dailyUsage: this.calculateDailyUsage(record, index),
     }));
+
+    // For table view, data is already paginated from API
+    this.paginatedTableData = [...this.dailyConsumptionTable];
+
+    console.log(
+      "Consumption table created with",
+      this.paginatedTableData.length,
+      "records"
+    );
   }
 
   transformMeterDataToChart(): void {
@@ -318,12 +635,14 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
       this.meterChartOptions = {};
       return;
     }
+
     const categories = this.meterChartData.map((row) =>
       this.formatDisplayDate(row.date)
     );
     const meterReadings = this.meterChartData.map((row) => row.consumption);
     const creditData = this.meterChartData.map((row) => row.availableCredit);
     const meterType = this.meterChartData[0].meterType;
+
     this.meterChartOptions = {
       chart: {
         type: "line",
@@ -336,7 +655,10 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
           "Daily_Consumption_Chart"
         )} - ${this.translate.instant("Meter")} ${this.selectedMeter?.meterId}`,
       },
-      xAxis: { categories },
+      xAxis: {
+        categories,
+        title: { text: this.translate.instant("Date") },
+      },
       yAxis: [
         {
           title: {
@@ -360,12 +682,14 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
           type: "line",
           data: meterReadings,
           yAxis: 0,
+          color: "#3498db",
         },
         {
           name: this.translate.instant("Available_Credit"),
           type: "line",
           data: creditData,
           yAxis: 1,
+          color: "#e74c3c",
         },
       ],
     };
@@ -389,7 +713,7 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
   }
 
   getConsumptionUnit(meterType: string): string {
-    switch (meterType) {
+    switch (meterType?.toUpperCase()) {
       case "ELECTRICITY":
         return "kWh";
       case "GAS":
@@ -401,16 +725,81 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToDashboard(): void {
-    this.router.navigate(["/dashboard"]);
+  onViewHistoryClick(meter: MeterSummery, event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (!this.isMeterSelected(meter)) {
+      this.selectMeter(meter);
+      this.pendingScroll = true;
+      this.changeDetectorRef.detectChanges();
+    } else {
+      this.pendingScroll = true;
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
-  toggleDataView(viewType: "chart" | "table"): void {
-    this.showTableView = viewType === "table";
+  private smoothScrollToChart(): void {
+    try {
+      if (this.chartSection?.nativeElement) {
+        const navbarHeight = 80; // Adjust based on your navbar height
+        const elementPosition = this.chartSection.nativeElement.offsetTop;
+        const offsetPosition = elementPosition - navbarHeight;
+        this.chartSection.nativeElement.scrollIntoView({
+          behavior: "smooth",
+          top: offsetPosition,
+          block: "center",
+        });
+      }
+    } catch (error) {
+      // Fails silently
+    }
   }
 
+  onMeterCardClick(meter: MeterSummery): void {
+    if (this.mode === "dashboard") {
+      this.selectMeter(meter);
+    }
+  }
+
+  onViewBalance(meter: MeterSummery): void {
+    this.isViewBalanceLoading = true;
+    setTimeout(() => {
+      this.loadAllMetersConsumption();
+    }, 1000);
+  }
+
+  onCharge(meter: MeterSummery): void {
+    this.router.navigate(["/Charging"], {
+      queryParams: {
+        meterId: meter.meterId,
+        meterSerial: meter.meterSerial,
+        meterType: meter.type,
+        autoFocus: "true",
+      },
+    });
+  }
+
+  goBackToAllMeters(): void {
+    this.router.navigate(["/Meters"]);
+  }
+
+  isMeterSelected(meter: MeterSummery): boolean {
+    return this.selectedMeter?.meterId === meter.meterId;
+  }
+
+  // Helper method to check if pagination should be shown (ONLY for table view)
+  shouldShowPagination(): boolean {
+    return this.showTableView && this.dataTotalItems > this.dataPageSize;
+  }
+
+  // Helper methods
   trackByDate(index: number, item: TableRecord): string {
     return item.date;
+  }
+
+  trackByMeterId(index: number, item: MeterSummery): number {
+    return item.meterId;
   }
 
   getDailyUsageClass(usage: number): string {
@@ -419,22 +808,32 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
     return "text-success";
   }
 
+  getUnitOfMeasure(type: string): string {
+    switch (type?.toUpperCase()) {
+      case "WATER":
+        return "m³";
+      case "ELECTRICITY":
+        return "kWh";
+      case "GAS":
+        return "m³";
+      default:
+        return "";
+    }
+  }
+
   getIcons(type: string): string {
-    if (type === "ELECTRICITY") return "fas fa-bolt";
-    else if (type === "GAS") return "fas fa-fire";
-    else if (type === "WATER") return "fas fa-tint";
+    const upperType = type?.toUpperCase();
+    if (upperType === "ELECTRICITY") return "fas fa-bolt";
+    else if (upperType === "GAS") return "fas fa-fire";
+    else if (upperType === "WATER") return "fas fa-tint";
     else return "fas fa-tachometer-alt";
   }
 
-  onMeterCardClick(meter: MeterDailyConsumption): void {
-    if (this.mode === "dashboard") {
-      this.selectMeter(meter);
-    }
+  getProgressWidth(balance: number): number {
+    return Math.min((balance / 4000) * 100, 100);
   }
-  goBackToAllMeters() {
-    this.router.navigate(["/Meters"]);
-  }
-  isMeterSelected(meter: MeterDailyConsumption): boolean {
-    return this.selectedMeter?.meterId === meter.meterId;
+
+  get Math() {
+    return Math;
   }
 }

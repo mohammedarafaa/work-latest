@@ -1,167 +1,647 @@
-.main-content {
+// custom-bootstrap.scss
+
+// Define your custom colors
+$primary: #001559; // Dark navy blue
+$secondary: #ff9203; // Vibrant orange
+$info: #0031EB; // Bright blue
+
+// Create the theme colors map
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": #198754,
+  "info": $info,
+  "warning": #ffc107,
+  "danger": #dc3545,
+  "light": #f8f9fa,
+  "dark": #212529
+);
+
+/* CSS Custom Properties for Light and Dark Themes */
+:root {
+  // Light theme variables
+  --custom-primary: #{$primary};
+  --custom-secondary: #{$secondary};
+  --custom-info: #{$info};
+  --custom-background-light: #f8f9fa;
+  --custom-card-bg: #ffffff;
+  --custom-text-color: #333333;
+  --custom-text-muted: #6c757d;
+  --custom-shadow-light: rgba(0, 0, 0, 0.15);
+  --custom-shadow-dark: rgba(0, 0, 0, 0.25);
+  --custom-border-color: #e0e0e0;
+  --custom-hover-bg: #f8f9fa;
+  --custom-table-hover: #f8f9fa;
+}
+
+// Dark theme variables
+.dark-theme,
+[data-bs-theme="dark"] {
+  --custom-primary: #{$primary};
+  --custom-secondary: #{$secondary};
+  --custom-info: #{$info};
+  --custom-background-light: #1a1d23 !important;
+  --custom-card-bg: #242833 !important;
+  --custom-text-color: #cbd5e0 !important;
+  --custom-text-muted: #718096 !important;
+  --custom-shadow-light: rgba(0, 0, 0, 0.3) !important;
+  --custom-shadow-dark: rgba(0, 0, 0, 0.4) !important;
+  --custom-border-color: #4a5568 !important;
+  --custom-hover-bg: #353b47 !important;
+  --custom-table-hover: #353b47 !important;
+}
+
+/* Card Base Styles with Dark Mode Support */
+.custom-card {
+  background-color: var(--custom-card-bg);
+  color: var(--custom-text-color);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px var(--custom-shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 1.5rem;
   padding: 1.5rem;
+  border: 1px solid var(--custom-border-color);
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px var(--custom-shadow-dark);
+}
+
+/* Card Header Styles */
+.card-header {
+  background-color: var(--custom-primary) !important;
+  padding: 1rem;
+  border-radius: 12px 12px 0 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--custom-border-color);
+}
+
+.card-header .card-title {
+  color: white !important;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.card-header .badge {
+  background-color: var(--custom-secondary) !important;
+  color: black !important;
+  font-weight: normal;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+/* Card Body Styles with Dark Mode */
+.card-body {
+  padding: 1rem 2rem;
+  color: var(--custom-text-color);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  background-color: var(--custom-card-bg);
+}
+
+.card-body .row .col-6 {
+  margin-bottom: 1rem;
+}
+
+.card-body strong {
+  font-weight: bold;
+  color: var(--custom-primary) !important;
+}
+
+.card-body .text-muted {
+  font-size: 0.85rem;
+  color: var(--custom-text-muted) !important;
+}
+
+.card-body .badge {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 25px;
+}
+
+/* Location & Status Styling */
+.card-body .row .fw-medium {
+  color: var(--custom-secondary) !important;
+  font-size: 1.1rem;
+}
+
+.card-body .badge.bg-info {
+  background-color: var(--custom-info) !important;
+  color: white !important;
+}
+
+.card-body .border-top {
+  border-top: 1px solid var(--custom-border-color) !important;
+  padding-top: 1rem;
+}
+
+/* Button Styles with Dark Mode */
+.btn-primary {
+  background-color: var(--custom-primary) !important;
+  border-color: var(--custom-primary) !important;
+  color: white !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #{darken($primary, 10%)} !important;
+    border-color: #{darken($primary, 10%)} !important;
+    transform: scale(1.05);
+  }
+
+  &:focus,
+  &:active {
+    background-color: #{darken($primary, 15%)} !important;
+    border-color: #{darken($primary, 15%)} !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25) !important;
+  }
+}
+
+.btn-secondary {
+  background-color: var(--custom-secondary) !important;
+  border-color: var(--custom-secondary) !important;
+  color: #000 !important;
+
+  &:hover {
+    background-color: #{darken($secondary, 10%)} !important;
+    border-color: #{darken($secondary, 10%)} !important;
+  }
+
+  &:focus,
+  &:active {
+    background-color: #{darken($secondary, 15%)} !important;
+    border-color: #{darken($secondary, 15%)} !important;
+  }
+}
+
+.btn-outline-secondary {
+  border-color: var(--custom-border-color) !important;
+  color: var(--custom-text-color) !important;
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--custom-hover-bg) !important;
+    border-color: var(--custom-border-color) !important;
+    color: var(--custom-text-color) !important;
+  }
+}
+
+/* Main Content with Dark Mode */
+.main-content {
+  padding: 2rem;
+  background-color: var(--custom-background-light);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--custom-primary);
+}
+
+.header-title h3 {
+  color: var(--custom-primary) !important;
+  font-weight: bold;
+  margin: 0;
+}
+
+.header-actions .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Meter Cards for Mobile */
+.meter-summary-card {
+  @extend .custom-card;
+  border-left: 4px solid var(--custom-secondary);
+}
+
+.meter-summary-card .card-body {
+  padding: 1.5rem;
+  background-color: var(--custom-card-bg);
+  color: var(--custom-text-color);
+}
+
+.meter-summary-card .card-text {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--custom-text-color);
+}
+
+.meter-summary-card .card-text strong {
+  color: var(--custom-primary) !important;
+  display: inline-block;
+  min-width: 120px;
+}
+
+/* Table Styles with Dark Mode */
+.meters-table {
+  width: 100%;
+  background-color: var(--custom-card-bg);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px var(--custom-shadow-light);
+  overflow: hidden;
+  border: 1px solid var(--custom-border-color);
+}
+
+.meters-table thead {
+  background-color: var(--custom-primary);
+}
+
+.meters-table thead th {
+  color: white !important;
+  padding: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border-bottom: 2px solid var(--custom-primary);
+}
+
+.meters-table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--custom-border-color);
+  vertical-align: middle;
+  color: var(--custom-text-color);
+  background-color: var(--custom-card-bg);
+}
+
+.meters-table tbody tr {
+  background-color: var(--custom-card-bg);
+  transition: background-color 0.2s ease;
+}
+
+.meters-table tbody tr:hover {
+  background-color: var(--custom-table-hover) !important;
+}
+
+/* Meter Row Styles */
+.meter-row {
+  background-color: var(--custom-card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--custom-shadow-light);
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  color: var(--custom-text-color);
+  border: 1px solid var(--custom-border-color);
+}
+
+.meter-row i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: var(--custom-secondary);
+}
+
+/* Meter Type Badges - Keep original colors but ensure visibility */
+.badge.WATER {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.badge.ELECTRICITY {
+  background-color: #ffc107 !important;
+  color: black !important;
+}
+
+.badge.GAS {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+/* Filter Form Styles */
+.limit-form {
+  background-color: var(--custom-card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--custom-shadow-light);
+  margin-bottom: 2rem;
+  border: 1px solid var(--custom-border-color);
+}
+
+.form-group label {
+  color: var(--custom-primary) !important;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Pagination Styles */
+.dataTable-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--custom-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--custom-shadow-light);
+  color: var(--custom-text-color);
+  border: 1px solid var(--custom-border-color);
+}
+
+/* Charging Icons */
+.charge-icon {
+  color: var(--custom-secondary);
+  margin-right: 0.5rem;
+}
+
+.meter-icon {
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+}
+
+.meter-icon.water {
+  color: #007bff;
+}
+
+.meter-icon.electricity {
+  color: #ffc107;
+}
+
+.meter-icon.gas {
+  color: #dc3545;
+}
+
+/* Dark Mode Specific Overrides */
+.dark-theme,
+[data-bs-theme="dark"] {
+
+  // Ensure all text inherits dark theme colors
+  .custom-card,
+  .meter-row,
+  .limit-form,
+  .dataTable-info,
+  .meters-table {
+    * {
+      color: var(--custom-text-color) !important;
+    }
+
+    // Preserve specific color elements
+    .badge {
+      color: inherit !important;
+    }
+
+    strong {
+      color: var(--custom-primary) !important;
+    }
+
+    .text-muted {
+      color: var(--custom-text-muted) !important;
+    }
+
+    .fw-medium {
+      color: var(--custom-secondary) !important;
+    }
+
+    .fw-bold {
+      color: var(--custom-text-color) !important;
+    }
+  }
+
+  // Form controls
+  .form-control,
+  .form-select,
+  ng-select {
+    background-color: var(--bs-input-bg) !important;
+    color: var(--bs-input-color) !important;
+    border-color: var(--bs-input-border-color) !important;
+
+    &:focus {
+      background-color: var(--bs-input-bg) !important;
+      color: var(--bs-input-color) !important;
+      border-color: var(--custom-primary) !important;
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25) !important;
+    }
+
+    &::placeholder {
+      color: var(--bs-text-muted) !important;
+    }
+  }
+
+  // ng-select specific styling
+  ng-select.ng-select {
+    &.custom {
+      .ng-select-container {
+        background-color: var(--bs-input-bg) !important;
+        border-color: var(--bs-input-border-color) !important;
+        color: var(--bs-input-color) !important;
+      }
+
+      .ng-placeholder {
+        color: var(--bs-text-muted) !important;
+      }
+
+      .ng-value-container .ng-value {
+        color: var(--bs-input-color) !important;
+      }
+    }
+
+    .ng-dropdown-panel {
+      background-color: var(--bs-dropdown-bg) !important;
+      border-color: var(--bs-dropdown-border-color) !important;
+
+      .ng-option {
+        background-color: var(--bs-dropdown-bg) !important;
+        color: var(--bs-dropdown-link-color) !important;
+
+        &.ng-option-highlighted {
+          background-color: var(--bs-dropdown-link-hover-bg) !important;
+          color: var(--bs-dropdown-link-color) !important;
+        }
+      }
+    }
+  }
+
+  // Table specific overrides
+  .table {
+    background-color: var(--custom-card-bg) !important;
+    color: var(--custom-text-color) !important;
+
+    td,
+    th {
+      background-color: var(--custom-card-bg) !important;
+      color: var(--custom-text-color) !important;
+      border-color: var(--custom-border-color) !important;
+    }
+
+    thead th {
+      background-color: var(--custom-primary) !important;
+      color: white !important;
+    }
+  }
+
+  // Pagination
+  .pagination {
+    .page-link {
+      background-color: var(--custom-card-bg) !important;
+      border-color: var(--custom-border-color) !important;
+      color: var(--custom-text-color) !important;
+
+      &:hover {
+        background-color: var(--custom-hover-bg) !important;
+        border-color: var(--custom-border-color) !important;
+        color: var(--custom-text-color) !important;
+      }
+
+      &.active {
+        background-color: var(--custom-primary) !important;
+        border-color: var(--custom-primary) !important;
+        color: white !important;
+      }
+    }
+  }
+
+  // Bootstrap utility overrides
+  .text-dark {
+    color: var(--custom-text-color) !important;
+  }
+
+  .text-black {
+    color: var(--custom-text-color) !important;
+  }
+
+  .bg-white {
+    background-color: var(--custom-card-bg) !important;
+  }
+
+  .border {
+    border-color: var(--custom-border-color) !important;
+  }
+
+  .text-center {
+    color: var(--custom-text-color) !important;
+  }
+
+  .border-bottom {
+    border-bottom-color: var(--custom-border-color) !important;
+  }
+
+  // Section and div overrides
+  section,
+  div,
+  span,
+  p,
+  td,
+  th,
+  label {
+    color: var(--custom-text-color) !important;
+  }
+
+  // Preserve icon colors
+  i.fa-solid {
+    color: inherit;
+  }
+
+  .charge-icon,
+  .meter-icon {
+    color: var(--custom-secondary) !important;
+  }
+
+  .meter-icon.water {
+    color: #007bff !important;
+  }
+
+  .meter-icon.electricity {
+    color: #ffc107 !important;
+  }
+
+  .meter-icon.gas {
+    color: #dc3545 !important;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
 
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-
-    h3 {
-      margin: 0;
-    }
-
-    .btn-group .btn {
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-    }
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
-  .bulk-charging-section {
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-
-    .limit-form {
-      .form-group {
-        ng-select {
-          .ng-select-container {
-            border-radius: 0.25rem;
-            border: 1px solid #ced4da;
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-
-            &:focus {
-              border-color: #276db5;
-              box-shadow: 0 0 0 0.2rem rgba(39, 109, 181, 0.25);
-              outline: none;
-            }
-          }
-        }
-      }
-    }
-
-    .meters-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-
-      th,
-      td {
-        padding: 1rem;
-        text-align: start;
-        border-bottom: 1px solid #e0e0e0;
-      }
-
-      th {
-        background-color: #f8f9fa;
-        font-weight: 600;
-        color: #495057;
-      }
-
-      .btn {
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-          transform: scale(1.05);
-        }
-      }
-    }
+  .custom-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .meter-summary-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease-in-out;
-    background-color: #fff;
+  .card-body .row {
+    display: block;
+    margin-bottom: 1rem;
+  }
 
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-title {
-      color: #276db5;
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .card-text {
-      margin-bottom: 0.5rem;
-
-      strong {
-        color: #495057;
-      }
-    }
-
-    .btn {
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .meter-row {
-    border: 1px solid #e0e0e0;
-    border-radius: 0.5rem;
     padding: 1rem;
-    margin-bottom: 1rem;
-    background-color: #f8f9fa;
-    align-items: center;
-
-    .meter-icon {
-      font-size: 1.5rem;
-      margin-inline-end: 0.5rem;
-    }
-
-    .badge {
-      font-size: 0.875rem;
-      padding: 0.5em 0.75em;
-
-      &.ELECTRICITY {
-        background-color: #F14A00; // Orange
-        color: #fff;
-      }
-
-      &.WATER {
-        background-color: #0093ce; // Light Blue
-        color: #fff;
-      }
-
-      &.GAS {
-        background-color: #69247C; // Purple
-        color: #fff;
-      }
-    }
   }
 
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
+  .meter-row .col-md-3 {
+    margin-bottom: 0.5rem;
+  }
+
+  // Mobile specific dark mode adjustments
+  .dark-theme,
+  [data-bs-theme="dark"] {
+    .meter-summary-card .card-text {
+      color: var(--custom-text-color) !important;
+    }
+
     .dataTable-info {
-      font-size: 0.9rem;
-      color: #6c757d;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
     }
+  }
+}
 
-    ngb-pagination ::ng-deep {
-      .page-item.active .page-link {
-        background-color: #276db5; // Blue color
-        border-color: #276db5; // Blue color
-      }
+/* Bulk Charging Section Specific Styles */
+.bulk-charging-section {
+  .table-responsive {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--custom-shadow-light);
+  }
 
-      .page-link {
-        color: #276db5; // Blue color
-      }
+  // Dark mode adjustments for section
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .table-responsive {
+      background-color: var(--custom-card-bg);
     }
+  }
+}
+
+/* Additional Dark Mode Component Styling */
+.dark-theme,
+[data-bs-theme="dark"] {
+
+  // App component integration
+  app-cib-payment {
+    background-color: var(--custom-card-bg);
+    color: var(--custom-text-color);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--custom-border-color);
+  }
+
+  // Ensure proper contrast for all interactive elements
+  .d-flex,
+  .row,
+  .col-12,
+  .col-md-3 {
+    color: var(--custom-text-color) !important;
   }
 }

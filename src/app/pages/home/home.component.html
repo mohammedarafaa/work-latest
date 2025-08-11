@@ -1,30 +1,52 @@
 <!-- Hero Section -->
-<section class="hero bg-light-gradient">
+<section class="hero" 
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
   <div class="container">
     <div class="row align-items-center min-vh-100 py-5">
       <div class="col-lg-6 order-lg-1 order-2">
-        <h1 class="display-4 fw-bold mb-4" translate>home.hero.title</h1>
-        <p class="lead mb-4" translate>home.hero.description</p>
+        <h1 class="display-4 text-primary fw-bold mb-4" 
+            [class.hero-title-dark]="isDarkMode"
+            translate>home.hero.title</h1>
+        <p class="lead mb-4 hero-description" 
+           [class.text-muted]="!isDarkMode"
+           [class.text-light]="isDarkMode" 
+           translate>home.hero.description</p>
         <div class="d-flex gap-3 flex-wrap">
-          <a routerLink="/Dashboard" class="btn btn-primary btn-lg px-4" translate>home.hero.getStarted</a>
-          <button (click)="scrollToSection('features')" class="btn btn-outline-primary btn-lg px-4" translate>home.hero.learnMore</button>
+          <a routerLink="/Dashboard" 
+             class="btn btn-primary btn-lg px-4 hero-btn-primary" 
+             [class.dark-theme]="isDarkMode"
+             translate>home.hero.getStarted</a>
+          <button (click)="scrollToSection('features')" 
+                  class="btn btn-outline-primary btn-lg px-4 hero-btn-outline" 
+                  [class.dark-theme]="isDarkMode"
+                  translate>home.hero.learnMore</button>
         </div>
       </div>
       <div class="col-lg-6 order-lg-2 order-1 mb-5 mb-lg-0">
-        <img src="assets/img/Pricing-Dashboard-Hero-Image.png" alt="Dashboard Preview" class="img-fluid hero-image animate-float">
+        <img src="assets/img/Pricing-Dashboard-Hero-Image.png" 
+             alt="Dashboard Preview" 
+             class="img-fluid hero-image animate-float"
+             [class.dark-image-filter]="isDarkMode">
       </div>
     </div>
   </div>
 </section>
 
 <!-- Stats Section -->
-<section class="stats-section py-5">
+<section class="stats-section py-5"
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
   <div class="container">
     <div class="row g-4 text-center">
-      <div class="col-md-4" *ngFor="let stat of stats">
-        <div class="stat-item">
-          <div class="stat-value display-4 fw-bold">{{stat.value}}</div>
-          <div class="stat-label h5">{{stat.label | translate}}</div>
+      <div class="col-md-6" *ngFor="let stat of stats">
+        <div class="stat-item" [class.dark-theme]="isDarkMode">
+          <div class="stat-value display-4 fw-bold"
+               [class.text-primary]="!isDarkMode"
+               [class.text-gradient-dark]="isDarkMode">{{stat.value}}</div>
+          <h3 class="stat-label h5"
+              [class.text-white]="!isDarkMode"
+              [class.text-light]="isDarkMode">{{ stat.label | translate }}</h3>
         </div>
       </div>
     </div>
@@ -32,19 +54,37 @@
 </section>
 
 <!-- Features Section -->
-<section id="features" class="section-padding bg-light">
+<section id="features" 
+         class="section-padding features-section"
+         [class.bg-light]="!isDarkMode"
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold" translate>home.features.title</h2>
-      <p class="lead mx-auto" style="max-width: 700px;" translate>home.features.description</p>
+      <h2 class="display-5 text-primary fw-bold section-title" 
+          [class.dark-theme]="isDarkMode"
+          translate>home.features.title</h2>
+      <p class="lead mx-auto section-description" 
+         style="max-width: 700px;" 
+         [class.text-muted]="!isDarkMode"
+         [class.text-light]="isDarkMode"
+         translate>home.features.description</p>
     </div>
     <div class="row g-4">
       <div class="col-md-6 col-lg-3" *ngFor="let feature of features">
-        <div class="feature-card">
+        <div class="feature-card h-100"
+             [class.dark-theme]="isDarkMode"
+             [class.feature-card-dark]="isDarkMode">
           <div class="card-body text-center p-4">
-            <i [class]="feature.icon + 'feature-icon mb-4 '"></i>
-            <h3 class="h4 mb-3 fw-bold">{{feature.title | translate}}</h3>
-            <p class="text-muted mb-0">{{feature.description | translate}}</p>
+            <i [class]="feature.icon + ' feature-icon mb-4'"
+               [class.text-warning]="!isDarkMode"
+               [class.text-gradient-primary]="isDarkMode"></i>
+            <h3 class="h4 mb-3 fw-bold feature-title"
+                [class.text-info]="!isDarkMode"
+                [class.text-primary-light]="isDarkMode">{{feature.title | translate}}</h3>
+            <p class="mb-0 feature-description"
+               [class.text-muted]="!isDarkMode"
+               [class.text-secondary-light]="isDarkMode">{{feature.description | translate}}</p>
           </div>
         </div>
       </div>
@@ -53,34 +93,171 @@
 </section>
 
 <!-- About Section -->
-<section id="about" class="section-padding">
+<section id="about" 
+         class="section-padding about-section"
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
   <div class="container">
+    <h2 class="display-5 text-primary text-center fw-bold mb-5 section-title"
+        [class.dark-theme]="isDarkMode" 
+        translate>home.about.title</h2>
     <div class="row align-items-center g-5">
       <div class="col-lg-6">
-        <img src="assets/img/company-employees-planning-task-brainstorming_74855-6316.avif" alt="About Us" class="img-fluid rounded-3 shadow about-image">
+        <div class="about-image-container">
+          <img src="assets/img/company-employees-planning-task-brainstorming_74855-6316.avif" 
+               alt="About Us" 
+               class="img-fluid rounded-3 shadow about-image"
+               [class.dark-image-shadow]="isDarkMode">
+        </div>
       </div>
       <div class="col-lg-6">
-        <h2 class="display-5 fw-bold mb-4" translate>home.about.title</h2>
-        <div class="feature-list">
-          <div class="feature-item">
-            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+        <div class="feature-list d-flex flex-column gap-4">
+          <div class="feature-item d-flex align-items-start gap-3"
+               [class.dark-theme]="isDarkMode"
+               [class.feature-item-dark]="isDarkMode">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1 feature-check-icon"
+               [class.text-gradient-primary]="isDarkMode"></i>
             <div>
-              <h3 class="h5 fw-bold mb-2">{{ 'home.about.reliable' | translate }}</h3>
-              <p class="text-muted mb-0">{{ 'home.about.reliableDescription' | translate }}</p>
+              <h3 class="h5 fw-bold mb-2 feature-item-title"
+                  [class.text-dark]="!isDarkMode"
+                  [class.text-primary-light]="isDarkMode">{{ 'home.about.reliable' | translate }}</h3>
+              <p class="mb-0 feature-item-description"
+                 [class.text-muted]="!isDarkMode"
+                 [class.text-secondary-light]="isDarkMode">{{ 'home.about.reliableDescription' | translate }}</p>
             </div>
           </div>
-          <div class="feature-item">
-            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+
+          <div class="feature-item d-flex align-items-start gap-3"
+               [class.dark-theme]="isDarkMode"
+               [class.feature-item-dark]="isDarkMode">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1 feature-check-icon"
+               [class.text-gradient-primary]="isDarkMode"></i>
             <div>
-              <h3 class="h5 fw-bold mb-2">{{ 'home.about.userFriendly' | translate }}</h3>
-              <p class="text-muted mb-0">{{ 'home.about.userFriendlyDescription' | translate }}</p>
+              <h3 class="h5 fw-bold mb-2 feature-item-title"
+                  [class.text-dark]="!isDarkMode"
+                  [class.text-primary-light]="isDarkMode">{{ 'home.about.userFriendly' | translate }}</h3>
+              <p class="mb-0 feature-item-description"
+                 [class.text-muted]="!isDarkMode"
+                 [class.text-secondary-light]="isDarkMode">{{ 'home.about.userFriendlyDescription' | translate }}</p>
             </div>
           </div>
-          <div class="feature-item">
-            <i class="bi bi-check-circle-fill text-primary ms-2 fs-4"></i>
+
+          <div class="feature-item d-flex align-items-start gap-3"
+               [class.dark-theme]="isDarkMode"
+               [class.feature-item-dark]="isDarkMode">
+            <i class="bi bi-check-circle-fill text-primary fs-4 mt-1 feature-check-icon"
+               [class.text-gradient-primary]="isDarkMode"></i>
             <div>
-              <h3 class="h5 fw-bold mb-2">{{ 'home.about.support' | translate }}</h3>
-              <p class="text-muted mb-0">{{ 'home.about.supportDescription' | translate }}</p>
+              <h3 class="h5 fw-bold mb-2 feature-item-title"
+                  [class.text-dark]="!isDarkMode"
+                  [class.text-primary-light]="isDarkMode">{{ 'home.about.support' | translate }}</h3>
+              <p class="mb-0 feature-item-description"
+                 [class.text-muted]="!isDarkMode"
+                 [class.text-secondary-light]="isDarkMode">{{ 'home.about.supportDescription' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Policy Section -->
+<section id="policies" 
+         class="section-padding policy-section"
+         [class.bg-light]="!isDarkMode"
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="text-center mb-5">
+      <h2 class="display-5 text-primary fw-bold section-title"
+          [class.dark-theme]="isDarkMode" 
+          translate>policy.title</h2>
+      <p class="lead mx-auto section-description" 
+         style="max-width: 700px;" 
+         [class.text-muted]="!isDarkMode"
+         [class.text-secondary-light]="isDarkMode"
+         translate>policy.description</p>
+    </div>
+
+    <!-- Service Activation Policy -->
+    <div class="policy-container mb-5">
+      <div class="policy-header mb-4">
+        <h3 class="h3 text-primary fw-bold border-start border-4 ps-3 mb-3 policy-title"
+            [class.border-primary]="!isDarkMode"
+            [class.border-gradient-primary]="isDarkMode">
+          {{ 'policy.serviceActivation.title' | translate }}
+        </h3>
+        <p class="mb-4 policy-intro"
+           [class.text-muted]="!isDarkMode"
+           [class.text-secondary-light]="isDarkMode">
+          {{ 'policy.serviceActivation.intro' | translate }}
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6" *ngFor="let section of policies.serviceActivation.sections">
+          <div class="policy-card hover-card h-100"
+               [class.dark-theme]="isDarkMode"
+               [class.policy-card-dark]="isDarkMode">
+            <div class="card-body p-4">
+              <div class="policy-icon mb-3">
+                <i [class]="section.icon + ' fs-2 policy-icon-element'"
+                   [class.text-primary]="!isDarkMode"
+                   [class.text-gradient-secondary]="isDarkMode"></i>
+              </div>
+              <h4 class="h5 mb-3 fw-bold policy-card-title"
+                  [class.text-dark]="!isDarkMode"
+                  [class.text-primary-light]="isDarkMode">
+                {{ section.title | translate }}
+              </h4>
+              <p class="mb-0 policy-card-content" 
+                 [class.text-muted]="!isDarkMode"
+                 [class.text-secondary-light]="isDarkMode"
+                 [innerHTML]="section.content | translate"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Refund Policy -->
+    <div class="policy-container">
+      <div class="policy-header mb-4">
+        <h3 class="h3 text-primary fw-bold border-start border-4 ps-3 mb-3 policy-title"
+            [class.border-primary]="!isDarkMode"
+            [class.border-gradient-primary]="isDarkMode">
+          {{ 'policy.refund.title' | translate }}
+        </h3>
+        <p class="mb-4 policy-intro"
+           [class.text-muted]="!isDarkMode"
+           [class.text-secondary-light]="isDarkMode">
+          {{ 'policy.refund.intro' | translate }}
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4" *ngFor="let section of policies.refund.sections">
+          <div class="policy-card hover-card h-100"
+               [class.dark-theme]="isDarkMode"
+               [class.policy-card-dark]="isDarkMode">
+            <div class="card-body p-4 text-center">
+              <div class="policy-icon mb-3">
+                <i [class]="section.icon + ' fs-2 policy-icon-element'"
+                   [class.text-primary]="!isDarkMode"
+                   [class.text-gradient-secondary]="isDarkMode"></i>
+              </div>
+              <h4 class="h5 mb-3 fw-bold policy-card-title"
+                  [class.text-dark]="!isDarkMode"
+                  [class.text-primary-light]="isDarkMode">
+                {{ section.title | translate }}
+              </h4>
+              <p class="mb-0 policy-card-content"
+                 [class.text-muted]="!isDarkMode"
+                 [class.text-secondary-light]="isDarkMode">
+                {{ section.content | translate }}
+              </p>
             </div>
           </div>
         </div>
@@ -90,39 +267,78 @@
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="section-padding bg-light">
+<section id="contact" 
+         class="contact-section"
+         [class.dark-theme]="isDarkMode"
+         [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <h2 class="display-5 fw-bold mb-4" translate>home.contact.title</h2>
-        <p class="lead mb-5 mx-auto" style="max-width: 700px;" translate>home.contact.description</p>
-      </div>
+    <!-- Section Header -->
+    <div class="contact-header">
+      <h2 class="display-5 text-primary section-title"
+          [class.dark-theme]="isDarkMode" 
+          translate>home.contact.title</h2>
+      <p class="contact-header-description"
+         [class.text-muted]="!isDarkMode"
+         [class.text-secondary-light]="isDarkMode" 
+         translate>home.contact.description</p>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card border-0 shadow-lg overflow-hidden">
-          <div class="card-body p-4 p-md-5">
-            <form class="contact-form">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label for="name" class="form-label fw-bold" translate>home.contact.nameLabel</label>
-                  <input type="text" id="name" class="form-control" placeholder="{{ 'home.contact.namePlaceholder' | translate }}">
-                </div>
-                <div class="col-md-6">
-                  <label for="email" class="form-label fw-bold" translate>home.contact.emailLabel</label>
-                  <input type="email" id="email" class="form-control" placeholder="{{ 'home.contact.emailPlaceholder' | translate }}">
-                </div>
-                <div class="col-12">
-                  <label for="message" class="form-label fw-bold" translate>home.contact.messageLabel</label>
-                  <textarea id="message" class="form-control" rows="5" placeholder="{{ 'home.contact.messagePlaceholder' | translate }}"></textarea>
-                </div>
-                <div class="col-12 mt-4">
-                  <button type="submit" class="btn btn-primary btn-lg w-100 py-3" translate>home.contact.sendMessage</button>
-                </div>
-              </div>
-            </form>
-          </div>
+    <div class="contact-info-section">
+      <!-- Email Contact Card -->
+      <div class="contact-info-card"
+           [class.dark-theme]="isDarkMode"
+           [class.contact-card-dark]="isDarkMode">
+        <div class="contact-icon"
+             [class.contact-icon-dark]="isDarkMode">
+          <i class="fas fa-envelope"></i>
         </div>
+        <h6 class="contact-card-title"
+            [class.text-dark]="!isDarkMode"
+            [class.text-primary-light]="isDarkMode" 
+            translate>home.contact.emailCardTitle</h6>
+        <a href="mailto:info-utilities@madkour.com.eg" 
+           class="contact-link"
+           [class.contact-link-dark]="isDarkMode">
+          info-utilities@madkour.com.eg
+        </a>
+        <p class="contact-subtitle" 
+           [class.text-muted]="!isDarkMode"
+           [class.text-secondary-light]="isDarkMode"
+           translate>home.contact.emailCardDesc</p>
+      </div>
+
+      <!-- Phone Contact Card -->
+      <div class="contact-info-card"
+           [class.dark-theme]="isDarkMode"
+           [class.contact-card-dark]="isDarkMode">
+        <div class="contact-icon"
+             [class.contact-icon-dark]="isDarkMode">
+          <i class="fas fa-phone"></i>
+        </div>
+        <h6 class="contact-card-title"
+            [class.text-dark]="!isDarkMode"
+            [class.text-primary-light]="isDarkMode" 
+            translate>home.contact.callCardTitle</h6>
+        <a href="tel:19718" 
+           class="contact-link"
+           [class.contact-link-dark]="isDarkMode">19718</a>
+      </div>
+      
+      <!-- Location Contact Card -->
+      <div class="contact-info-card"
+           [class.dark-theme]="isDarkMode"
+           [class.contact-card-dark]="isDarkMode">
+        <div class="contact-icon"
+             [class.contact-icon-dark]="isDarkMode">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h6 class="contact-card-title"
+            [class.text-dark]="!isDarkMode"
+            [class.text-primary-light]="isDarkMode"
+            translate>dashboardTemp.location</h6>
+        <h6 class="contact-card-address"
+            [class.text-dark]="!isDarkMode"
+            [class.text-secondary-light]="isDarkMode"
+            translate>home.contact.address</h6>
       </div>
     </div>
   </div>

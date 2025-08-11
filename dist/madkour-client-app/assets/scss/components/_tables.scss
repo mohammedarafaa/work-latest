@@ -1,21 +1,28 @@
 .table {
-	thead, tbody, tfoot, tr, td, th {
+
+	thead,
+	tbody,
+	tfoot,
+	tr,
+	td,
+	th {
 		border-color: $table-border-color;
 	}
-	
-	> :not(:last-child) > :last-child > * {
+
+	> :not(:last-child)> :last-child>* {
 		border-color: $table-border-color;
 	}
 }
 
 .card {
-	> .dataTables_wrapper .table.dataTable,
-	> .table,
-	> .table-responsive .table,
-	> .table-responsive-sm .table,
-	> .table-responsive-md .table,
-	> .table-responsive-lg .table,
-	> .table-responsive-xl .table {
+
+	>.dataTables_wrapper .table.dataTable,
+	>.table,
+	>.table-responsive .table,
+	>.table-responsive-sm .table,
+	>.table-responsive-md .table,
+	>.table-responsive-lg .table,
+	>.table-responsive-xl .table {
 		border-inline-end: 0;
 		border-bottom: 0;
 		border-inline-start: 0;
@@ -43,7 +50,7 @@
 		}
 	}
 
-	.card-header + .table {
+	.card-header+.table {
 		border-top: 0;
 	}
 }
@@ -63,14 +70,14 @@
 	}
 }
 
-.table > tbody > tr > td {
+.table>tbody>tr>td {
 	vertical-align: middle;
 }
 
-.card > .dataTables_wrapper {
+.card>.dataTables_wrapper {
 	.table.dataTable {
-	  margin-top: 0 !important;
-	  margin-bottom: 0 !important;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
 	}
 
 	.dataTables_info {
@@ -85,6 +92,3 @@
 .dt-bootstrap4 {
 	width: calc(100% - 2px);
 }
-
-
-

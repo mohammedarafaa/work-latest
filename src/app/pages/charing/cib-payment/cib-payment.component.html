@@ -1,43 +1,157 @@
-<section class="main-content">
-  <div class="row" *ngIf="!isLoadingPayment">
+<section class="main-content my-5">
+  <!-- Payment Mode Selector -->
+  <div class="row" *ngIf="!sessionId && !isInitPayment">
+    <div class="col-md-12 mb-3">
+      <div class="card mode-selector-card">
+        <div class="card-body">
+          <h6 class="card-title mb-3">
+            <i class="fa-solid fa-toggle-on me-2"></i>
+            {{ 'Payment_Mode' | translate }}
+          </h6>
+          <div class="btn-group w-100" role="group">
+            <input 
+              type="radio" 
+              class="btn-check" 
+              name="paymentMode" 
+              id="chargeMode" 
+              value="charge"
+              [checked]="paymentMode === 'charge'"
+              (change)="onPaymentModeChange('charge')">
+            <label class="btn btn-outline-primary" for="chargeMode">
+              <i class="fa-solid fa-calculator me-2"></i>
+              {{ 'Charge_Amount_Mode' | translate }}
+              <small class="d-block text-muted">{{ 'Enter_charge_amount_fees_calculated' | translate }}</small>
+            </label>
+
+            <input 
+              type="radio" 
+              class="btn-check" 
+              name="paymentMode" 
+              id="totalMode" 
+              value="total"
+              [checked]="paymentMode === 'total'"
+              (change)="onPaymentModeChange('total')">
+            <label class="btn btn-outline-success" for="totalMode">
+              <i class="fa-solid fa-money-bill me-2"></i>
+              {{ 'Total_Amount_Mode' | translate }}
+              <small class="d-block text-muted">{{ 'Enter_total_amount_charge_calculated' | translate }}</small>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charge Breakdown Card - Show when amount is entered -->
+  <div class="row" *ngIf="!sessionId && !isInitPayment && currentChargeScheme">
+    <div class="col-md-12 mb-3">
+      <div class="card charge-breakdown-card border-0 shadow">
+        <div class="card-header text-white" style="background-color: #001559;">
+          <h5 class="mb-0">
+            <i class="fa-solid fa-calculator text-warning me-2" style="color: #ff9203;"></i>
+            {{ 'Charge_Breakdown' | translate }}
+            <span class="badge ms-2" 
+                  [ngClass]="paymentMode === 'charge' ? 'bg-primary' : 'bg-success'">
+              {{ paymentMode === 'charge' ? ('Charge_Mode' | translate) : ('Total_Mode' | translate) }}
+            </span>
+          </h5>
+        </div>
+        <div class="card-body" style="background-color: #f8f9fa;">
+          <div class="row">
+            <div class="col-md-3 col-6">
+              <div class="charge-item mb-3">
+                <label class="text-muted">{{ 'Charge_Amount' | translate }}:</label>
+                <span class="fw-bold text-dark">
+                  {{ currentChargeScheme.chargeAmount | number:'1.2-2' }} EGP
+                  <i class="fa-solid fa-info-circle ms-1 text-info" 
+                     [title]="paymentMode === 'total' ? ('Calculated_from_total' | translate) : ('User_entered' | translate)"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="charge-item mb-3">
+                <label class="text-muted">{{ 'Fixed_Fee' | translate }}:</label>
+                <span class="fw-bold text-dark">{{ currentChargeScheme.fixedFee | number:'1.2-2' }} EGP</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="charge-item mb-3">
+                <label class="text-muted">{{ 'Variable_Fee' | translate }} (2.5%):</label>
+                <span class="fw-bold text-dark">{{ currentChargeScheme.varFee | number:'1.2-2' }} EGP</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="charge-item total-pay mb-3">
+                <label class="text-muted">{{ 'Total_Payment' | translate }}:</label>
+                <span class="fw-bold" style="color: #0031EB; font-size: 1.25rem;">
+                  {{ currentChargeScheme.totalPay | number:'1.2-2' }} EGP
+                  <i class="fa-solid fa-info-circle ms-1 text-info" 
+                     [title]="paymentMode === 'charge' ? ('Calculated_with_fees' | translate) : ('User_entered' | translate)"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Mode specific information -->
+          <div class="alert" [ngClass]="paymentMode === 'charge' ? 'alert-info' : 'alert-success'" role="alert">
+            <i class="fa-solid fa-lightbulb me-2"></i>
+            <span *ngIf="paymentMode === 'charge'">
+              {{ 'Charge_Mode_Info' | translate }}
+            </span>
+            <span *ngIf="paymentMode === 'total'">
+              {{ 'Total_Mode_Info' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Form Section -->
+  <div class="row" *ngIf="!sessionId && !isInitPayment">
     <div class="col-md-12">
       <div class="card charge-card">
         <div class="card-body">
           <form [formGroup]="form" autocomplete="off" (ngSubmit)="chargeMeter()">
             <div class="form-group">
-              <label for="amount">{{'Amount' | translate}}</label>
+              <label for="amount">{{ amountLabel }}</label>
               <div class="input-group">
-                <input 
-                  type="number" 
-                  id="amount" 
-                  formControlName="amount" 
+                <span class="input-group-text" 
+                      [ngClass]="paymentMode === 'charge' ? 'text-primary' : 'text-success'">
+                  <i [ngClass]="paymentMode === 'charge' ? 'fa-solid fa-calculator' : 'fa-solid fa-money-bill'"></i>
+                </span>
+                <input
+                  type="number"
+                  id="amount"
                   class="form-control"
-                  [min]="MIN_AMOUNT" 
-                  [max]="MAX_AMOUNT" 
-                  placeholder="{{'Enter_Amount' | translate}}"
-                  [class.is-invalid]="f['amount'].touched && f['amount'].errors"
-                  [class.is-valid]="f['amount'].touched && f['amount'].valid" />
+                  formControlName="amount"
+                  [placeholder]="amountPlaceholder"
+                  step="0.01"
+                />
                 <span class="input-group-text">LE</span>
               </div>
-              <small class="form-text text-muted">
-                {{'Amount_Hint' | translate: { min: MIN_AMOUNT, max: MAX_AMOUNT } }}
+              <small id="amountHelp" class="form-text text-muted">
+                {{ amountHint }}
               </small>
-              <div *ngIf="f['amount'].touched && f['amount'].errors" class="invalid-feedback d-block">
+              <div *ngIf="f['amount'].touched && f['amount'].errors" class="text-danger">
                 {{ amountErrorMessage }}
               </div>
             </div>
-            
+
             <div class="form-group mt-3 text-center">
-              <button 
-                type="submit" 
-                class="btn btn-primary w-50" 
-                [disabled]="!form.valid || isInitPayment || isLoading">
+              <button type="submit" 
+                      class="btn w-50" 
+                      [ngClass]="paymentMode === 'charge' ? 'btn-primary' : 'btn-success'"
+                      [disabled]="!form.valid || isInitPayment || isLoading">
                 <span *ngIf="!isInitPayment && !isLoading">
-                  {{'Charge_Now' | translate}}
+                  <i class="fa-solid fa-credit-card me-2"></i>
+                  {{ 'Pay' | translate }} 
+                  <span *ngIf="currentChargeScheme">{{ currentChargeScheme.totalPay | number:'1.2-2' }} EGP</span>
+                  <span *ngIf="!currentChargeScheme">{{ 'Charge_Now' | translate }}</span>
                 </span>
                 <span *ngIf="isInitPayment || isLoading">
                   <i class="fas fa-spinner fa-spin me-2"></i>
-                  {{'Processing' | translate}}
+                  {{ 'Processing' | translate }}
                 </span>
               </button>
             </div>
@@ -47,76 +161,133 @@
     </div>
   </div>
 
-  <!-- Enhanced Payment Error Display -->
-  <div class="row" *ngIf="paymentError">
+  <!-- Payment Initialization Loading -->
+  <div class="row" *ngIf="isInitPayment && !sessionId">
     <div class="col-md-12">
-      <div class="alert alert-danger" role="alert">
-        <div class="d-flex align-items-start">
-          <i class="fas fa-exclamation-triangle me-2 mt-1"></i>
-          <div class="flex-grow-1">
-            <strong>{{'Payment_Error_Title' | translate}}</strong>
-            <p class="mb-2">{{'Payment_Error_Message' | translate}}</p>
-            
-            <div class="d-flex gap-2 flex-wrap">
-              <button 
-                class="btn btn-sm btn-outline-danger" 
-                (click)="retryPayment()" 
-                [disabled]="!canRetry">
-                <i class="fas fa-redo me-1"></i>
-                {{'Retry' | translate}} 
-                <span *ngIf="currentRetryCount > 0">
-                  ({{currentRetryCount}}/{{maxRetryAttempts}})
-                </span>
-              </button>
-              
-              <button 
-                class="btn btn-sm btn-outline-secondary" 
-                (click)="clearErrorState()"
-                [disabled]="isInitPayment">
-                <i class="fas fa-times me-1"></i>
-                {{'Dismiss' | translate}}
-              </button>
-            </div>
-            
-            <small class="text-muted d-block mt-2" *ngIf="isRetryLimitReached">
-              <i class="fas fa-info-circle me-1"></i>
-              {{'Max_Retries_Reached' | translate}}
-            </small>
-          </div>
+      <div class="d-flex justify-content-center align-items-center py-5">
+        <div class="text-center">
+          <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+          <p class="mt-3 text-center">{{ 'Initializing_Payment' | translate }}</p>
+          <small class="text-muted" *ngIf="currentChargeScheme">
+            {{ 'Total_Amount' | translate }}: {{ currentChargeScheme.totalPay | number:'1.2-2' }} EGP<br>
+            {{ 'Charge_Amount' | translate }}: {{ currentChargeScheme.chargeAmount | number:'1.2-2' }} EGP
+          </small>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Payment Container with Enhanced Loading -->
-  <div class="row">
+  <!-- Payment Container -->
+  <div class="row" *ngIf="sessionId">
     <div class="col-md-12">
       <div class="card payment-card">
-        <div class="card-body">
-          <!-- Enhanced Loading State -->
-          <div *ngIf="isLoading || isInitPayment" class="text-center p-4">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">{{'Loading' | translate}}</span>
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-lock me-2"></i>
+            {{ 'Secure_Payment' | translate }}
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <!-- Loading State Inside Payment Container -->
+          <div *ngIf="isLoadingPayment" 
+               class="d-flex justify-content-center align-items-center py-5" 
+               style="min-height: 400px;">
+            <div class="text-center">
+              <i class="fas fa-credit-card fa-3x text-primary mb-3"></i>
+              <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="text-muted">{{ 'Loading_Secure_Payment' | translate }}</p>
+              <small class="text-muted">{{ 'Please_Wait_Loading_Payment_Form' | translate }}</small>
             </div>
-            <p class="mt-3 mb-0">
-              <span *ngIf="isInitPayment">{{'Initializing_Payment' | translate}}</span>
-              <span *ngIf="isLoading && !isInitPayment">{{'Loading_Payment' | translate}}</span>
-            </p>
           </div>
 
-          <!-- Payment Embed Container -->
-          <div 
-            id="embed-target" 
-            class="embed-target-box border rounded"
-            [style.min-height.px]="400"
-            [style.display]="(isLoading || isInitPayment) ? 'none' : 'block'">
-            <!-- Placeholder content when empty -->
-            <div *ngIf="!sessionId && !isLoading && !isInitPayment" class="d-flex align-items-center justify-content-center h-100 text-muted">
+          <!-- Main payment container -->
+          <div id="embed-target" 
+               class="embed-target-box"
+               [style.display]="isLoadingPayment ? 'none' : 'block'"
+               style="min-height: 400px; width: 100%; border: none;">
+            <!-- Fallback content -->
+            <div class="d-flex justify-content-center align-items-center h-100 py-5" 
+                 style="min-height: 400px;">
               <div class="text-center">
-                <i class="fas fa-credit-card fa-3x mb-3"></i>
-                <p>{{'Payment_Ready' | translate}}</p>
+                <i class="fas fa-credit-card fa-3x text-muted mb-3"></i>
+                <p class="text-muted">{{ 'Preparing_Payment_Form' | translate }}</p>
               </div>
             </div>
+          </div>
+        </div>
+        
+        <!-- Payment Status Indicator -->
+        <div class="card-footer">
+          <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+              <i class="fas fa-shield-alt text-success me-1"></i>
+              {{ 'Payment_Secured_By_Mastercard' | translate }}
+            </small>
+            <div class="text-end">
+              <small class="text-muted d-block">
+                {{ 'Charge_Amount' | translate }}: {{ currentChargeScheme?.chargeAmount | number:'1.2-2' }} LE
+              </small>
+              <small class="text-primary fw-bold" *ngIf="currentChargeScheme">
+                {{ 'Total_Payment' | translate }}: {{ currentChargeScheme.totalPay | number:'1.2-2' }} LE
+              </small>
+              <small class="text-info d-block">
+                {{ 'Mode' | translate }}: {{ paymentMode === 'charge' ? ('Charge_Mode' | translate) : ('Total_Mode' | translate) }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancel Payment Button -->
+      <div class="text-center mt-3">
+        <button class="btn btn-outline-secondary" 
+                (click)="cancelPayment()"
+                [disabled]="isInitPayment || isLoading">
+          <i class="fas fa-times me-2"></i>
+          {{ 'Cancel_Payment' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="row mt-3" *ngIf="paymentError">
+    <div class="col-md-12">
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+        <div class="flex-grow-1">
+          <h5 class="alert-heading mb-1">{{ 'Payment_Failed' | translate }}</h5>
+          <p class="mb-2">{{ 'Payment_Failed_Message' | translate }}</p>
+          
+          <!-- Retry Button -->
+          <div *ngIf="canRetry" class="mt-2">
+            <button class="btn btn-outline-danger btn-sm me-2" 
+                    (click)="retryPayment()"
+                    [disabled]="isInitPayment || isLoading">
+              <i class="fas fa-redo me-1"></i>
+              {{ 'Retry_Payment' | translate }} 
+              ({{ currentRetryCount }}/{{ maxRetryAttempts }})
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" 
+                    (click)="clearErrorState()">
+              <i class="fas fa-arrow-left me-1"></i>
+              {{ 'Back_To_Form' | translate }}
+            </button>
+          </div>
+          
+          <!-- Max Retries Reached -->
+          <div *ngIf="isRetryLimitReached" class="mt-2">
+            <p class="text-danger mb-2">
+              <i class="fas fa-exclamation-circle me-1"></i>
+              {{ 'Max_Retry_Attempts_Reached' | translate }}
+            </p>
+            <button class="btn btn-outline-secondary btn-sm" 
+                    (click)="clearErrorState()">
+              <i class="fas fa-arrow-left me-1"></i>
+              {{ 'Back_To_Form' | translate }}
+            </button>
           </div>
         </div>
       </div>

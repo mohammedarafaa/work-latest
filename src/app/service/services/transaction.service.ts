@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { HttpService } from '@service/shared/http.service';
-import { TransactionDTO } from '@models/transaction.dto';
-import { paging_$Searching } from '@models/Utils/Pagination';
+import { TransactionDTO } from '@model/models/transaction.dto';
+import { paging_$Searching } from '@model/Utils/Pagination';
 
 @Injectable({
   providedIn: 'root',

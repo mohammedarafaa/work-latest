@@ -1,22 +1,17 @@
 <app-alerts></app-alerts>
-<ng-scrollbar class="layout-scrollbar" visibility="hover" style="height: 100vh; overflow: auto">
   <app-navbar [isCollapsed]="isCollapsed" (isCollapseChanged)="onChangeCollapsed($event)"></app-navbar>
   <div class="wrapper">
-
-    <app-side-nav [isCollapsed]="isCollapsed"></app-side-nav>
-    <div class="main">
-
-
-
-      <main class="content">
-        <div class="container-fluid p-0">
-
-          <router-outlet></router-outlet>
-        </div>
-        <app-footer></app-footer>
-      </main>
-
+    <app-side-nav [isCollapsed]="isCollapsed" class="test"></app-side-nav>
+    <div class="main">  <!-- Optional class for easier CSS targeting -->
+      <ng-scrollbar class="layout-scrollbar" visibility="hover" style="height: 100%; overflow: auto;">
+        <main class="content">
+          <div class=" main-layout-container">
+            <router-outlet></router-outlet>
+          </div>
+          <app-footer></app-footer>
+        </main>
+      </ng-scrollbar>
     </div>
   </div>
+  
   <!-- </body> -->
-</ng-scrollbar>

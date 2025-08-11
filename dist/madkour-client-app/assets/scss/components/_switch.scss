@@ -1,5 +1,123 @@
-@mixin switch-variant($color) {
-  input:checked + label::before {
+// Switch variant mixin with dark mode support
+@mixin switch-variant($color, $dark-color: null) {
+  $final-dark-color: if($dark-color, $dark-color, $color);
+
+  input:checked+label::before {
     background-color: $color;
+    transition: background-color 0.3s ease;
+  }
+
+  // Dark mode switch variant
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    input:checked+label::before {
+      background-color: $final-dark-color !important;
+    }
+  }
+}
+
+// Complete switch component with dark mode support
+@mixin switch-base-styles() {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:focus+label {
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25);
+    }
+  }
+
+  label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bs-card-border-color, #ccc);
+    border-radius: 34px;
+    transition: all 0.3s ease;
+
+    &::before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: var(--bs-card-bg, white);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  input:checked+label {
+    background-color: var(--custom-primary, #001559);
+
+    &::before {
+      transform: translateX(26px);
+      background-color: white;
+    }
+  }
+
+  input:disabled+label {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Dark mode base styles
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    label {
+      background-color: var(--bs-card-border-color) !important;
+
+      &::before {
+        background-color: var(--bs-card-bg) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+      }
+    }
+
+    input:checked+label {
+      background-color: var(--custom-primary) !important;
+
+      &::before {
+        background-color: white !important;
+      }
+    }
+
+    input:focus+label {
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25) !important;
+    }
+  }
+}
+
+// Size variants for switches
+@mixin switch-size($width, $height, $slider-size: null) {
+  $final-slider-size: if($slider-size, $slider-size, $height - 8px);
+  $translate-distance: $width - $final-slider-size - 8px;
+
+  width: $width;
+  height: $height;
+
+  label {
+    border-radius: $height;
+
+    &::before {
+      height: $final-slider-size;
+      width: $final-slider-size;
+      left: 4px;
+      bottom: 4px;
+    }
+  }
+
+  input:checked+label::before {
+    transform: translateX($translate-distance);
   }
 }

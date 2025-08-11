@@ -1,0 +1,13 @@
+{
+  "production": true,
+  "apiUrl": "/MadkourPortal/api",
+  "_apiUrl": "/MadkourPortal/Api",
+  "mediaUrl": "/MadkourPortal/image?imagePath=",
+  "imagePlaceHolderUrl": "assets/img/image_placeholder.png",
+  "Mqqt_host": "68.183.221.11",
+  "Mqqt_port": 4200,
+  "Mqqt_Message": "MUMS_PORTAL_",
+  "App_Name": "MADKOUR-CLIENT",
+  "currentUser": "MADKOUR-CLIENT-$User",
+  "CurrentLang": "MADKOUR-CLIENT-$Lang"
+}

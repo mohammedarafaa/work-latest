@@ -2,19 +2,6 @@
   <div class="col-xl-4 col-md-5">
     <div class="card">
       <div class="d-flex flex-column align-items-center">
-        <form [formGroup]="form" autocomplete="off">
-          <label class="avatar profile-cover-avatar m-0" for="edit_img">
-            <img class="avatar-img w-100 h-50" [src]="getProfilePic()" alt="Profile Image" />
-            <input type="file" accept="image/*" id="edit_img" />
-            <button class="btn btn-outline-primary avatar-edit" placement="end" (click)="image.click()"
-              ngbTooltip="{{ 'Upload_Pro' | translate }}">
-              <i class="avatar-uploader-icon shadow-soft bi bi-camera text-primary"></i>
-              <!-- <i class=""></i> -->
-            </button>
-            <input #image formControlName="image" type="file" accept="image/*" multiple="false" hidden
-              (change)="onAttachmentSelect($event)" />
-          </label>
-        </form>
       </div>
       <div class="widget settings-menu p-2">
 

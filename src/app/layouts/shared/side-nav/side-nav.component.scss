@@ -1,1 +1,12 @@
+.sidebar-item.active>.sidebar-link,
+.sidebar-item .sidebar-link.active,
+.sidebar-item.active .sidebar-link:hover {
+    color: black;
+    background-color: white; // 
+    border-left: 4px solid #ff9203;
 
+    i,
+    svg {
+        color: white;
+    }
+}

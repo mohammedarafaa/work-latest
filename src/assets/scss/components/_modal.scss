@@ -1,11 +1,270 @@
-@mixin modal-variant($color) {
+// Modal variant mixin with dark mode support
+@mixin modal-variant($color, $dark-color: null, $text-color: white, $dark-text-color: null) {
+  $final-dark-color: if($dark-color, $dark-color, $color);
+  $final-text-color: if($text-color, $text-color, white);
+  $final-dark-text-color: if($dark-text-color, $dark-text-color, $final-text-color);
+
   .modal-content {
     background: $color;
-    color: color-yiq($color);
+    color: $final-text-color;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
   }
 
-  h1, h2, h3, h4, h5, h6,
-  .h1, .h2, .h3, .h4, .h5, .h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    color: $white !important;
+    transition: color 0.3s ease;
+  }
+
+  .modal-header {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     color: $white;
+  }
+
+  .modal-footer {
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  // Dark mode modal variant
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .modal-content {
+      background: $final-dark-color !important;
+      color: $final-dark-text-color !important;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
+      color: $white !important;
+    }
+
+    .modal-header {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+      color: $white !important;
+    }
+
+    .modal-footer {
+      background: rgba(0, 0, 0, 0.1) !important;
+      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+// Base modal styles with dark mode support
+@mixin modal-base-styles() {
+  .modal-content {
+    background-color: var(--bs-modal-bg, #ffffff);
+    color: var(--bs-modal-color, #212529);
+    border: 1px solid var(--bs-card-border-color, rgba(0, 0, 0, 0.125));
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .modal-header {
+    background-color: var(--bs-card-cap-bg, transparent);
+    border-bottom: 1px solid var(--bs-card-border-color, #dee2e6);
+    color: var(--bs-modal-color);
+    padding: 1rem 1.5rem;
+
+    .modal-title {
+      color: var(--bs-body-color);
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .btn-close {
+      background-color: transparent;
+      border: none;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+    color: var(--bs-modal-color);
+  }
+
+  .modal-footer {
+    background-color: var(--bs-card-cap-bg, transparent);
+    border-top: 1px solid var(--bs-card-border-color, #dee2e6);
+    padding: 1rem 1.5rem;
+
+    .btn {
+      margin-left: 0.5rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  // Dark mode base modal
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .modal-content {
+      background-color: var(--bs-modal-bg) !important;
+      color: var(--bs-modal-color) !important;
+      border-color: var(--bs-card-border-color) !important;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .modal-header {
+      background-color: var(--bs-card-cap-bg) !important;
+      border-bottom-color: var(--bs-card-border-color) !important;
+
+      .modal-title {
+        color: var(--bs-body-color) !important;
+      }
+
+      .btn-close {
+        filter: invert(1);
+      }
+    }
+
+    .modal-body {
+      color: var(--bs-modal-color) !important;
+    }
+
+    .modal-footer {
+      background-color: var(--bs-card-cap-bg) !important;
+      border-top-color: var(--bs-card-border-color) !important;
+    }
+  }
+}
+
+// Enhanced modal variant with more options
+@mixin modal-variant-enhanced($bg-color, $text-color: white, $header-bg: null, $footer-bg: null, $dark-bg: null, $dark-text: null) {
+  $final-header-bg: if($header-bg, $header-bg, rgba(255, 255, 255, 0.1));
+  $final-footer-bg: if($footer-bg, $footer-bg, rgba(255, 255, 255, 0.05));
+  $final-dark-bg: if($dark-bg, $dark-bg, $bg-color);
+  $final-dark-text: if($dark-text, $dark-text, $text-color);
+
+  .modal-content {
+    background: $bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .modal-header {
+    background: $final-header-bg;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: $text-color;
+
+    .modal-title {
+      color: $white !important;
+      font-weight: 600;
+    }
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .modal-body {
+    color: $text-color;
+
+    p,
+    span,
+    div,
+    label {
+      color: $text-color !important;
+    }
+  }
+
+  .modal-footer {
+    background: $final-footer-bg;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    color: $white !important;
+    transition: color 0.3s ease;
+  }
+
+  // Dark mode enhanced variant
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    .modal-content {
+      background: $final-dark-bg !important;
+      color: $final-dark-text !important;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .modal-header {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+
+      .modal-title {
+        color: $white !important;
+      }
+    }
+
+    .modal-body {
+      color: $final-dark-text !important;
+
+      p,
+      span,
+      div,
+      label {
+        color: $final-dark-text !important;
+      }
+    }
+
+    .modal-footer {
+      background: rgba(0, 0, 0, 0.1) !important;
+      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    }
   }
 }

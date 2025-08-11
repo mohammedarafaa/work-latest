@@ -67,7 +67,7 @@ export const getCurrentStatus = (name: string, type: String): any => {
  else if (type === 'TRANSACTION_STATUS') {
   statusList = TRANSACTION_STATUS;
 }
-  console.log(statusList);
+  // console.log(statusList);
 
   const status: any = statusList.find((status) => status.name === name);
   if (status) return status;

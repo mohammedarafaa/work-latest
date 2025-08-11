@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestComponent } from './test/test.component';
 import { HomeComponent } from './home/home.component';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout.component';
 import { AuthGuard } from '@service/_helpers/auth.guard';
@@ -30,6 +29,7 @@ import { FaqsFormComponent } from './faqs/faqs-form/faqs-form.component';
 import { CharingComponent } from './charing/charing.component';
 import { ChargeByCustomerServiceComponent } from './charge-by-customer-service/charge-by-customer-service.component';
 import { CibPaymentComponent } from './charing/cib-payment/cib-payment.component';
+import { PaymentSuccessComponent } from './payment-getway/payment-success/payment-success.component';
 
 const routes: Routes = [
   {
@@ -72,7 +72,6 @@ const routes: Routes = [
 
       { path: "Payment_CIb", component: CibPaymentComponent },
 
-      { path: "test", component: TestComponent },
 
       {
         path: "Customer",
@@ -96,6 +95,7 @@ const routes: Routes = [
       },
 
       { path: "Meter_Transactions", component: MeterTransactionsMainComponent },
+      { path: "Payment_Success/:paymentId", component: PaymentSuccessComponent },
 
       {
         path: "Property",

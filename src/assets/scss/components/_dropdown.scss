@@ -1,10 +1,12 @@
 .navbar-nav .dropdown-menu {
   box-shadow: $box-shadow;
+  padding: 1rem;
 }
 
+// Animation
 .dropdown .dropdown-menu.show {
   animation-name: dropdownAnimation;
-  animation-duration: .25s;
+  animation-duration: 0.25s;
   animation-iteration-count: 1;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
@@ -15,32 +17,51 @@
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
-    transform: translate(0);
+    transform: translateY(0);
   }
 }
 
+// Arrow icon – direction-sensitive
 .dropdown-toggle:after {
+  content: '';
   border: solid;
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 2px;
-  transform: rotate(45deg);
+  vertical-align: middle;
 }
 
+// RTL & LTR Direction
+:dir(ltr) .dropdown-toggle:after {
+  transform: rotate(45deg);
+  margin-left: 6px;
+}
+
+:dir(rtl) .dropdown-toggle:after {
+  transform: rotate(-135deg);
+  margin-right: 6px;
+}
+
+// Transition
 .dropdown-item {
   transition: $transition-appearance-fast;
 }
 
+// Drop direction auto
 .dropdown-menu {
   top: auto;
+  inset-inline-start: 0; // respects direction
 }
 
+// Large dropdown
 .dropdown-menu-lg {
-  min-width: $dropdown-min-width*2;
+  min-width: $dropdown-min-width * 2;
 }
 
+// Dropdown list group
 .dropdown .list-group .list-group-item {
   border-width: 0;
   border-bottom-width: 1px;
@@ -56,16 +77,44 @@
   }
 }
 
+// Header and Footer
 .dropdown-menu-header {
-  padding: $spacer*0.75;
+  padding: $spacer * 0.75;
   text-align: center;
   font-weight: $font-weight-bold;
   border-bottom: 1px solid $gray-300;
 }
 
 .dropdown-menu-footer {
-  padding: $spacer*0.5;
+  padding: $spacer * 0.5;
   text-align: center;
   display: block;
   font-size: $font-size-sm;
+}
+// Bootstrap Dropdown Override for RTL/LTR
+.dropdown-toggle::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  padding: 2px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+  transform-origin: center;
+}
+
+// Direction: LTR
+:dir(ltr) .dropdown-toggle::after {
+  transform: rotate(45deg); // Down-right arrow
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+// Direction: RTL
+:dir(rtl) .dropdown-toggle::after {
+  transform: rotate(-135deg); // Down-left arrow
+  margin-right: 0.5rem;
+  margin-left: 0;
 }

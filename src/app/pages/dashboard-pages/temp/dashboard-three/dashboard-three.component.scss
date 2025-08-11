@@ -14,10 +14,8 @@
   }
 
   .sidebar {
-    height: 100vh;
+    height: calc(100vh - 70px);
     background-color: #212529;
-    position: fixed;
-    padding-top: 0;
   }
 
   .sidebar .logo {

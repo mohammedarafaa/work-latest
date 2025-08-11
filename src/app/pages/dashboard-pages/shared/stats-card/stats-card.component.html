@@ -1,6 +1,6 @@
 <!-- Dashboard Quick Stats -->
 <div class="row stats-row">
-  <div class="col-md-3">
+  <div class="col-md-3 my-2">
     <div class="stat-card">
       <div class="stat-card-content">
         <div class="stat-icon">
@@ -13,11 +13,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="stat-card" (click)="navigateToMeterList('ELECTRICITY')">
+  <div class="col-md-3 my-2">
+    <div class="stat-card clickable" (click)="navigateToMeterList('ELECTRICITY')">
       <div class="stat-card-content">
-        <div class="stat-icon">
-          <i class="fas fa-bolt"></i>
+        <div class="stat-icon electricity">
+          <i class="fas fa-bolt electricity-icon"></i>
         </div>
         <div class="stat-info mx-2">
           <div class="stat-title">{{ 'dashboardTemp.electricityMeters' | translate }}</div>
@@ -26,11 +26,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="stat-card" (click)="navigateToMeterList('WATER')">
+  <div class="col-md-3 my-2">
+    <div class="stat-card clickable" (click)="navigateToMeterList('WATER')">
       <div class="stat-card-content">
-        <div class="stat-icon">
-          <i class="fas fa-tint"></i>
+        <div class="stat-icon water">
+          <i class="fas fa-tint water-icon"></i>
         </div>
         <div class="stat-info mx-2">
           <div class="stat-title">{{ 'dashboardTemp.waterMeters' | translate }}</div>
@@ -39,11 +39,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="stat-card" (click)="navigateToMeterList('GAS')">
+  <div class="col-md-3 my-2">
+    <div class="stat-card clickable" (click)="navigateToMeterList('GAS')">
       <div class="stat-card-content">
-        <div class="stat-icon">
-          <i class="fas fa-fire"></i>
+        <div class="stat-icon gas">
+          <i class="fas fa-fire gas-icon"></i>
         </div>
         <div class="stat-info mx-2">
           <div class="stat-title">{{ 'dashboardTemp.waterGas' | translate }}</div>

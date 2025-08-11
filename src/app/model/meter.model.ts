@@ -32,14 +32,15 @@ export interface MeterDTo {
   totalElements: number;
   numberOfElements: number;
 }
-export interface MeterSummery{
-  meterId: number
-  meterSerial: string
-  type: string
-  propertyNo: string
-  block: string
-  availableCredit: number
-  consumption: number
+export interface MeterSummery {
+  meterId: number;
+  meterSerial: string;
+  type: string;
+  propertyNo: string;
+  block: string;
+  availableCredit: number;
+  consumption: number;
+  meterReading:number
 }
 export interface MeterSummeryDTo {
   content: MeterSummery[];

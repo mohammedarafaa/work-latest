@@ -1,17 +1,22 @@
+// @import 'src/assets/scss/variables';
+// @import 'src/assets/scss/components/sidebar';
 .sidebar {
+  height: 100vh;
+  z-index: 1020;
+  top: 0;
+  padding-top: 75px;
   min-width: $sidebar-width;
   max-width: $sidebar-width;
   transition: $sidebar-transition;
-  // direction: ltr;
   background: $sidebar-bg;
-  height: 100vh;
-overflow-y: auto;
+  overflow-y:scroll;
 }
 
 .sidebar-content {
   transition: $sidebar-transition;
   display: flex;
   height: 100vh;
+  // padding-top:rem;
   flex-direction: column;
   background: $sidebar-bg;
   -webkit-user-select: none;
@@ -68,7 +73,7 @@ a.sidebar-link {
 .sidebar-item.active > .sidebar-link,
 .sidebar-item.active .sidebar-link:hover {
   color: $sidebar-link-active-color;
-  background: $sidebar-link-active-bg;
+  background: #fff;
   border-inline-start-color: $sidebar-link-active-border-left-color;
 
   i,

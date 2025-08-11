@@ -1,7 +1,10 @@
-<section class="main-content">
+<section class="main-content px-5">
   <div class="header">
     <div class="header-title">
-      <h3>{{ 'app_link.Charging' | translate }}</h3>
+      <h3>
+        <i class="fa-solid fa-bolt charge-icon"></i>
+        {{ 'app_link.Charging' | translate }}
+      </h3>
     </div>
     <div class="header-actions">
       <div class="btn-group">
@@ -21,7 +24,10 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
-                <label for="meterType">{{'charge.meterType' | translate}}</label>
+                <label for="meterType">
+                  <i class="fa-solid fa-gauge meter-icon"></i>
+                  {{'charge.meterType' | translate}}
+                </label>
                 <ng-select [items]="meterTypes" class="custom" placeholder="{{ 'meterType_place' | translate}}"
                   [ngClass]="{ 'is-invalid': f['meterType'].touched && f['meterType'].errors, 'is-valid': f['meterType'].valid }"
                   formControlName="meterType" (change)="onMeterTypeChange($event)">
@@ -32,47 +38,107 @@
         </div>
       </form>
 
-      <div class="table-responsive d-none d-md-block">
-        <table class="meters-table">
-          <thead>
+      <!-- Responsive table -->
+      <div class="table-responsive d-none px-5 d-md-block">
+        <table class="table table-bordered meters-table">
+          <thead class="thead-light">
             <tr>
-  
-              <th>{{'Property_Number' | translate}}</th>
-              <th>{{'Block' | translate}}</th>
-              <th>{{'Type' | translate}}</th>
-              <th>{{'consumption' | translate}}</th>
-              <th>{{'Available_Credit' | translate}}</th>
-              <th>{{'Action' | translate}}</th>
+              <th class="text-center">
+                <i class="fa-solid fa-home"></i> {{'Property_Number' | translate}}
+              </th>
+              <th class="text-center">
+                <i class="fa-solid fa-building"></i> {{'Block' | translate}}
+              </th>
+              <th class="text-center">
+                <i class="fa-solid fa-tag"></i> {{'Type' | translate}}
+              </th>
+              <th class="text-center">
+                <i class="fa-solid fa-chart-line"></i> {{'consumption' | translate}}
+              </th>
+              <th class="text-center">
+                <i class="fa-solid fa-wallet"></i> {{'Available_Credit' | translate}}
+              </th>
+              <th class="text-center">
+                <i class="fa-solid fa-bolt"></i> {{'Action' | translate}}
+              </th>
             </tr>
           </thead>
           <tbody *ngIf="meterList">
             <tr *ngFor="let meter of meterList?.content">
-  
-              <td>{{meter.propertyNo}}</td>
-              <td>{{meter.block}}</td>
-              <td>{{meter.type | translate}}</td>
-              <td>{{meter.consumption | number}}</td>
-              <td>{{meter.availableCredit | number}}</td>
-              <td>
-                <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+              <td class="text-center">{{meter.propertyNo}}</td>
+              <td class="text-center">{{meter.block}}</td>
+              <td class="text-center d-flex align-items-center justify-content-center">
+                <span class="badge d-inline-flex align-items-center" [ngClass]="meter.type">
+                  <i [ngClass]="getIcons(meter.type)" class="meter-icon me-2"></i>
+                  {{ meter.type | translate }}
+                </span>
+              </td>
+              <td class="text-center">{{meter.consumption | number}}</td>
+              <td class="text-center">
+                <span class="fw-bold">{{meter.availableCredit | number}} EGP</span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">
+                  <i class="fa-solid fa-charging-station"></i>
+                  {{'Charge' | translate}}
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
 
+      <!-- Mobile view for the table (cards layout) -->
       <div class="d-block d-md-none">
         <div class="row">
           <div class="col-12 mb-3" *ngFor="let meter of meterList?.content">
-            <div class="card meter-summary-card">
+            <div class="card meter-summary-card custom-card">
               <div class="card-body">
-                <p class="card-text"><strong>{{ 'Property_Number' | translate }}:</strong> {{ meter.propertyNo }}</p>
-                <p class="card-text"><strong>{{ 'Block' | translate }}:</strong> {{ meter.block }}</p>
-                <p class="card-text"><strong>{{ 'Type' | translate }}:</strong> {{ meter.type | translate }}</p>
-                <p class="card-text"><strong>{{ 'consumption' | translate }}:</strong> {{ meter.consumption | number }}</p>
-                <p class="card-text"><strong>{{ 'Available_Credit' | translate }}:</strong> {{ meter.availableCredit | number }}</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <strong>
+                      <i class="fa-solid fa-home"></i>
+                      {{ 'Property_Number' | translate }}:
+                    </strong> 
+                    {{ meter.propertyNo }}
+                  </div>
+                  <div>
+                    <span class="badge d-inline-flex align-items-center" [ngClass]="meter.type">
+                      <i [ngClass]="getIcons(meter.type)" class="meter-icon"></i>
+                      {{ meter.type | translate }}
+                    </span>
+                  </div>
+                </div>
+
+                <p class="card-text">
+                  <strong>
+                    <i class="fa-solid fa-building"></i>
+                    {{ 'Block' | translate }}:
+                  </strong> 
+                  {{ meter.block }}
+                </p>
+
+                <p class="card-text">
+                  <strong>
+                    <i class="fa-solid fa-chart-line"></i>
+                    {{ 'consumption' | translate }}:
+                  </strong> 
+                  {{ meter.consumption | number }}
+                </p>
+
+                <p class="card-text">
+                  <strong>
+                    <i class="fa-solid fa-wallet"></i>
+                    {{ 'Available_Credit' | translate }}:
+                  </strong> 
+                  <span class="fw-bold">{{ meter.availableCredit | number }} EGP</span>
+                </p>
+
                 <div class="d-flex justify-content-between mt-3">
-                  <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">{{'Charge' | translate}}</button>
+                  <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">
+                    <i class="fa-solid fa-charging-station"></i>
+                    {{'Charge' | translate}}
+                  </button>
                 </div>
               </div>
             </div>
@@ -81,8 +147,9 @@
       </div>
 
       <div class="row pt-2" *ngIf="meterList">
-        <div class="dataTable-info">
+        <div class="dataTable-info px-5">
           <span>
+            <i class="fa-solid fa-info-circle"></i>
             {{ 'DataTable_info' |
             translate : {
             from: (meterList.pageable.pageNumber * meterList.pageable.pageSize) +1 ,
@@ -106,19 +173,23 @@
       </button>
     </div>
 
-    <div class="row py-3 border-bottom meter-row align-items-center" [ngClass]="'meter-' + currentMeter.type">
+    <div class="row py-1 border-bottom meter-row align-items-center custom-card" [ngClass]="'meter-' + currentMeter.type">
       <div class="col-md-3">
-        <i [ngClass]="getIcons(currentMeter.type)"></i>
+        <i [ngClass]="getIcons(currentMeter.type)" class="meter-icon"></i>
         <strong>{{currentMeter.meterSerial}}</strong>
-
       </div>
       <div class="col-md-3">
-        <span class="badge" [ngClass]="currentMeter.type">{{currentMeter.type | translate}}</span>
+        <span class="badge d-inline-flex align-items-center" [ngClass]="currentMeter.type">
+          <i [ngClass]="getIcons(currentMeter.type)" class="meter-icon"></i>
+          {{currentMeter.type | translate}}
+        </span>
       </div>
       <div class="col-md-3">
+        <i class="fa-solid fa-map-marker-alt"></i>
         {{currentMeter.propertyNo}} - {{currentMeter.block}}
       </div>
       <div class="col-md-3">
+        <i class="fa-solid fa-wallet charge-icon"></i>
         <span class="fw-bold">{{currentMeter.availableCredit | number}} {{'EGP' | translate}}</span>
       </div>
     </div>

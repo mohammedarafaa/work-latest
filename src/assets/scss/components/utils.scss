@@ -1,3 +1,4 @@
+// Scrollbar with dark mode support
 .ng-scrollbar {
   --scrollbar-border-radius: 7px;
   --scrollbar-padding: 4px;
@@ -9,13 +10,27 @@
   --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
   --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
 
+  // Dark mode scrollbar
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    --scrollbar-thumb-color: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.5);
+    --scrollbar-thumb-active-color: rgba(255, 255, 255, 0.7);
+  }
 }
 
 .app-layout .layout-scrollbar {
   height: calc(100vh - 300px) !important;
   min-height: calc(100vh - 300px) !important;
+
+  // Dark mode layout scrollbar
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-body-bg);
+  }
 }
 
+// Dropdown positioning (unchanged as it's directional, not theme-related)
 body[dir=ltr] .dropdown-menu {
   text-align: start !important;
   float: inline-end !important;
@@ -25,6 +40,13 @@ body[dir=ltr] .dropdown-menu {
 
 footer {
   margin-top: auto;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    // background-color: var(--bs-card-bg);
+    color: var(--bs-body-color);
+    border-top-color: var(--bs-card-border-color);
+  }
 }
 
 body[dir=rtl] .dropdown-menu {
@@ -37,6 +59,11 @@ body[dir=rtl] .dropdown-menu {
 body[dir=rtl] .breadcrumb-item+.breadcrumb-item::before {
   float: inline-end !important;
   padding-inline-end: var(--bs-breadcrumb-item-padding-x);
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--bs-body-color);
+  }
 }
 
 body[dir=rtl] .dropdown-mega {
@@ -61,15 +88,32 @@ body[dir=ltr] .mdir-auto {
   margin-left: auto !important;
 }
 
+// Search form controls with dark mode
 .has-search .form-control {
   padding-inline-start: 2.375rem;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-input-bg) !important;
+    border-color: var(--bs-input-border-color) !important;
+    color: var(--bs-input-color) !important;
+
+    &:focus {
+      background-color: var(--bs-input-bg) !important;
+      border-color: var(--custom-primary) !important;
+      color: var(--bs-input-color) !important;
+      box-shadow: 0 0 0 0.25rem rgba(0, 21, 89, 0.25) !important;
+    }
+
+    &::placeholder {
+      color: var(--bs-text-muted) !important;
+    }
+  }
 }
 
 .has-search .form-control.padding-right {
   padding-inline-end: 2.375rem;
-  /* Padding for Arabic (RTL) */
   padding-inline-start: inherit;
-  /* Reset padding-inline-start */
 }
 
 .has-search .form-control-feedback {
@@ -82,10 +126,16 @@ body[dir=ltr] .mdir-auto {
   text-align: center;
   pointer-events: none;
   color: #aaa;
+  transition: color 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--bs-text-muted) !important;
+  }
 }
 
+// Filter dropdown with dark mode
 .filter-dropdown {
-
   .dropdown-item {
     display: block;
     padding: 0.3rem 1.625rem;
@@ -97,34 +147,57 @@ body[dir=ltr] .mdir-auto {
     border-inline-start-width: 3px;
     color: #222E3C;
     border-inline-start-color: transparent;
+    transition: all 0.3s ease;
 
     i {
       margin-inline-end: .25rem !important;
       font-size: 13px;
     }
+
+    // Dark mode filter dropdown
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      color: var(--bs-dropdown-link-color) !important;
+      background-color: var(--bs-dropdown-bg) !important;
+
+      &:hover,
+      &:focus {
+        color: var(--bs-dropdown-link-color) !important;
+        background-color: var(--bs-dropdown-link-hover-bg) !important;
+        border-inline-start-color: var(--custom-primary) !important;
+      }
+
+      &.active {
+        color: white !important;
+        background-color: var(--custom-primary) !important;
+        border-inline-start-color: var(--custom-secondary) !important;
+      }
+    }
   }
 }
 
-
+// File container with dark mode
 .file-container {
   display: flex;
   flex-direction: row;
   align-items: baseline;
-
 
   .wrapper {
     position: relative;
     height: 150px;
     width: 100%;
     border-radius: 10px;
-    background: $body-bg;
+    padding-top: 80px !important;
+    background: var(--bs-body-bg, $body-bg);
     border: 2px dashed #c2cdda;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    transition: all 0.3s ease;
 
     .content {
+      padding-top: 55px !important;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -150,25 +223,40 @@ body[dir=ltr] .mdir-auto {
       font-size: 60px;
       text-align: center;
       color: var(--bs-primary);
+      transition: color 0.3s ease;
     }
 
     .text {
       font-size: 18px;
       font-weight: 500;
       color: var(--bs-primary);
+      transition: color 0.3s ease;
     }
 
+    // Dark mode file container
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background: var(--bs-card-bg) !important;
+      border-color: var(--bs-card-border-color) !important;
+
+      .icon,
+      .text {
+        color: var(--custom-primary) !important;
+      }
+    }
   }
-
-
-
-
 }
 
-
+// Avatar components
 .avatar {
   width: 40px;
   height: 40px;
+  transition: all 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    border-color: var(--bs-card-border-color);
+  }
 }
 
 .avatar-title {
@@ -178,6 +266,12 @@ body[dir=ltr] .mdir-auto {
   align-items: center;
   justify-content: center;
   color: $primary;
+  transition: color 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--custom-primary) !important;
+  }
 }
 
 .data-table-logo {
@@ -185,10 +279,27 @@ body[dir=ltr] .mdir-auto {
   height: 60px;
 }
 
+.avatar-md {
+  height: 5rem;
+  width: 5rem;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    border-color: var(--bs-card-border-color);
+  }
+}
+
+// Feather icons
 .feather {
   width: 18px;
   height: 18px;
   stroke-width: 1.5;
+  transition: color 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--bs-body-color);
+  }
 }
 
 .feather-sm {
@@ -201,11 +312,25 @@ body[dir=ltr] .mdir-auto {
   height: 36px;
 }
 
+// List group items
 a.list-group-item {
   text-decoration: none;
+  transition: all 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-card-bg) !important;
+    color: var(--bs-body-color) !important;
+    border-color: var(--bs-card-border-color) !important;
+
+    &:hover {
+      background-color: var(--custom-hover-bg) !important;
+      color: var(--bs-body-color) !important;
+    }
+  }
 }
 
-/* text */
+/* Text utilities with dark mode support */
 .text-sm {
   font-size: $font-size-sm;
 }
@@ -217,21 +342,41 @@ a.list-group-item {
 b,
 strong {
   font-weight: $font-weight-bold;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--bs-body-color) !important;
+  }
 }
 
 pre.snippet {
   white-space: pre-wrap;
   word-wrap: break-word;
   text-align: justify;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-card-bg) !important;
+    color: var(--bs-body-color) !important;
+    border-color: var(--bs-card-border-color) !important;
+  }
 }
 
 a {
   cursor: pointer;
+  transition: color 0.3s ease;
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: var(--custom-primary) !important;
+
+    &:hover {
+      color: #{darken($primary, 15%)} !important;
+    }
+  }
 }
 
-/* end text */
-
-/* Sizing */
+/* Sizing utilities (unchanged as they're layout-related) */
 .min-vw-50 {
   min-width: 50vw !important;
 }
@@ -248,37 +393,21 @@ a {
   height: 50vh !important;
 }
 
-/* end Sizing */
-/* alert */
-
-/* end alert */
-/* text */
-
-/* end text */
-/* text */
-
-/* end text */
-/* text */
-
-/* end text */
-/* text */
-
-/* end text */
-
-
+// Auth wrapper with dark mode
 .Auth-wrapper {
   width: 100%;
   height: 100%;
-
-  background: $body-bg;
+  background: var(--bs-body-bg, $body-bg);
+  transition: background-color 0.3s ease;
 
   .auth-container {
-    background-color: $card-bg;
+    background-color: var(--bs-card-bg, $card-bg);
     border-radius: 20px;
     box-shadow: 0 0 13px 0 rgba(82, 63, 105, .05);
     display: flex;
-    // margin: 1.575rem auto;
     width: 100%;
+    transition: all 0.3s ease;
+    border: 1px solid var(--bs-card-border-color, transparent);
 
     .auth-right {
       align-items: center;
@@ -300,6 +429,11 @@ a {
       padding-bottom: 10px;
       padding-top: 10px;
       position: relative;
+
+      .dark-theme &,
+      [data-bs-theme="dark"] & {
+        color: var(--bs-text-muted) !important;
+      }
     }
 
     .or-line {
@@ -308,6 +442,11 @@ a {
       margin-bottom: 0;
       margin-top: 0;
       display: block;
+
+      .dark-theme &,
+      [data-bs-theme="dark"] & {
+        background-color: var(--bs-card-border-color) !important;
+      }
     }
 
     .span-or {
@@ -320,8 +459,13 @@ a {
       text-transform: uppercase;
       top: 0;
       width: 42px;
-    }
 
+      .dark-theme &,
+      [data-bs-theme="dark"] & {
+        background-color: var(--bs-card-bg) !important;
+        color: var(--bs-body-color) !important;
+      }
+    }
 
     .toggle-password {
       position: absolute;
@@ -330,75 +474,163 @@ a {
       transform: translateY(-50%);
       color: #757575;
       cursor: pointer;
+      transition: color 0.3s ease;
+
+      .dark-theme &,
+      [data-bs-theme="dark"] & {
+        color: var(--bs-text-muted) !important;
+
+        &:hover {
+          color: var(--bs-body-color) !important;
+        }
+      }
     }
 
     .pass-group {
       position: relative;
     }
 
+    // Dark mode auth container
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background-color: var(--bs-card-bg) !important;
+      border-color: var(--bs-card-border-color) !important;
+      box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.3) !important;
+    }
   }
 
   .cover-100 {
     width: 100%;
     height: 90vh;
     padding: 30px 10px;
-    background: $card-bg;
+    background: var(--bs-card-bg, $card-bg);
+    transition: background-color 0.3s ease;
+
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background: var(--bs-card-bg) !important;
+    }
+  }
+
+  // Dark mode auth wrapper
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background: var(--bs-body-bg) !important;
   }
 }
 
-
+// DataTable with dark mode
 .dataTable {
   .card {
     display: flex;
+    transition: all 0.3s ease;
 
     .card-body {
       min-height: 60vh;
+
+      .dark-theme &,
+      [data-bs-theme="dark"] & {
+        background-color: var(--bs-card-bg) !important;
+        color: var(--bs-body-color) !important;
+      }
+    }
+
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background-color: var(--bs-card-bg) !important;
+      border-color: var(--bs-card-border-color) !important;
     }
   }
 
   th,
   tr {
     text-align: center;
+    transition: all 0.3s ease;
+
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background-color: var(--bs-table-bg) !important;
+      color: var(--bs-table-color) !important;
+      border-color: var(--bs-table-border-color) !important;
+    }
   }
 }
 
+// Reading card with dark mode
 .reading-card {
-
-  background: $white;
+  background: var(--bs-card-bg, $white);
   -webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
   box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
   border-radius: 10px;
-  /* padding: 10px 35px; */
-  border: 1px solid $primary;
+  border: 1px solid var(--custom-primary, $primary);
+  transition: all 0.3s ease;
 
   .reading-card-title {
     font-size: 0.9rem;
-    color: $gray-700;
+    color: var(--bs-text-muted, $gray-700);
+    transition: color 0.3s ease;
   }
 
   .stat i {
-    color: $primary;
+    color: var(--custom-primary, $primary);
     font-size: 1.2rem;
+    transition: color 0.3s ease;
   }
 
   .card-value {
     font-size: 1.2rem;
-    color: $gray-700;
+    color: var(--bs-body-color, $gray-700);
+    transition: color 0.3s ease;
+  }
+
+  // Dark mode reading card
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background: var(--bs-card-bg) !important;
+    border-color: var(--custom-primary) !important;
+    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.3) !important;
+
+    .reading-card-title {
+      color: var(--bs-text-muted) !important;
+    }
+
+    .stat i {
+      color: var(--custom-primary) !important;
+    }
+
+    .card-value {
+      color: var(--bs-body-color) !important;
+    }
   }
 }
 
-.avatar-md {
-  height: 5rem;
-  width: 5rem;
-}
-
+// Badge with dark mode
 .badge-DT {
   margin: 0.2rem;
+  transition: all 0.3s ease;
 
   .btn-close {
     margin-inline-start: .25rem;
     color: inherit;
     font-size: 0.5rem;
     text-shadow: 0 1px 0 rgba(#000, .5);
+    transition: all 0.3s ease;
+
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      color: var(--bs-body-color) !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, .1) !important;
+
+      &:hover {
+        color: var(--bs-danger) !important;
+      }
+    }
+  }
+
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: var(--bs-card-bg) !important;
+    color: var(--bs-body-color) !important;
+    border-color: var(--bs-card-border-color) !important;
   }
 }

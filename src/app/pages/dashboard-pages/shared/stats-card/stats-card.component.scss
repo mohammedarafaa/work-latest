@@ -1,0 +1,450 @@
+/* Dashboard Stats Row */
+.stats-row {
+    margin-bottom: 2rem;
+  }
+  
+  /* Enhanced Stat Cards with Dark Mode Support */
+  .stat-card {
+    background: var(--bs-card-bg, #ffffff);
+    cursor: default;
+    border-radius: 0.5rem;
+    box-shadow: var(--bs-card-shadow, 0 4px 20px rgba(0, 0, 0, 0.05));
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--bs-card-border-color, transparent);
+  
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--custom-primary, #001559);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--bs-box-shadow-lg, 0 8px 25px rgba(0, 0, 0, 0.1));
+  
+      &::before {
+        opacity: 1;
+      }
+    }
+  
+    // Clickable stat cards
+    &.clickable {
+      cursor: pointer;
+  
+      &:hover {
+        transform: translateY(-5px);
+        
+        .stat-icon {
+          transform: scale(1.05);
+        }
+        
+        .stat-value {
+          color: var(--custom-primary, #001559);
+        }
+      }
+  
+      &:active {
+        transform: translateY(-2px);
+      }
+    }
+  
+    .stat-card-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--stat-icon-bg, rgba(0, 21, 89, 0.1));
+      border-radius: 12px;
+      padding: 0.75rem;
+      transition: all 0.3s ease;
+      
+      i {
+        font-size: 1.5rem;
+        color: var(--custom-primary, #001559);
+        transition: all 0.3s ease;
+      }
+  
+      // Meter type specific styling
+      &.electricity {
+        background: rgba(252, 139, 0, 0.1);
+        
+        .electricity-icon {
+          color: #FC8B00 !important;
+        }
+      }
+  
+      &.water {
+        background: rgba(0, 147, 206, 0.1);
+        
+        .water-icon {
+          color: #0093ce !important;
+        }
+      }
+  
+      &.gas {
+        background: rgba(0, 50, 209, 0.1);
+        
+        .gas-icon {
+          color: #0032D1 !important;
+        }
+      }
+    }
+  
+    .stat-info {
+      flex: 1;
+  
+      .stat-title {
+        color: var(--bs-text-muted, #6c757d);
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: color 0.3s ease;
+      }
+  
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--bs-body-color, #212529);
+        margin-bottom: 0;
+        line-height: 1;
+        transition: color 0.3s ease;
+      }
+    }
+  
+    // Dark mode stat card
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background: var(--bs-card-bg) !important;
+      border-color: var(--bs-card-border-color) !important;
+      box-shadow: var(--bs-card-shadow) !important;
+      
+      &:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+      }
+      
+      .stat-icon {
+        background: var(--stat-icon-bg, rgba(0, 21, 89, 0.2)) !important;
+        
+        i {
+          color: var(--custom-primary) !important;
+        }
+  
+        // Dark mode meter type icons - keep brand colors
+        &.electricity {
+          background: rgba(252, 139, 0, 0.2) !important;
+          
+          .electricity-icon {
+            color: #FC8B00 !important;
+          }
+        }
+  
+        &.water {
+          background: rgba(0, 147, 206, 0.2) !important;
+          
+          .water-icon {
+            color: #0093ce !important;
+          }
+        }
+  
+        &.gas {
+          background: rgba(0, 50, 209, 0.2) !important;
+          
+          .gas-icon {
+            color: #0032D1 !important;
+          }
+        }
+      }
+      
+      .stat-info {
+        .stat-title {
+          color: var(--bs-text-muted) !important;
+        }
+        
+        .stat-value {
+          color: var(--bs-body-color) !important;
+        }
+      }
+  
+      // Dark mode clickable hover effects
+      &.clickable:hover {
+        .stat-value {
+          color: var(--custom-primary) !important;
+        }
+      }
+    }
+  }
+  
+  /* Dashboard Stats Icons - Enhanced with Dark Mode */
+  .electricity-icon {
+    color: #FC8B00 !important;
+    transition: all 0.3s ease;
+    
+    // Maintain color in dark mode
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      color: #FC8B00 !important;
+    }
+  }
+  
+  .water-icon {
+    color: #0093ce !important;
+    transition: all 0.3s ease;
+    
+    // Maintain color in dark mode
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      color: #0093ce !important;
+    }
+  }
+  
+  .gas-icon {
+    color: #0032D1 !important;
+    transition: all 0.3s ease;
+    
+    // Maintain color in dark mode
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      color: #0032D1 !important;
+    }
+  }
+  
+  // Generic stat icon styling for non-specific types
+  .stat-icon:not(.electricity):not(.water):not(.gas) {
+    background: rgba(0, 21, 89, 0.1);
+    
+    i {
+      color: var(--custom-primary, #001559);
+    }
+    
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      background: rgba(0, 21, 89, 0.2) !important;
+      
+      i {
+        color: var(--custom-primary) !important;
+      }
+    }
+  }
+  
+  // Loading state for stat cards
+  .stat-card.loading {
+    .stat-value {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      color: transparent;
+      
+      &::after {
+        content: '---';
+        color: var(--bs-text-muted);
+      }
+    }
+    
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      .stat-value {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        
+        &::after {
+          color: var(--bs-text-muted) !important;
+        }
+      }
+    }
+  }
+  
+  @keyframes loading {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  // Error state for stat cards
+  .stat-card.error {
+    .stat-value {
+      color: #dc3545 !important;
+      
+      &::after {
+        content: 'Error';
+        font-size: 1rem;
+      }
+    }
+    
+    .stat-icon {
+      background: rgba(220, 53, 69, 0.1) !important;
+      
+      i {
+        color: #dc3545 !important;
+      }
+    }
+    
+    .dark-theme &,
+    [data-bs-theme="dark"] & {
+      .stat-value {
+        color: #dc3545 !important;
+      }
+      
+      .stat-icon {
+        background: rgba(220, 53, 69, 0.2) !important;
+        
+        i {
+          color: #dc3545 !important;
+        }
+      }
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 992px) {
+    .stat-card {
+      margin-bottom: 1rem;
+      padding: 1.25rem;
+      
+      .stat-icon {
+        width: 44px;
+        height: 44px;
+        
+        i {
+          font-size: 1.3rem;
+        }
+      }
+      
+      .stat-info .stat-value {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .stats-row {
+      margin-bottom: 1.5rem;
+    }
+    
+    .stat-card {
+      padding: 1rem;
+      
+      .stat-card-content {
+        gap: 0.75rem;
+      }
+      
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        padding: 0.5rem;
+        
+        i {
+          font-size: 1.2rem;
+        }
+      }
+      
+      .stat-info {
+        .stat-title {
+          font-size: 0.8rem;
+          margin-bottom: 0.25rem;
+        }
+        
+        .stat-value {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    
+    // Mobile dark mode adjustments
+    .dark-theme,
+    [data-bs-theme="dark"] {
+      .stat-card {
+        background: var(--bs-card-bg) !important;
+        border-color: var(--bs-card-border-color) !important;
+        
+        .stat-icon {
+          &.electricity {
+            background: rgba(252, 139, 0, 0.15) !important;
+          }
+          
+          &.water {
+            background: rgba(0, 147, 206, 0.15) !important;
+          }
+          
+          &.gas {
+            background: rgba(0, 50, 209, 0.15) !important;
+          }
+        }
+      }
+    }
+  }
+  
+  // RTL support
+  [dir="rtl"] {
+    .stat-card {
+      .stat-card-content {
+        flex-direction: row-reverse;
+      }
+      
+      .stat-info {
+        text-align: right;
+        
+        .stat-title {
+          text-align: right;
+        }
+      }
+    }
+  }
+  
+  // Accessibility improvements
+  .stat-card {
+    &.clickable {
+      &:focus-visible {
+        outline: 2px solid var(--custom-primary);
+        outline-offset: 2px;
+      }
+      
+      // Screen reader support
+      &[aria-label] {
+        position: relative;
+      }
+    }
+  }
+  
+  // Print styles
+  @media print {
+    .stat-card {
+      background: white !important;
+      box-shadow: none !important;
+      border: 1px solid #dee2e6 !important;
+      break-inside: avoid;
+      
+      &:hover {
+        transform: none !important;
+      }
+      
+      .stat-icon {
+        background: #f8f9fa !important;
+        
+        i {
+          color: #6c757d !important;
+        }
+      }
+    }
+  }
+  

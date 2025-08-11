@@ -34,6 +34,10 @@ export class DashboardService {
     return this.http.get<any>(`${environment.apiUrl}/profile/min-max-limits`);
     // /api/profile/min-max-limits
   }
+  getAllMeterList(): Observable<DataTableResponse<any>> {
+    return this.http.get<any>(`${environment.apiUrl}/meter-profile/list`);
+  }
+
    getAllMeterFilterByCustomer(paging: paging_$Searching, params: URLSearchParams): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/meter-transactions/filtered_meters?page=${paging.page - 1}&size=${paging.size}${paging.sortDirection}${params ? '&' + params?.toString() : ''}`);
     // /api/meter-transactions/filtered_meters

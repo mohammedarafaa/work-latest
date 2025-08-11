@@ -23,6 +23,7 @@
 
   .app-container {
     display: grid;
+    gap: 1rem;
     grid-template-columns: 240px 1fr;
     grid-template-rows: 64px 1fr;
     min-height: 100vh;

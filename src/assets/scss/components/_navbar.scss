@@ -1,7 +1,25 @@
 .navbar {
+  // position: fixed !important; // Change from 'relative' to 'fixed'
+    top: 0;
+    left: 0;
+    width: 100%; // Ensure it spans the full width
+    z-index: 1030; // High z-index to stay above content (Bootstrap default for navbars)
+    border-bottom: $navbar-border-bottom;
+    box-shadow: $navbar-box-shadow;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1.25rem;
+    -webkit-user-select: none;
+    -webkit-touch-callout: default;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: $navbar-brand-color;
   border-bottom: $navbar-border-bottom;
   box-shadow: $navbar-box-shadow;
-  position: relative;
+  position: fixed !important;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -171,5 +189,5 @@ color: $navbar-brand-color;
 }
 
 .navbar input {
-  // direction: ltr;
+  direction: ltr;
 }

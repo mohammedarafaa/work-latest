@@ -1,24 +1,202 @@
-@mixin button-color($color) {
+// Button color mixin with dark mode support
+@mixin button-color($color, $dark-color: null) {
+  $final-dark-color: if($dark-color, $dark-color, $color);
+
   &,
   &:focus,
   &.focus,
   &.disabled,
   &:disabled,
-  .show > &.dropdown-toggle {
+  .show>&.dropdown-toggle {
     color: $color;
+    transition: color 0.3s ease;
+  }
+
+  // Dark mode color override
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+
+    &,
+    &:focus,
+    &.focus,
+    &.disabled,
+    &:disabled,
+    .show>&.dropdown-toggle {
+      color: $final-dark-color !important;
+    }
   }
 }
 
-@mixin button-color-hover($color) {
+// Button hover color mixin with dark mode support
+@mixin button-color-hover($color, $dark-color: null) {
+  $final-dark-color: if($dark-color, $dark-color, $color);
+
   &:hover:not(:disabled):not(.disabled),
   &.hover:not(:disabled):not(.disabled) {
     color: $color;
+    transition: color 0.3s ease;
+  }
+
+  // Dark mode hover color override
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+
+    &:hover:not(:disabled):not(.disabled),
+    &.hover:not(:disabled):not(.disabled) {
+      color: $final-dark-color !important;
+    }
   }
 }
 
-@mixin button-color-active($color) {
+// Button active color mixin with dark mode support
+@mixin button-color-active($color, $dark-color: null) {
+  $final-dark-color: if($dark-color, $dark-color, $color);
+
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
     color: $color;
+    transition: color 0.3s ease;
+  }
+
+  // Dark mode active color override
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active {
+      color: $final-dark-color !important;
+    }
+  }
+}
+
+// Complete button variant mixin with background and borders
+@mixin button-variant-dark-mode($bg, $border, $color: white, $hover-bg: null, $hover-border: null, $hover-color: null, $active-bg: null, $active-border: null, $active-color: null, $dark-bg: null, $dark-border: null, $dark-color: null) {
+
+  // Set default values
+  $final-hover-bg: if($hover-bg, $hover-bg, darken($bg, 7.5%));
+  $final-hover-border: if($hover-border, $hover-border, darken($border, 10%));
+  $final-hover-color: if($hover-color, $hover-color, $color);
+
+  $final-active-bg: if($active-bg, $active-bg, darken($bg, 10%));
+  $final-active-border: if($active-border, $active-border, darken($border, 12.5%));
+  $final-active-color: if($active-color, $active-color, $color);
+
+  // Dark mode defaults
+  $final-dark-bg: if($dark-bg, $dark-bg, $bg);
+  $final-dark-border: if($dark-border, $dark-border, $border);
+  $final-dark-color: if($dark-color, $dark-color, $color);
+
+  // Light mode styles
+  background-color: $bg;
+  border-color: $border;
+  color: $color;
+  transition: all 0.3s ease;
+
+  // Light mode hover
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: $final-hover-bg;
+    border-color: $final-hover-border;
+    color: $final-hover-color;
+  }
+
+  // Light mode focus
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 0.25rem rgba($bg, 0.25);
+  }
+
+  // Light mode active
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show>&.dropdown-toggle {
+    background-color: $final-active-bg;
+    border-color: $final-active-border;
+    color: $final-active-color;
+  }
+
+  // Dark mode overrides
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    background-color: $final-dark-bg !important;
+    border-color: $final-dark-border !important;
+    color: $final-dark-color !important;
+
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: darken($final-dark-bg, 7.5%) !important;
+      border-color: darken($final-dark-border, 10%) !important;
+      color: $final-dark-color !important;
+    }
+
+    &:focus,
+    &.focus {
+      box-shadow: 0 0 0 0.25rem rgba($final-dark-bg, 0.25) !important;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show>&.dropdown-toggle {
+      background-color: darken($final-dark-bg, 10%) !important;
+      border-color: darken($final-dark-border, 12.5%) !important;
+      color: $final-dark-color !important;
+    }
+  }
+}
+
+// Outline button variant with dark mode support
+@mixin button-outline-variant-dark-mode($color, $color-hover: white, $active-background: $color, $active-border: $color, $dark-color: null, $dark-color-hover: null) {
+
+  $final-dark-color: if($dark-color, $dark-color, $color);
+  $final-dark-color-hover: if($dark-color-hover, $dark-color-hover, $color-hover);
+
+  // Light mode styles
+  color: $color;
+  border-color: $color;
+  background-color: transparent;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled):not(.disabled) {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 0.25rem rgba($color, 0.25);
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show>&.dropdown-toggle {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+
+  // Dark mode overrides
+  .dark-theme &,
+  [data-bs-theme="dark"] & {
+    color: $final-dark-color !important;
+    border-color: $final-dark-color !important;
+    background-color: transparent !important;
+
+    &:hover:not(:disabled):not(.disabled) {
+      color: $final-dark-color-hover !important;
+      background-color: $final-dark-color !important;
+      border-color: $final-dark-color !important;
+    }
+
+    &:focus,
+    &.focus {
+      box-shadow: 0 0 0 0.25rem rgba($final-dark-color, 0.25) !important;
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show>&.dropdown-toggle {
+      color: $final-dark-color-hover !important;
+      background-color: $final-dark-color !important;
+      border-color: $final-dark-color !important;
+    }
   }
 }

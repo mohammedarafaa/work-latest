@@ -26,3 +26,25 @@ export interface MeterTransactionDTo{
   totalElements: number,
   numberOfElements: number
 }
+export interface MeterTransactionFilter {
+  propertyId?: number;
+  meterId?: number;
+  meterType?: "GAS" | "WATER" | "ELECTRICITY";
+  compoundId?: number;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface FilterOption {
+  id: number;
+  name: string;
+  value?: any;
+}
+
+export interface MeterOption {
+  id: number;
+  serialNumber: string;
+  meterType: string;
+  propertyId?: number;
+  compoundId?: number;
+}

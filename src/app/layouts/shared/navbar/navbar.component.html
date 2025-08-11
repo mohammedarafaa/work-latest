@@ -1,137 +1,186 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<nav class="navbar navbar-expand navbar-light navbar-bg">
-<div class="container-fluid mx-1 mx-md-2 flex-column   justify-content-between w-100 flex-md-row">
- 
-
-<div class="flex-row  d-flex w-100 w-md-auto justify-content-between"> 
-  <a class="navbar-brand mx-2" (click)="onLogoClick()">
-    <img src="assets/img/logo.png" alt="Madkour" class=" w-100">
-  
-  </a>
-  <a class="sidebar-toggle d-flex ms-1 ms-md-5" (click)="collapse()">
-  
-    <i *ngIf="!isCollapsed" class="bi bi-list"></i>
-    <i *ngIf="isCollapsed" class="bi bi-x-lg"></i>
-  </a>
-</div>
-  
-
-  <div class="navbar-collapse  collapse">
-
-    <div class="w-25" *ngIf="!isMobile">
-      <ng-select [items]="allLinks" bindLabel="name" bindValue="name" (search)="onSearchPage($event)"
-        placeholder="{{'Search_Link' | translate}}" (change)="onSelectPage($event)" [clearable]="false"
-        [searchable]="true">
-  
-        <ng-template ng-option-tmp let-item="item">
-          <!-- <img [src]="item.icon" alt="icon" width="20" height="20" class="icon-class"> -->
-          <i [ngClass]="item.icon" alt="icon" width="20" height="20" class="icon-class"></i>
-          {{ item.name | translate }}
-        </ng-template>
-  
-        <ng-template ng-label-tmp let-item="item">
-          <i [ngClass]="item.icon" alt="icon" width="20" height="20" class="icon-class"></i>
-          {{ item.name | translate}}
-        </ng-template>
-      </ng-select>
-  
-  
+<nav class="navbar navbar-expand navbar-bg" 
+     [attr.dir]="isRTL ? 'rtl' : 'ltr'"
+     [class.dark-theme]="isDarkMode"
+     [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
+  <div class="container-fluid navbar-container">
+    
+    <!-- Left Section: Logo + Toggle + Search (new order) -->
+    <div class="navbar-left-section">
+      <!-- Logo comes FIRST -->
+      <a class="navbar-brand ms-lg-5" (click)="onLogoClick($event)">
+        <img src="./assets/img/image.svg" width="130" height="30" alt="Madkour">
+      </a>
+      
+      <!-- Toggle comes SECOND (after logo) -->
+      <a class="sidebar-toggle" (click)="collapse()">
+        <span class="toggler-wrapper">
+          <i *ngIf="isCollapsed" class="bi bi-list fa-2xl toggler-icon"
+             [class.text-black]="!isDarkMode"
+             [class.text-black]="isDarkMode"></i>
+          <i *ngIf="!isCollapsed" class="bi bi-x-lg fa-2xl toggler-icon"
+             [class.text-black]="!isDarkMode"
+             [class.text-black]="isDarkMode"></i>
+        </span>
+      </a>
+      
+      <!-- Search comes THIRD (after toggle) -->
+      <div class="navbar-search-inline d-none mx-5 d-lg-block">
+        <ng-select
+          [items]="filteredLinks"
+          bindLabel="translatedName"
+          bindValue="href"
+          (search)="onSearchPage($event)"
+          [placeholder]="'Search_Link' | translate"
+          (change)="onSelectPage($event)"
+          [clearable]="false"
+          [searchable]="true"
+          class="compact-search"
+          [class.dark-theme]="isDarkMode">
+          <ng-template ng-option-tmp let-item="item">
+            <i [ngClass]="item.icon" class="icon-class me-2"></i>
+            {{ item.translatedName }}
+          </ng-template>
+          <ng-template ng-label-tmp let-item="item">
+            <i [ngClass]="item.icon" class="icon-class me-2"></i>
+            {{ item.translatedName }}
+          </ng-template>
+        </ng-select>
+      </div>
     </div>
-  
-    <ul class="navbar-nav fs-3 nav-justified navbar-align">
 
+    <!-- Right Section: All Navigation Items in Single Line -->
+    <div class="navbar-right-section">
+      <ul class="navbar-nav navbar-nav-items">
+        
+        <!-- Theme Toggle -->
+        <li class="nav-item ms-3">
+          <button 
+            class="nav-btn theme-toggle" 
+            (click)="toggleDarkMode()"
+            [disabled]="isThemeLoading"
+            [attr.aria-label]="isDarkMode ? ('Switch to light mode' | translate) : ('Switch to dark mode' | translate)"
+            [title]="isDarkMode ? ('Switch to light mode' | translate) : ('Switch to dark mode' | translate)"
+            [attr.data-theme-status]="currentThemeStatus">
+            <i *ngIf="!isThemeLoading" 
+               [class]="isDarkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
+            <span class="btn-text d-none d-lg-inline">
 
-      <!-- Notation-->
+                {{(isDarkMode ? ('Dark' | translate) : ('Light' | translate)) }}
+            </span>
+          </button>
+        </li>
 
-      <li class="nav-item dropdown" ngbDropdown>
-          <a class="nav-icon dropdown-toggle"ngbDropdownToggle id="notificationsDropdown" data-toggle="dropdown">
-            <div class="position-relative">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell align-middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-              <span class="indicator">{{notificationList.length}}</span>
+        <!-- Rest of your navbar items remain the same -->
+<!-- Notifications -->
+<li class="nav-item dropdown notification-dropdown" ngbDropdown [placement]="isRTL ? 'bottom-start' : 'bottom-end'">
+  <a class="nav-btn dropdown-toggle notification-trigger" ngbDropdownToggle id="notificationsDropdown">
+    <i class="fas fa-bell"></i>
+    <span class="notification-count" *ngIf="hasUnreadNotifications">{{ displayNotificationCount }}</span>
+    <span class="btn-text d-none d-lg-inline">{{ 'Notifications' | translate }}</span>
+  </a>
+
+  <div class="dropdown-menu notification-dropdown-menu" 
+       aria-labelledby="notificationsDropdown" 
+       ngbDropdownMenu
+       [class.dark-theme]="isDarkMode">
+    
+    <div class="dropdown-menu-header" [class.dark-theme]="isDarkMode">
+      {{ unreadNotificationCount }} {{ 'New Notifications' | translate }}
+    </div>
+    
+    <!-- Notification List -->
+    <div class="list-group" *ngIf="notificationList && notificationList.length > 0">
+      <a class="list-group-item" 
+         [class.dark-theme]="isDarkMode"
+         ngbDropdownItem 
+         *ngFor="let notify of notificationList; trackBy: trackByNotificationId" 
+         (click)="markAsRead(notify)">
+        <div class="row g-0">
+          <div class="col-1">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="col-11">
+            <div class="notification-title">{{ notify.title }}</div>
+            <div class="notification-message">
+              <p>{{ notify.message }}</p>
             </div>
+            <div class="notification-time">{{ notify.timestamp }}</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    
+    <!-- Empty State -->
+    <div class="no-notifications" *ngIf="!notificationList || notificationList.length === 0">
+      <i class="fas fa-bell-slash"></i>
+      <div>{{ 'No notifications' | translate }}</div>
+    </div>
+  </div>
+</li>
+
+
+        <!-- Language Selector -->
+        <li class="nav-item dropdown py-lg-2" ngbDropdown [placement]="isRTL ? 'bottom-start' : 'bottom-end'">
+          <a class="nav-btn dropdown-toggle" ngbDropdownToggle id="languageDropdown">
+            <img [src]="getFlagImagePath()" 
+                 [alt]="currentLanguage || 'English'"
+                 loading="lazy"
+                 width="20"
+                 height="15"
+                 class="flag-img">
+            <span class="btn-text d-none d-lg-inline">{{ currentLanguage || 'EN' }}</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="notificationsDropdown" ngbDropdownMenu>
-            <div class="dropdown-menu-header">
-              {{notificationList.length}} {{'New Notifications' | translate}}
-            </div>
-            <div class="list-group">
-              <a  class="list-group-item" ngbDropdownItem *ngFor="let notify of notificationList">
-                <div class="row g-0 align-items-start">
-                  <div class="col-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                  </div>
-                  <div class="col-11">
-                    <div class="text-dark">{{notify.title}}</div>
-                    <!-- <p class="text-muted small mt-1">{{notify.message}}</p> -->
-                    <div class="parent message mx-2">
-
-                      <p class="text-muted small">
-                        {{notify.message}}
-                      </p>
-
-                    </div>
-                    <div class="text-muted small mt-1">{{notify.timestamp }}</div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-            <div class="dropdown-menu-footer">
-              <a class="text-muted">{{'Show all notifications' | translate}}</a>
-            </div>
+          
+          <div class="dropdown-menu" 
+               aria-labelledby="languageDropdown" 
+               ngbDropdownMenu
+               [class.dark-theme]="isDarkMode">
+            <a ngbDropdownItem 
+               class="dropdown-item" 
+               *ngFor="let lang of languageList"
+               (click)="changeLanguage(lang.value)" 
+               [class.active]="(currentLanguage || 'en') === lang.value"
+               [disabled]="(currentLanguage || 'en') === lang.value">
+              <img [src]="lang.image" 
+                   [alt]="lang.name" 
+                   width="20" 
+                   height="15"
+                   class="me-2">
+              {{lang.name | translate}}
+            </a>
           </div>
         </li>
-      <!-- Notation-->
-      <!-- language -->
-      <li class="nav-item dropdown px-1" ngbDropdown>
-        <a class="nav-flag dropdown-toggle" ngbDropdownToggle id="languageDropdown" data-bs-toggle="dropdown"
-          aria-expanded="true">
-          <img src="assets/img/flags/{{ currentLanguage }}.png" alt="{{currentLanguage}}">
-        </a>
-        <div class="dropdown-menu dropdown-menu-start" aria-labelledby="languageDropdown" data-bs-popper="static"
-          ngbDropdownMenu>
-          <a ngbDropdownItem class="dropdown-item" *ngFor="let lang of languageList"
-            (click)="changeLanguage(lang.value)" [disabled]="currentLanguage === lang.value ? true : false">
-            <img [src]="lang.image" alt="{{ lang.name }}" width="30" class="align-middle me-1">
-            <span class="align-middle">{{lang.name | translate}}</span>
-            <h5 *ngIf="isMobile" class="align-middle d-inline-block text-black">{{lang.name}}</h5>
-          </a>
-        </div>
-      </li>
 
+        <!-- Profile Menu -->
+        <li class="nav-item dropdown" ngbDropdown [placement]="isRTL ? 'bottom-start' : 'bottom-end'">
+          <a class="nav-btn dropdown-toggle profile-btn" id="profile" ngbDropdownToggle>
+            <img [src]="url" class="avatar" alt="profile" />
+            <span class="btn-text d-none d-sm-inline username-text">{{currentUser ? currentUser.username : ""}}</span>
+          </a>
 
-      <!-- profile -->
-      <li class="nav-item dropdown px-1" ngbDropdown>
-        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" ngbDropdownToggle data-bs-toggle="dropdown">
-          <i class="fe fe-settings"></i>
-        </a>
-        <a class="nav-link dropdown-toggle d-none d-sm-inline-block" id="profile" ngbDropdownToggle
-          data-bs-toggle="dropdown">
-          <img src="assets/img/avatar/avatar.png" class="avatar img-fluid rounded mr-1" alt="profile" />
-          <span>{{currentUser ? currentUser.username : ""}}</span>
-        </a>
-
-        <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="profile">
-          <a class="dropdown-item" [routerLink]="'/Profile'" ngbDropdownItem>
-            <i class="fa-solid fa-address-card mx-2"></i>
-            {{ "View_Profile" | translate }}
-          </a>
-          <a class="dropdown-item" [routerLink]="'/Profile/Edit_Profile'" ngbDropdownItem>
-            <i class="fa-solid fa-user-pen mx-2"></i>
-            {{ "Edit_Profile" | translate }}
-          </a>
-          <a class="dropdown-item" [routerLink]="'/Profile/Change_Password'" ngbDropdownItem>
-            <i class="fa-solid fa-key mx-2"></i>
-            {{ "Change_Password" | translate }}
-          </a>
-          <a class="dropdown-item" (click)="logout()">
-            <i class="fa-solid fa-arrow-right-from-bracket margin-inline-start-2 flip-on-rtl"></i>
-            {{ 'Logout' | translate }}
-          </a>
-        </div>
-      </li>
-      <!-- end profile -->
-    </ul>
+          <div class="dropdown-menu" 
+               ngbDropdownMenu 
+               aria-labelledby="profile"
+               [class.dark-theme]="isDarkMode">
+            <a class="dropdown-item" [routerLink]="'/Profile'" ngbDropdownItem>
+              <i class="fa-solid fa-address-card me-2"></i>
+              {{ "View_Profile" | translate }}
+            </a>
+            <a class="dropdown-item" [routerLink]="'/Profile/Edit_Profile'" ngbDropdownItem>
+              <i class="fa-solid fa-user-pen me-2"></i>
+              {{ "Edit_Profile" | translate }}
+            </a>
+            <a class="dropdown-item" [routerLink]="'/Profile/Change_Password'" ngbDropdownItem>
+              <i class="fa-solid fa-key me-2"></i>
+              {{ "Change_Password" | translate }}
+            </a>
+            <a class="dropdown-item" (click)="logout()">
+              <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+              {{ 'Logout' | translate }}
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 </nav>

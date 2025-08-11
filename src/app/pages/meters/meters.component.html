@@ -1,11 +1,11 @@
-<section class="container-fluid my-4">
+<section class="">
   <!-- Header Section with Return Button -->
   <div class="header-section mb-4 d-flex justify-content-between align-items-center">
     <h2 class="mb-0">{{ 'dashboardTemp.yourMeters' | translate }}</h2>
   </div>
 
   <!-- Filter Section -->
-  <div class="filter-section mb-4">
+  <div class="filter-section mb-4 p-4">
     <form class="row g-3 align-items-end" [formGroup]="form" autocomplete="off">
       <div class="col-12 col-md-6 col-lg-3">
         <label for="compoundId" class="form-label">{{ 'compound' | translate }}</label>
@@ -46,15 +46,19 @@
   </div>
 
   <!-- Meters Display Section -->
-  <div class="meters-section" *ngIf="meterList">
+  <div class="meters-section my-3" *ngIf="meterList">
     <div class="row g-3">
       <div class="col-lg-4 col-md-6" *ngFor="let meter of meterList.content">
-        <app-meter-card [currentMeter]="meter"></app-meter-card>
+        <app-meter-card 
+          [currentMeter]="meter"
+          [isViewBalanceLoading]="isViewBalanceLoading"
+          (viewBalanceClick)="onViewBalanceClick($event)">
+        </app-meter-card>
       </div>
     </div>
 
     <!-- Pagination -->
-    <div class="row gy-2" *ngIf="meterList">
+    <div class="row mt-4 gy-2" *ngIf="meterList">
       <div class="col">
         <span>
           {{ 'DataTable_info' |

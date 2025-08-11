@@ -129,6 +129,7 @@ $water-color: #3498db;
     }
   
     .meter-header {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       padding: 1rem;
       color: $white;
       display: flex;

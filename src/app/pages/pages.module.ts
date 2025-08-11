@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BidiModule } from '@angular/cdk/bidi';
 import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
-import { TestComponent } from './test/test.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutsModule } from '@layouts/layouts.module';
 import { NgbToastModule, NgbNavModule, NgbModalModule, NgbDropdownModule, NgbTooltipModule, NgbPaginationModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
@@ -45,12 +44,12 @@ import { ChargeByCustomerServiceComponent } from './charge-by-customer-service/c
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CibPaymentComponent } from './charing/cib-payment/cib-payment.component';
 import { RechargeFormComponent } from './charge-by-customer-service/recharge-form/recharge-form.component';
+import { PaymentSuccessComponent } from './payment-getway/payment-success/payment-success.component';
 // import { NotificationService } from '@service/shared/notifcation.service';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    TestComponent,
     ErrorMainComponent,
     DashboardComponent,
     DashboardTempComponent,
@@ -83,7 +82,8 @@ import { RechargeFormComponent } from './charge-by-customer-service/recharge-for
     CharingComponent,
     ChargeByCustomerServiceComponent,
     CibPaymentComponent,
-    RechargeFormComponent
+    RechargeFormComponent,
+    PaymentSuccessComponent
   ],
   imports: [
     CommonModule,

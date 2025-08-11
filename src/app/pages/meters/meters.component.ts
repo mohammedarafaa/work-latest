@@ -23,6 +23,8 @@ export class MetersComponent implements OnInit {
   meterList!: MeterSummeryDTo;
   isLoading = true;
   isApplyingFilters = false; // For button loading state
+  isViewBalanceLoading = false; // For view balance loading state
+  private isApplyingFiltersFlag = false; // Prevent form interference during filter processing
 
   // Filter form and data
   form: FormGroup = this.fb.group({});
@@ -60,19 +62,19 @@ export class MetersComponent implements OnInit {
       propertyId: [null],
       compoundId: [null],
     });
-    // Only update property dropdown on compound change
-    this.onChanges();
+    // Only watch compound changes to update property dropdown
+    this.onCompoundChange();
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-  // Only update property dropdown, not filters
-  onChanges(): void {
-    this.form.valueChanges.subscribe((val) => {
-      if (val.compoundId) {
-        this.getPropertyData(val.compoundId);
+  // Only watch compound changes, not all form changes
+  private onCompoundChange(): void {
+    this.form.get("compoundId")?.valueChanges.subscribe((compoundId) => {
+      if (compoundId && !this.isApplyingFiltersFlag) {
+        this.getPropertyData(compoundId);
       }
     });
   }
@@ -80,17 +82,26 @@ export class MetersComponent implements OnInit {
   // Apply filters only on button click
   applyFilters(): void {
     this.isApplyingFilters = true;
+    this.isApplyingFiltersFlag = true; // Prevent form changes during processing
     this.isLoading = true;
     this.loaderService.setSpinner(true);
 
     // Prepare filter parameters
     const temp = Object.entries(this.form.value)
-      .filter(([_, value]) => value !== undefined && value !== null && value !== "")
+      .filter(
+        ([_, value]) => value !== undefined && value !== null && value !== ""
+      )
       .map(([key, value]) => [key, value]);
     this.filterParam = new URLSearchParams(temp as string[][]);
 
     // Reload data
     this.pageChange();
+  }
+
+  // View Balance click handler
+  onViewBalanceClick(meter: MeterSummery): void {
+    this.isViewBalanceLoading = true;
+    this.getAllMeterSummery();
   }
 
   // Data loading methods
@@ -114,10 +125,34 @@ export class MetersComponent implements OnInit {
   }
 
   getPropertyData(compoundId: string): void {
+    // Store current property selection before refreshing
+    const currentPropertyId = this.form.get("propertyId")?.value;
+
     this._sharedService.getAllPropertyByCompoundId(compoundId).subscribe({
       next: (list: any) => {
         if (list.status === 200) {
           this.propertyList.next(list.data);
+
+          // Restore property selection if it exists in the new list
+          if (currentPropertyId && list.data) {
+            const propertyExists = list.data.some(
+              (property: any) =>
+                property.id === currentPropertyId ||
+                property.propertyId === currentPropertyId
+            );
+
+            if (propertyExists) {
+              // Use setTimeout to ensure dropdown is updated before setting value
+              setTimeout(() => {
+                this.form
+                  .get("propertyId")
+                  ?.setValue(currentPropertyId, { emitEvent: false });
+              }, 0);
+            } else {
+              // Clear property selection if it doesn't exist in new compound
+              this.form.get("propertyId")?.setValue(null, { emitEvent: false });
+            }
+          }
         } else {
           this.notificationService.WaringNotification(
             this.translate.instant(`Get_Status_Warning`)
@@ -143,25 +178,43 @@ export class MetersComponent implements OnInit {
       .getAllMeterFilter(this.paging, this.filterParam)
       .subscribe({
         next: (response: ApiResponse<MeterSummeryDTo>) => {
-          if (response.status === 200) {
-            this.meterList = response.data!;
-          } else {
-            this.notificationService.WaringNotification(
-              this.translate.instant(`Get_Meter_Error`)
-            );
-          }
+          this.handleMeterListResponse(response);
         },
         error: (err) => {
-          this.notificationService.ErrorNotification(
-            this.translate.instant(`${err.message}`)
-          );
+          this.handleMeterListError(err);
         },
         complete: () => {
-          this.isLoading = false;
-          this.isApplyingFilters = false;
-          this.loaderService.setSpinner(false);
+          this.finishLoading(); // Centralized cleanup
         },
       });
+  }
+
+  // Centralized cleanup method
+  private finishLoading(): void {
+    this.isLoading = false;
+    this.isApplyingFilters = false;
+    this.isViewBalanceLoading = false;
+    this.isApplyingFiltersFlag = false; // Reset flag to allow form changes
+    this.loaderService.setSpinner(false);
+  }
+
+  // Helper methods for better error handling
+  private handleMeterListResponse(
+    response: ApiResponse<MeterSummeryDTo>
+  ): void {
+    if (response.status === 200) {
+      this.meterList = response.data!;
+    } else {
+      this.notificationService.WaringNotification(
+        this.translate.instant(`Get_Meter_Error`)
+      );
+    }
+  }
+
+  private handleMeterListError(err: any): void {
+    this.notificationService.ErrorNotification(
+      this.translate.instant(`${err.message}`)
+    );
   }
 
   get Math() {

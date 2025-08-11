@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+// account-setting.component.ts - Updated to use simplified ThemeService
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
@@ -7,11 +7,12 @@ import {
   Validators,
 } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, combineLatest, takeUntil } from "rxjs";
 
 import { ProfileService } from "@service/profile.service";
 import { AlertService } from "@service/shared/alert.service";
 import { LanguageServiceService } from "@service/shared/language-service.service";
+import { ThemeService } from "@service/theme.service";
 
 @Component({
   selector: "app-account-setting",
@@ -20,22 +21,28 @@ import { LanguageServiceService } from "@service/shared/language-service.service
 })
 export class AccountSettingComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-  isLoading: boolean = true;
+  isLoading = true;
+  isRTL = false;
+  currentLanguageString = "en";
+  isDarkMode = false;
+  currentTheme: "light" | "dark" = "light";
+  isThemeLoading = false;
   private destroy$ = new Subject<void>();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
     private fb: FormBuilder,
     private notificationService: AlertService,
     private profileService: ProfileService,
     private translate: TranslateService,
-    private languageService: LanguageServiceService
+    public languageService: LanguageServiceService,
+    private themeService: ThemeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.createForm();
     this.getNotificationData();
-    this.subscribeToLanguageChanges();
+    this.subscribeToLanguageDirectionAndThemeChanges();
   }
 
   ngOnDestroy(): void {
@@ -43,57 +50,92 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private subscribeToLanguageChanges(): void {
-    this.languageService.getLanguageChangedObservable()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((lang: string) => {
-        // Update form language value when language changes externally
-        if (this.form) {
-          this.form.patchValue({
-            language: lang === "ar" ? "Arabic" : "English",
-          });
-        }
-      });
-  }
-
-  createForm(): void {
+  private createForm(): void {
     this.form = this.fb.group({
       pushNotifications: [false, Validators.required],
       emailNotifications: [false, Validators.required],
       smsNotifications: [false, Validators.required],
       billReminders: [false, Validators.required],
       usageAlerts: [false, Validators.required],
-      appearanceMode: [null, Validators.required],
-      language: [null, Validators.required],
+      appearanceMode: [this.getInitialThemeEnumValue(), Validators.required],
+      language: [this.getInitialLanguageEnumValue(), Validators.required],
     });
+  }
+
+  private getInitialThemeEnumValue(): string {
+    return this.themeService.currentTheme ? "DARK" : "LIGHT";
+  }
+
+  private getInitialLanguageEnumValue(): string {
+    const currentLang = this.languageService.activeCurrentLanguage;
+    return currentLang === "ar" ? "ARABIC" : "ENGLISH";
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
-  setFormValue(updatedItem: any): void {
+  private subscribeToLanguageDirectionAndThemeChanges(): void {
+    // Combine all observables for efficient subscription
+    combineLatest([
+      this.languageService.getLanguageChangedObservable(),
+      this.languageService.getDirectionChangedObservable(),
+      this.themeService.isDarkMode$,
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([language, direction, isDarkMode]) => {
+        console.log("AccountSettings: Language/Direction/Theme changed:", {
+          language,
+          direction,
+          isDarkMode,
+        });
+
+        // Update component state
+        this.isRTL = direction === "rtl";
+        this.currentLanguageString = language;
+        this.isDarkMode = isDarkMode;
+        this.currentTheme = isDarkMode ? "dark" : "light";
+        this.isThemeLoading = this.themeService.isThemeLoading;
+
+        // Update form with enum values
+        const enumLanguage = language === "ar" ? "ARABIC" : "ENGLISH";
+        const enumTheme = isDarkMode ? "DARK" : "LIGHT";
+
+        this.form.patchValue({
+          language: enumLanguage,
+          appearanceMode: enumTheme,
+        });
+
+        this.cdr.detectChanges();
+      });
+
+    // Initialize values
+    this.isRTL = this.languageService.isRTL();
+    this.currentLanguageString = this.languageService.activeCurrentLanguage;
+    this.isDarkMode = this.themeService.currentTheme;
+    this.currentTheme = this.isDarkMode ? "dark" : "light";
+    this.isThemeLoading = this.themeService.isThemeLoading;
+  }
+
+  private setFormValue(data: any): void {
     this.form.patchValue({
-      pushNotifications: updatedItem.pushNotifications,
-      emailNotifications: updatedItem.emailNotifications,
-      smsNotifications: updatedItem.smsNotifications,
-      billReminders: updatedItem.billReminders,
-      usageAlerts: updatedItem.usageAlerts,
-      appearanceMode: updatedItem.appearanceMode,
-      language: updatedItem.language,
+      pushNotifications: data.pushNotifications,
+      emailNotifications: data.emailNotifications,
+      smsNotifications: data.smsNotifications,
+      billReminders: data.billReminders,
+      usageAlerts: data.usageAlerts,
+      appearanceMode: data.appearanceMode || this.getInitialThemeEnumValue(),
+      language: data.language || this.getInitialLanguageEnumValue(),
     });
   }
 
-  getNotificationData(): void {
+  private getNotificationData(): void {
     this.profileService
       .getNotificationPreferences()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (value) => {
-          console.log(value);
-          if (value.data) {
-            this.setFormValue(value.data);
-          }
+          if (value.data) this.setFormValue(value.data);
           this.isLoading = false;
         },
         error: (err) => {
@@ -102,20 +144,7 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
           );
           this.isLoading = false;
         },
-        complete: () => {
-          this.isLoading = false;
-        },
       });
-  }
-
-  applyTheme(theme: string): void {
-    if (theme === "DARK") {
-      this.document.body.classList.add("dark-theme");
-      this.document.documentElement.classList.add("dark-theme");
-    } else {
-      this.document.body.classList.remove("dark-theme");
-      this.document.documentElement.classList.remove("dark-theme");
-    }
   }
 
   onUpdateSetting(): void {
@@ -128,25 +157,40 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
+    // Handle theme change using simplified service
+    const appearanceMode = this.form.value.appearanceMode;
+    const currentFormTheme = appearanceMode === "DARK";
+
+    // Only update theme if it's different from current state
+    if (currentFormTheme !== this.themeService.currentTheme) {
+      console.log(
+        "AccountSettings: Theme change detected, updating via simplified service"
+      );
+      this.themeService.setDarkMode(currentFormTheme, false); // Don't save to API yet, we'll do it in the main update
+    }
+
+    // Handle language change
+    this.handleLanguageChange(this.form.value.language);
+
+    // Update notification preferences (including theme)
     this.profileService
       .updateNotificationPreferences(this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (value: any) => {
-          console.log(value);
-
-          if (value.status === 200) {
+        next: (res: any) => {
+          if (res.status === 200) {
             this.notificationService.SuccessNotification(
-              this.translate.instant(value.message)
+              this.translate.instant(res.message)
             );
 
-            // Apply theme
-            this.applyTheme(this.form.value.appearanceMode);
-
-            // Handle language change
-            this.handleLanguageChange(this.form.value.language);
+            // After successful notification update, also save theme separately if needed
+            if (currentFormTheme !== this.isDarkMode) {
+              this.themeService.setDarkMode(currentFormTheme, true); // Now save to API
+            }
           } else {
-            this.notificationService.ErrorNotification(value.code);
+            this.notificationService.ErrorNotification(res.code);
+            // Revert theme if update failed
+            this.themeService.setDarkMode(this.isDarkMode, false);
           }
           this.isLoading = false;
         },
@@ -154,28 +198,65 @@ export class AccountSettingComponent implements OnInit, OnDestroy {
           this.notificationService.ErrorNotification(
             this.translate.instant("Update_Notification_Error")
           );
+          // Revert theme if update failed
+          this.themeService.setDarkMode(this.isDarkMode, false);
           this.isLoading = false;
         },
-        complete: () => (this.isLoading = false),
       });
   }
 
   private handleLanguageChange(language: string): void {
-    const normalizedLang = language.toLowerCase();
+    console.log("AccountSettings: Handling language change:", language);
 
-    if (normalizedLang === "arabic" || normalizedLang === "ar") {
-      this.languageService.toggleLanguage("ar");
-    } else if (normalizedLang === "english" || normalizedLang === "en") {
-      this.languageService.toggleLanguage("en");
+    let langCode = "";
+    if (
+      language.toLowerCase() === "en" ||
+      language.toLowerCase() === "english" ||
+      language === "ENGLISH"
+    ) {
+      langCode = "en";
+    } else if (
+      language.toLowerCase() === "ar" ||
+      language.toLowerCase() === "arabic" ||
+      language === "ARABIC"
+    ) {
+      langCode = "ar";
+    }
+
+    if (langCode && langCode !== this.currentLanguageString) {
+      console.log(
+        "AccountSettings: Sending language code to service:",
+        langCode
+      );
+
+      this.languageService.toggleLanguage(langCode);
+
+      const enumValue = langCode === "ar" ? "ARABIC" : "ENGLISH";
+      this.form.patchValue({ language: enumValue });
+
+      console.log("AccountSettings: Form updated with enum value:", enumValue);
+    } else {
+      console.warn("AccountSettings: Invalid language provided:", language);
     }
   }
 
-  // Utility methods for template
-  
+  // Helper method to manually toggle theme (for UI buttons if needed)
+  toggleTheme(): void {
+    if (!this.isThemeLoading) {
+      const newTheme = !this.isDarkMode;
+      const enumValue = newTheme ? "DARK" : "LIGHT";
 
-  
+      this.form.patchValue({ appearanceMode: enumValue });
+      this.themeService.setDarkMode(newTheme, true);
+    }
+  }
 
-  get currentLanguage(): string {
-    return this.languageService.activeCurrentLanguage;
+  // Getter for template use
+  get themeButtonText(): string {
+    return this.isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode";
+  }
+
+  get themeIcon(): string {
+    return this.isDarkMode ? "fas fa-sun" : "fas fa-moon";
   }
 }

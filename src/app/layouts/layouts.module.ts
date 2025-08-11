@@ -1,28 +1,48 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MainLayoutComponent } from './main-layout/main-layout.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { LoaderComponent } from './shared/loader/loader.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SideNavComponent } from './shared/side-nav/side-nav.component';
-import { RouterModule } from '@angular/router';
-import { NgbCollapseModule, NgbDropdownModule, NgbPopoverModule, NgbToastModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { AlertService } from '@service/shared/alert.service';
-import { AlertsComponent } from './shared/alerts/alerts.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { BlankLayoutsComponent } from './blank-layouts/blank-layouts.component';
-import { FormsModule } from '@angular/forms';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { LandingHeaderComponent } from './shared/landing-header/landing-header.component';
-import { LandingFooterComponent } from './shared/landing-footer/landing-footer.component';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DeletedModalComponent } from './shared/deleted-modal/deleted-modal.component';
-import { ConfirmModelComponent } from './shared/confirm-model/confirm-model.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+import { FormsModule } from "@angular/forms";
+
+// NgBootstrap modules
+import {
+  NgbCollapseModule,
+  NgbDropdownModule,
+  NgbPopoverModule,
+  NgbToastModule,
+  NgbTooltipModule,
+} from "@ng-bootstrap/ng-bootstrap";
+
+// Third-party modules
+import { TranslateModule } from "@ngx-translate/core";
+import { NgScrollbarModule } from "ngx-scrollbar";
+import { NgSelectModule } from "@ng-select/ng-select";
+
+// Layout components
+import { MainLayoutComponent } from "./main-layout/main-layout.component";
+import { BlankLayoutsComponent } from "./blank-layouts/blank-layouts.component";
+
+// Shared components
+import { FooterComponent } from "./shared/footer/footer.component";
+import { LoaderComponent } from "./shared/loader/loader.component";
+import { NavbarComponent } from "./shared/navbar/navbar.component";
+import { SideNavComponent } from "./shared/side-nav/side-nav.component";
+import { AlertsComponent } from "./shared/alerts/alerts.component";
+import { SpinnerComponent } from "./shared/spinner/spinner.component";
+import { LandingHeaderComponent } from "./shared/landing-header/landing-header.component";
+import { LandingFooterComponent } from "./shared/landing-footer/landing-footer.component";
+import { DeletedModalComponent } from "./shared/deleted-modal/deleted-modal.component";
+import { ConfirmModelComponent } from "./shared/confirm-model/confirm-model.component";
+
+// Services
+import { AlertService } from "@service/shared/alert.service";
 
 @NgModule({
   declarations: [
+    // Layout components
     MainLayoutComponent,
+    BlankLayoutsComponent,
+
+    // Shared components
     FooterComponent,
     SideNavComponent,
     LoaderComponent,
@@ -30,32 +50,47 @@ import { ConfirmModelComponent } from './shared/confirm-model/confirm-model.comp
     DeletedModalComponent,
     SpinnerComponent,
     NavbarComponent,
-    BlankLayoutsComponent,
     LandingHeaderComponent,
+    LandingFooterComponent,
     ConfirmModelComponent,
-    LandingFooterComponent
   ],
   imports: [
+    // Angular modules
     CommonModule,
-    NgScrollbarModule,
-    FormsModule,
     RouterModule,
-    NgbToastModule,
+    FormsModule,
+
+    // Third-party modules
+    NgScrollbarModule,
     TranslateModule,
+    NgSelectModule,
+
+    // NgBootstrap modules
+    NgbToastModule,
     NgbPopoverModule,
     NgbCollapseModule,
     NgbTooltipModule,
-    NgSelectModule,
-    NgbDropdownModule
+    NgbDropdownModule,
   ],
   exports: [
-    NgbTooltipModule,
+    // Export layout components for use in other modules
     MainLayoutComponent,
+    BlankLayoutsComponent,
+
+    // Export shared components
     AlertsComponent,
     SpinnerComponent,
     DeletedModalComponent,
-    LoaderComponent
+    LoaderComponent,
+    NavbarComponent,
+    LandingHeaderComponent,
+    LandingFooterComponent,
+
+    // Export NgBootstrap modules for use in other modules
+    NgbTooltipModule,
+    NgbDropdownModule,
+    NgbCollapseModule,
   ],
-  providers: [AlertService]
+  providers: [AlertService],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

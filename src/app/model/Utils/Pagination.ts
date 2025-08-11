@@ -8,7 +8,7 @@ export class paging_$Searching {
   title: string;
   search: string;
   constructor() {
-    this.page = 1;
+    this.page = 0;
     this.size = 8;
     this.sort = '';
     this.sortDirection = 'asc';

@@ -3,19 +3,17 @@ import { FAQ } from '@model/models/faq.model';
 import { ProfileService } from '@service/profile.service';
 
 @Component({
-  selector: 'app-support',
-  templateUrl: './support.component.html',
-  styleUrls: ['./support.component.scss']
+  selector: "app-support",
+  templateUrl: "./support.component.html",
+  styleUrls: ["./support.component.scss"],
 })
 export class SupportComponent implements OnInit {
   faqs: FAQ[] = [];
-  callCenterNumber = '+1234567890'; // Replace with actual number
-  supportEmail = 'support@example.com'; // Replace with actual email
+  callCenterNumber = " 19718"; // Replace with actual number
+  supportEmail = "info-utilities@madkour.com.eg"; // Replace with actual email
   activeFaqId: number | null = null;
 
-  constructor(
-    private profileService: ProfileService
-  ) {}
+  constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
     this.loadFAQs();
@@ -27,8 +25,8 @@ export class SupportComponent implements OnInit {
         this.faqs = data.data;
       },
       error: (error) => {
-        console.error('Error loading FAQs:', error);
-      }
+        console.error("Error loading FAQs:", error);
+      },
     });
   }
 

@@ -1,34 +1,72 @@
-
-    <div class="meter-card ">
-        <div class="meter-header" [ngClass]="currentMeter.type">
-            <div class="meter-type d-flex flex-column justify-content-center g-4 align-items-center text-white">
- 
-                <h4 class="text-black"> 
-                    <i class="text-white" [ngClass]="getIcons(currentMeter.type)">
-                    </i>
-                    {{ currentMeter.type| translate }}</h4>
-                <span class="type-text text-black">{{ currentMeter.meterSerial| translate }}</span>
-            </div>
+<div class="meter-card text-2xlg">
+  <div class="meter-header" [ngClass]="currentMeter.type">
+    <div class="meter-info-box">
+      <div class="meter-type-section">
+        <div class="meter-type d-flex align-items-center justify-content-center">
+          <i class="text-white me-3" [ngClass]="getIcons(currentMeter.type)"></i>
+          <span class="text-black text-3xl">{{ currentMeter.type | translate }}</span>
         </div>
-        <div class="meter-body">
-            <div class="meter-location">
-                <strong>{{ 'dashboardThree.location' | translate }}:</strong> {{currentMeter.block}},{{currentMeter.propertyNo}}
-            </div>
-            <div class="meter-balance">
-                <div class="balance-label">{{ 'currentBalance' | translate }}</div>
-                <div class="balance-amount">{{currentMeter.availableCredit | number}} EGP</div>
-            </div>
-            <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="meter-consumption">
-                <div class="consumption-label">{{ 'lastMonthUsage' | translate }}</div>
-                <div class="consumption-amount">{{currentMeter.consumption | number}} kWh</div>
-            </div>
-        </div>
-        <div class="meter-footer">
-            <button class="btn btn-outline-primary mx-2"><i class="fa fa-sync-alt"></i> {{ 'View_Balance' | translate}}</button>
-            <button   (click)="viewMeterHistory(currentMeter)"   class="btn btn-primary"><i class="fa fa-credit-card"></i> {{ 'View_History' | translate }}</button>
-        </div>
+      </div>
+      <div class="meter-serial-section">
+        <span class="meter-serial-text text-black">{{ currentMeter.meterSerial }}</span>
+      </div>
     </div>
+  </div>
+  
+  <div class="meter-body">
+    <!-- Location Section with Border -->
+    <div class="location-section">
+      <div class="location-content d-flex justify-content-between align-items-center">
+        <span class="location-label">{{ 'dashboardThree.location' | translate }}:</span>
+        <span class="location-value">{{ currentMeter.block }}, {{ currentMeter.propertyNo }}</span>
+      </div>
+    </div>
+    
+    <!-- Current Balance Section with Border -->
+    <div class="balance-section">
+      <div class="balance-content d-flex flex-row justify-content-between align-items-center">
+        <div class="balance-label">{{ 'currentBalance' | translate }}</div>
+        <div class="balance-value">{{ currentMeter.availableCredit | number }} {{ 'EGP' | translate }}</div>
+      </div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="progress-section">
+      <div class="progress">
+        <div class="progress-bar bg-success"
+             role="progressbar"
+             [style.width.%]="getProgressWidth(currentMeter.availableCredit)"
+             [attr.aria-valuenow]="currentMeter.availableCredit"
+             aria-valuemin="0"
+             aria-valuemax="1000">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Last Month Usage Section with Border -->
+    <div class="consumption-section">
+      <div class="consumption-content d-flex justify-content-between align-items-center">
+        <span class="consumption-label">{{ 'Meter_Reading' | translate }}</span>
+        <span class="consumption-value">
+          {{ currentMeter.meterReading | number }} {{ getUnitOfMeasure(currentMeter.type) }}
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="meter-footer">
+    <!-- <button class="btn btn-view-balance"
+            (click)="onViewBalance(currentMeter)"
+            [disabled]="isViewBalanceLoading">
+      <span *ngIf="isViewBalanceLoading" class="spinner-border spinner-border-sm me-2"></span>
+      <i *ngIf="!isViewBalanceLoading" class="fas fa-eye me-2"></i>
+      {{ 'viewBalance' | translate }}
+    </button> -->
+    
+    <button class="btn btn-charge"
+            (click)="onCharge(currentMeter)">
+      <i class="fas fa-bolt me-2"></i>
+      {{ 'Charge' | translate }}
+    </button>
+  </div>
+</div>

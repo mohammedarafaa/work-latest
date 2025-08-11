@@ -51,22 +51,27 @@ export class PaymentComponent implements OnInit {
     });
 
     // Load billing history
-    this.profileService.getTransactionHistory(new paging_$Searching() , new URLSearchParams()).subscribe({
-      next: (response) => {
-        if(response.status === 200){
-          const result = response.data?.content!;
-          this.meterTransactionHistory = result.slice(0, 4);
-        }else{
-          this.meterTransactionHistory = [];
-        }
-      },
-      error: (error) => {
-        this.alertService.ErrorNotification(this.translate.instant('Error_Loading_Transaction'));
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
-    });
+    this.profileService
+      .getTransactionHistory(new paging_$Searching(), null)
+      .subscribe({
+        next: (response) => {
+          if (response.status === 200) {
+            const result = response.data?.content!;
+            this.meterTransactionHistory = result.slice(0, 4);
+          } else {
+            this.meterTransactionHistory = [];
+          }
+        },
+        error: (error: any) => {
+          this.alertService.ErrorNotification(
+            this.translate.instant("Error_Loading_Transaction")
+          );
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
+    
   }
 
   getCardIcon(cardType: string): string {

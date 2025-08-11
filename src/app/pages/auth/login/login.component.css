@@ -4,16 +4,16 @@
   align-items: center;
   justify-content: center;
   background-color: #f0f2f5;
-  padding: 2rem 0;
+  padding: 2rem 1rem; 
 }
 
 .Auth-wrapper .auth-container {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
   padding: 2.5rem;
   width: 100%;
-  max-width: 450px;
+  max-width: 550px; 
   margin: auto;
 }
 
@@ -152,28 +152,23 @@
   color: #fff;
 }
 
-.Auth-wrapper .cover-100 {
-  max-width: 100%;
-  height: auto;
-}
+/* Removed .cover-100 as it's no longer needed without the image */
 
+/* Refined media queries for better adaptivity */
 @media (max-width: 991.98px) {
-  .Auth-wrapper .col-md-8 {
-    display: none;
-  }
-
-  .Auth-wrapper .col-md-4 {
-    width: 100%;
-    max-width: 450px;
-  }
-
   .Auth-wrapper {
-    padding: 1rem 0;
+    padding: 1.5rem 1rem;
   }
 }
 
 @media (max-width: 576px) {
   .Auth-wrapper .auth-container {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem; 
+    max-width: 100%; 
+    border-radius: 0; 
+  }
+
+  .Auth-wrapper .auth-container .btn-lg {
+    padding: 0.75rem 1rem; 
   }
 }

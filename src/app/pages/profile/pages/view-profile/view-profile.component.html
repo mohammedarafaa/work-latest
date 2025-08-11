@@ -1,81 +1,89 @@
-<div class="card">
-  <div class="card-header">
-    <h2 class="card-title text-primary">{{ "app_link.Profile_info" | translate }}</h2>
-  </div>
-  <div class="card-body" *ngIf="currentUser">
-    <div id="about-me">
-      <div class="profile-personal-info">
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "Fullname" | translate }} <span class="float-end">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-           <span>{{ currentUser.fullName }}</span>
-          </div>
+<!-- Enhanced Personal Information Component -->
+<div class="profile-container">
+
+  <div class="profile-card custom-card" *ngIf="currentUser">
+    <div class="card-header profile-card-header">
+      <div class="header-content">
+        <h3 class="card-title text-black">
+          <i class="fa-solid fa-user-gear"></i>
+          {{ "Personal_Details" | translate }}
+        </h3>
+        <div class="status-badge">
+          <h3 class="text-black badge account-type-badge">
+            <i class="fa-solid fa-crown"></i>
+            {{ currentUser.accountType | translate }}
+          </h3>
         </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "userName" | translate }} <span class="float-end">:</span>
-            </h5>
+      </div>
+    </div>
+
+    <div class="card-body profile-card-body">
+      <div class="profile-grid">
+        <!-- Full Name -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-signature"></i>
           </div>
-          <div class="col-sm-9 col-7">
-           <span>{{ currentUser.username }}</span>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "Phone_Number" | translate }} <span class="float-end">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-            <span>{{ currentUser.phoneNumber }}</span>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "Email" | translate }} <span class="float-end">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-            <span>{{ currentUser.email }}</span>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "street" | translate }} <span class="float-end">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-            <span>{{ currentUser.street }}</span>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "buildingNumber" | translate }} <span class="float-end">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-            <span>{{ currentUser.buildingNumber }}</span>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-3 col-5">
-            <h5 class="f-w-500">
-              {{ "AccountType" | translate }} <span class="pull-right">:</span>
-            </h5>
-          </div>
-          <div class="col-sm-9 col-7">
-            <span class="badge bg-info">{{ currentUser.accountType }}</span>
+          <div class="item-content">
+            <label class="item-label">{{ "Fullname" | translate }}</label>
+            <span class="item-value">{{ currentUser.fullName }}</span>
           </div>
         </div>
 
+        <!-- Username -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-at"></i>
+          </div>
+          <div class="item-content">
+            <label class="item-label">{{ "userName" | translate }}</label>
+            <span class="item-value">{{ currentUser.username }}</span>
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div class="item-content">
+            <label class="item-label">{{ "Phone_Number" | translate }}</label>
+            <span class="item-value">{{ currentUser.phoneNumber }}</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="item-content">
+            <label class="item-label">{{ "Email" | translate }}</label>
+            <span class="item-value">{{ currentUser.email }}</span>
+          </div>
+        </div>
+
+        <!-- Street -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-road"></i>
+          </div>
+          <div class="item-content">
+            <label class="item-label">{{ "street" | translate }}</label>
+            <span class="item-value">{{ currentUser.street }}</span>
+          </div>
+        </div>
+
+        <!-- Building Number -->
+        <div class="profile-item">
+          <div class="item-icon">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div class="item-content">
+            <label class="item-label">{{ "buildingNumber" | translate }}</label>
+            <span class="item-value">{{ currentUser.buildingNumber }}</span>
+          </div>
+        </div>
       </div>
 
     </div>

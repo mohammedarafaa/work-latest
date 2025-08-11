@@ -1,17 +1,529 @@
-.payment-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  .embed-target-box {
-    border: 1px solid #ddd;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  .payment-buttons button {
-    margin-inline-end: 10px;
-  }
-  .loading-container {
-    text-align: center;
-  }
-  
+// Dark Mode Payment Form Styles
+.main-content {
+
+    // Payment Mode Selector Card
+    .mode-selector-card {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        transition: all 0.3s ease;
+
+        .card-body {
+            background-color: var(--bs-body-bg);
+
+            .card-title {
+                color: var(--bs-body-color);
+
+                i {
+                    color: var(--bs-primary);
+                }
+            }
+
+            .btn-group {
+
+                .btn-outline-primary,
+                .btn-outline-success {
+                    color: var(--bs-body-color);
+                    border-color: var(--bs-border-color);
+                    background-color: var(--bs-body-bg);
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background-color: var(--bs-primary);
+                        border-color: var(--bs-primary);
+                        color: white;
+                    }
+
+                    &.active,
+                    &:checked+& {
+                        background-color: var(--bs-primary);
+                        border-color: var(--bs-primary);
+                        color: white;
+                    }
+
+                    small {
+                        color: var(--bs-secondary-color);
+                        transition: color 0.3s ease;
+                    }
+
+                    &:hover small,
+                    &.active small,
+                    &:checked+& small {
+                        color: rgba(255, 255, 255, 0.8);
+                    }
+                }
+
+                .btn-outline-success {
+                    &:hover {
+                        background-color: var(--bs-success);
+                        border-color: var(--bs-success);
+                    }
+
+                    &.active,
+                    &:checked+& {
+                        background-color: var(--bs-success);
+                        border-color: var(--bs-success);
+                    }
+                }
+            }
+        }
+    }
+
+    // Charge Breakdown Card
+    .charge-breakdown-card {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color) !important;
+
+        .card-header {
+            background-color: var(--bs-primary) !important;
+            border-bottom: 1px solid var(--bs-border-color);
+
+            h5 {
+                color: white !important;
+
+                .text-warning {
+                    color: #ffc107 !important;
+                }
+
+                .badge {
+                    &.bg-primary {
+                        background-color: rgba(255, 255, 255, 0.2) !important;
+                        color: white;
+                    }
+
+                    &.bg-success {
+                        background-color: var(--bs-success) !important;
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .card-body {
+            background-color: var(--bs-secondary-bg) !important;
+
+            .charge-item {
+                label {
+                    color: var(--bs-secondary-color) !important;
+                    font-size: 0.9rem;
+                }
+
+                span {
+                    color: var(--bs-body-color) !important;
+
+                    &.fw-bold {
+                        font-weight: 600;
+                    }
+
+                    .text-info {
+                        color: var(--bs-info) !important;
+                    }
+                }
+
+                &.total-pay span {
+                    color: var(--bs-primary) !important;
+                    font-size: 1.25rem !important;
+                }
+            }
+
+            .alert {
+                background-color: var(--bs-secondary-bg);
+                border-color: var(--bs-border-color);
+                color: var(--bs-body-color);
+
+                &.alert-info {
+                    background-color: rgba(13, 202, 240, 0.1);
+                    border-color: rgba(13, 202, 240, 0.2);
+                    color: var(--bs-info);
+                }
+
+                &.alert-success {
+                    background-color: rgba(25, 135, 84, 0.1);
+                    border-color: rgba(25, 135, 84, 0.2);
+                    color: var(--bs-success);
+                }
+
+                i {
+                    color: inherit;
+                }
+            }
+        }
+    }
+
+    // Payment Form Card
+    .charge-card {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+
+        .card-body {
+            background-color: var(--bs-body-bg);
+
+            .form-group {
+                label {
+                    color: var(--bs-body-color);
+                    font-weight: 500;
+                }
+
+                .input-group {
+                    .input-group-text {
+                        background-color: var(--bs-secondary-bg);
+                        border-color: var(--bs-border-color);
+                        color: var(--bs-body-color);
+
+                        &.text-primary i {
+                            color: var(--bs-primary) !important;
+                        }
+
+                        &.text-success i {
+                            color: var(--bs-success) !important;
+                        }
+                    }
+
+                    .form-control {
+                        background-color: var(--bs-body-bg);
+                        border-color: var(--bs-border-color);
+                        color: var(--bs-body-color);
+
+                        &:focus {
+                            background-color: var(--bs-body-bg);
+                            border-color: var(--bs-primary);
+                            box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+                            color: var(--bs-body-color);
+                        }
+
+                        &::placeholder {
+                            color: var(--bs-secondary-color);
+                        }
+                    }
+                }
+
+                .form-text {
+                    color: var(--bs-secondary-color) !important;
+                }
+
+                .text-danger {
+                    color: var(--bs-danger) !important;
+                }
+            }
+
+            .btn {
+                &.btn-primary {
+                    background-color: var(--bs-primary);
+                    border-color: var(--bs-primary);
+                    color: white;
+
+                    &:hover:not(:disabled) {
+                        background-color: var(--bs-primary);
+                        border-color: var(--bs-primary);
+                        filter: brightness(1.1);
+                    }
+
+                    &:disabled {
+                        background-color: var(--bs-secondary);
+                        border-color: var(--bs-secondary);
+                        opacity: 0.6;
+                    }
+                }
+
+                &.btn-success {
+                    background-color: var(--bs-success);
+                    border-color: var(--bs-success);
+                    color: white;
+
+                    &:hover:not(:disabled) {
+                        background-color: var(--bs-success);
+                        border-color: var(--bs-success);
+                        filter: brightness(1.1);
+                    }
+
+                    &:disabled {
+                        background-color: var(--bs-secondary);
+                        border-color: var(--bs-secondary);
+                        opacity: 0.6;
+                    }
+                }
+            }
+        }
+    }
+
+    // Loading States
+    .text-center {
+        .text-primary {
+            color: var(--bs-primary) !important;
+        }
+
+        .text-muted {
+            color: var(--bs-secondary-color) !important;
+        }
+
+        .fas.fa-spinner {
+            color: var(--bs-primary);
+        }
+    }
+
+    // Payment Card
+    .payment-card {
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+
+        .card-header {
+            background-color: var(--bs-primary) !important;
+            border-bottom: 1px solid var(--bs-border-color);
+            color: white !important;
+
+            h5 {
+                color: white !important;
+
+                i {
+                    color: white;
+                }
+            }
+        }
+
+        .card-body {
+            background-color: var(--bs-body-bg);
+
+            .text-center {
+                .text-primary {
+                    color: var(--bs-primary) !important;
+                }
+
+                .text-muted {
+                    color: var(--bs-secondary-color) !important;
+                }
+
+                .spinner-border {
+                    border-color: var(--bs-primary);
+                    border-right-color: transparent;
+                }
+
+                .fas.fa-credit-card {
+                    color: var(--bs-primary);
+                }
+            }
+
+            // Embed target styling
+            .embed-target-box {
+                background-color: var(--bs-body-bg);
+                border-radius: 0.375rem;
+
+                .text-center {
+                    .fas.fa-credit-card {
+                        color: var(--bs-secondary-color);
+                    }
+
+                    p {
+                        color: var(--bs-secondary-color);
+                    }
+                }
+            }
+        }
+
+        .card-footer {
+            background-color: var(--bs-secondary-bg);
+            border-top: 1px solid var(--bs-border-color);
+
+            .text-muted {
+                color: var(--bs-secondary-color) !important;
+            }
+
+            .text-success {
+                color: var(--bs-success) !important;
+            }
+
+            .text-primary {
+                color: var(--bs-primary) !important;
+            }
+
+            .text-info {
+                color: var(--bs-info) !important;
+            }
+
+            .fw-bold {
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Cancel Button
+    .btn-outline-secondary {
+        color: var(--bs-body-color);
+        border-color: var(--bs-border-color);
+        background-color: transparent;
+
+        &:hover:not(:disabled) {
+            background-color: var(--bs-secondary);
+            border-color: var(--bs-secondary);
+            color: white;
+        }
+
+        &:disabled {
+            color: var(--bs-secondary-color);
+            border-color: var(--bs-border-color);
+            opacity: 0.6;
+        }
+    }
+
+    // Error Alert
+    .alert-danger {
+        background-color: rgba(220, 53, 69, 0.1);
+        border-color: rgba(220, 53, 69, 0.2);
+        color: var(--bs-danger);
+
+        .alert-heading {
+            color: var(--bs-danger);
+        }
+
+        .fas.fa-exclamation-triangle {
+            color: var(--bs-danger);
+        }
+
+        .btn-outline-danger {
+            color: var(--bs-danger);
+            border-color: var(--bs-danger);
+            background-color: transparent;
+
+            &:hover:not(:disabled) {
+                background-color: var(--bs-danger);
+                border-color: var(--bs-danger);
+                color: white;
+            }
+
+            &:disabled {
+                opacity: 0.6;
+            }
+        }
+
+        .btn-outline-secondary {
+            color: var(--bs-body-color);
+            border-color: var(--bs-border-color);
+
+            &:hover {
+                background-color: var(--bs-secondary);
+                border-color: var(--bs-secondary);
+                color: white;
+            }
+        }
+
+        .text-danger {
+            color: var(--bs-danger) !important;
+        }
+
+        .fas.fa-exclamation-circle {
+            color: var(--bs-danger);
+        }
+    }
+}
+
+// Dark theme specific overrides
+[data-bs-theme="dark"] .main-content {
+
+    // Force dark backgrounds for specific elements
+    .charge-breakdown-card .card-body {
+        background-color: #2b3035 !important;
+    }
+
+    .charge-breakdown-card .card-header {
+        background-color: #0d47a1 !important;
+    }
+
+    // Ensure proper contrast for text
+    .charge-item label {
+        color: #adb5bd !important;
+    }
+
+    .charge-item span {
+        color: #f8f9fa !important;
+    }
+
+    .charge-item.total-pay span {
+        color: #6ea8fe !important;
+    }
+
+    // Form controls dark theme
+    .form-control {
+        background-color: #2b3035;
+        border-color: #495057;
+        color: #f8f9fa;
+
+        &:focus {
+            background-color: #2b3035;
+            border-color: #6ea8fe;
+            color: #f8f9fa;
+        }
+
+        &::placeholder {
+            color: #6c757d;
+        }
+    }
+
+    .input-group-text {
+        background-color: #343a40;
+        border-color: #495057;
+        color: #f8f9fa;
+    }
+
+    // Payment card footer
+    .payment-card .card-footer {
+        background-color: #2b3035;
+        border-top-color: #495057;
+    }
+}
+
+// Responsive adjustments for dark mode
+@media (max-width: 767.98px) {
+    [data-bs-theme="dark"] .main-content {
+        .charge-breakdown-card {
+            .card-body {
+                padding: 1rem;
+            }
+
+            .charge-item {
+                margin-bottom: 1rem;
+
+                label {
+                    font-size: 0.8rem;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        .mode-selector-card .btn-group {
+            flex-direction: column;
+
+            .btn {
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+// Animation for theme transitions
+.main-content * {
+    transition: background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+
+// Loading spinner dark mode
+[data-bs-theme="dark"] .spinner-border {
+    border-color: #6ea8fe;
+    border-right-color: transparent;
+}
+
+// Focus states for accessibility in dark mode
+[data-bs-theme="dark"] {
+    .btn:focus-visible {
+        box-shadow: 0 0 0 0.2rem rgba(110, 168, 254, 0.5);
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(110, 168, 254, 0.25);
+    }
+}

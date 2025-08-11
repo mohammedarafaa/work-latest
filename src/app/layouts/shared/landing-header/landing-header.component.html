@@ -1,24 +1,78 @@
-<header class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+<!-- landing-header.component.html -->
+<header 
+  class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" 
+  [attr.dir]="isRTL ? 'rtl' : 'ltr'" 
+  [class.rtl-header]="isRTL"
+  [class.dark-theme]="isDarkMode"
+>
   <div class="container">
-    <a class="navbar-brand" routerLink="/">
-      <img src="assets/img/logo-white.png" alt="Madkour Logo" height="50">
+    <!-- Logo -->
+    <a class="navbar-brand " routerLink="/">
+      <img src="assets/img/image.svg" alt="Logo" width="220" height="70">
     </a>
-    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed" [attr.aria-expanded]="!isMenuCollapsed" aria-controls="navbarNav">
+
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler" type="button" 
+            (click)="isMenuCollapsed = !isMenuCollapsed"
+            [attr.aria-expanded]="!isMenuCollapsed"
+            aria-controls="navbarNav">
       <i class="bi" [class.bi-list]="isMenuCollapsed" [class.bi-x]="!isMenuCollapsed"></i>
     </button>
+
+    <!-- Nav links -->
     <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav" [class.ms-auto]="!isRTL" [class.me-auto]="isRTL">
         <li class="nav-item">
-          <a class="nav-link" (click)="scrollToSection('features'); isMenuCollapsed = true;">{{ 'navLanding.features' | translate }}</a>
+          <a class="nav-link" (click)="scrollToSection('features'); isMenuCollapsed = true;">
+            {{ 'navLanding.features' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="scrollToSection('about'); isMenuCollapsed = true;">{{ 'navLanding.about' | translate }}</a>
+          <a class="nav-link" (click)="scrollToSection('about'); isMenuCollapsed = true;">
+            {{ 'navLanding.about' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="scrollToSection('contact'); isMenuCollapsed = true;">{{ 'navLanding.contact' | translate }}</a>
+          <a class="nav-link" (click)="scrollToSection('contact'); isMenuCollapsed = true;">
+            {{ 'navLanding.contact' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/Auth/Login" (click)="isMenuCollapsed = true;">{{ 'navLanding.login' | translate }}</a>
+          <a class="nav-link" (click)="scrollToSection('policies'); isMenuCollapsed = true;">
+            {{ 'navLanding.policies' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a 
+            class="nav-link"
+            [routerLink]="isLoggedIn ? '/Dashboard' : '/Auth/Login'"
+            (click)="isMenuCollapsed = true"
+          >
+            {{ isLoggedIn ? ('navLanding.myAccount' | translate) : ('navLanding.login' | translate) }}
+          </a>
+        </li>
+
+
+        <!-- Language switcher -->
+        <li class="nav-item dropdown" ngbDropdown [placement]="isRTL ? 'bottom-start' : 'bottom-end'">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" ngbDropdownToggle>
+            <img 
+              [src]="'assets/img/flags/' + currentLanguage + '.png'" 
+              width="20" height="15" 
+              [class.me-2]="!isRTL" [class.ms-2]="isRTL"
+            >
+            {{ currentLanguage === 'ar' ? 'العربية' : 'English' }}
+          </a>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <a class="dropdown-item d-flex align-items-center" 
+               (click)="changeLanguage('en'); isMenuCollapsed = true;">
+              <img src="assets/img/flags/en.png" width="20" height="15" class="me-2"> English
+            </a>
+            <a class="dropdown-item d-flex align-items-center" 
+               (click)="changeLanguage('ar'); isMenuCollapsed = true;">
+              <img src="assets/img/flags/ar.png" width="20" height="15" class="me-2"> العربية
+            </a>
+          </div>
         </li>
       </ul>
     </div>

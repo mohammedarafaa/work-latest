@@ -2,15 +2,14 @@
 // Bootswatch
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
+
 @import "bootstrap/scss/mixins";
-
-
 
 // Color system
 // Fonts
 $font-family-sans-serif: "Inter", "Helvetica Neue", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $font-size-root: 0.9rem !default;
-$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-base: 1rem !default;
 $font-size-sm: $font-size-base * .475 !default;
 $font-size-lg: $font-size-base * .825 !default;
 
@@ -36,7 +35,7 @@ $input-btn-font-size: 0.9rem !default;
 $btn-font-size: $font-size-base !default;
 
 $input-btn-font-family: $font-family-sans-serif !default;
-// scss-docs-start font-sizes
+
 $font-sizes: (
   1: $h1-font-size,
   2: $h2-font-size,
@@ -88,23 +87,25 @@ $transition-base: all .35s ease-in-out !default;
 // Options
 $enable-rfs: false !default;
 $enable-negative-margins: true !default;
+
+// Base Colors
 $white: #fff !default;
 $black: #000 !default;
-$blue: #276db5;
+$blue: #0031EB;
 $brown: #887456;
 $indigo: #9c62b8;
-$purple: #69247C; // Not a direct purple, but fitting based on palette
-$pink: #DA498D; // Vibrant pink with a slight red tint
-$red: #C62300; // Strong red with a warm hue
-$orange: #F14A00; // Bright, energetic orange
-$yellow: #f9f871; // Soft golden yellow
-$green: #0093ce; // Using light_blue for what was green
-$teal: #00d3ab; // Muted teal, balancing between blue and green
-$cyan: #00b6c8; // Fresh and bright cyan
-$dark_blue: #1a3a5f;
+$purple: #69247C;
+$pink: #DA498D;
+$red: #C62300;
+$orange: #ff9203;
+$yellow: #f9f871;
+$green: #0093ce;
+$teal: #00d3ab;
+$cyan: #00b6c8;
+$dark_blue: #001559;
 $light_blue: #0093ce;
 
-
+// Light Theme Grays
 $gray-100: #f8f9fa;
 $gray-200: #f6f9ff;
 $gray-300: #dee2e6;
@@ -115,14 +116,26 @@ $gray-700: #495057;
 $gray-800: #404756;
 $gray-900: #212529;
 
-$primary: $blue; // Primary brand color (your provided blue)
-$secondary: $teal; // A neutral dark gray for secondary actions
-$success: $light_blue; // Using light_blue for success
-$info: $cyan; // Cyan for informational messages
-$warning: $yellow; // Bright yellow for warnings
-$danger: $red; // Strong red for danger alerts
-$dark: $gray-900; // Dark color for deep backgrounds
-$light: $light_blue; // Very light color for backgrounds
+// Dark Theme Grays
+$dark-gray-100: #2d3436;
+$dark-gray-200: #353b47;
+$dark-gray-300: #4a5568;
+$dark-gray-400: #5a6172;
+$dark-gray-500: #718096;
+$dark-gray-600: #a0aec0;
+$dark-gray-700: #cbd5e0;
+$dark-gray-800: #e2e8f0;
+$dark-gray-900: #f7fafc;
+
+// Theme Colors
+$primary: $blue;
+$secondary: $teal;
+$success: $light_blue;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$dark: $gray-900;
+$light: $light_blue;
 
 $electricity-color: $orange;
 $water-color: $light_blue;
@@ -138,6 +151,115 @@ $theme-colors: (
   "light": $light,
   "dark": $dark) !default;
 
+// CSS Custom Properties for Dynamic Theme Switching
+:root {
+  // Light theme variables
+  --bs-body-bg: #{#efefef};
+  --bs-body-color: #{$gray-700};
+  --bs-text-muted: #{$gray-600};
+  
+  // Card variables
+  --bs-card-bg: #{$white};
+  --bs-card-border-color: #{$gray-300};
+  --bs-card-cap-bg: #{$white};
+  
+  // Navbar variables
+  --bs-navbar-bg: #{$white};
+  --bs-navbar-brand-color: #{$dark};
+  --bs-navbar-color: #{$gray-700};
+  
+  // Sidebar variables
+  --bs-sidebar-bg: #{$dark_blue};
+  --bs-sidebar-color: #{$white};
+  --bs-sidebar-link-color: #{$white};
+  --bs-sidebar-link-hover-bg: #{$white};
+  --bs-sidebar-link-hover-color: #{$dark_blue};
+  
+  // Form variables
+  --bs-input-bg: #{$white};
+  --bs-input-color: #{$gray-700};
+  --bs-input-border-color: #{$gray-400};
+  --bs-input-disabled-bg: #{$gray-200};
+  
+  // Table variables
+  --bs-table-bg: #{$white};
+  --bs-table-color: #{$gray-700};
+  --bs-table-border-color: #{$gray-300};
+  --bs-table-striped-bg: #{$gray-100};
+  --bs-table-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.075);
+  
+  // Dropdown variables
+  --bs-dropdown-bg: #{$white};
+  --bs-dropdown-link-color: #{$gray-700};
+  --bs-dropdown-link-hover-bg: #{$gray-100};
+  --bs-dropdown-border-color: #{$gray-300};
+  
+  // Modal variables
+  --bs-modal-bg: #{$white};
+  --bs-modal-color: #{$gray-700};
+  
+  // Box shadow variables
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(#{red($dark)}, #{green($dark)}, #{blue($dark)}, 0.05);
+}
+
+// Dark Theme Variables
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Override CSS custom properties for dark theme
+  --bs-body-bg: #1a1d23;
+  --bs-body-color: #{$dark-gray-700};
+  --bs-text-muted: #{$dark-gray-500};
+  
+  // Card variables (dark)
+  --bs-card-bg: #242833;
+  --bs-card-border-color: #{$dark-gray-300};
+  --bs-card-cap-bg: #2d3436;
+  
+  // Navbar variables (dark)
+  --bs-navbar-bg: #242833;
+  --bs-navbar-brand-color: #{$dark-gray-800};
+  --bs-navbar-color: #{$dark-gray-600};
+  
+  // Sidebar variables (dark)
+  --bs-sidebar-bg: #1e2329;
+  --bs-sidebar-color: #{$dark-gray-700};
+  --bs-sidebar-link-color: #{$dark-gray-600};
+  --bs-sidebar-link-hover-bg: #{$dark-gray-200};
+  --bs-sidebar-link-hover-color: #{$primary};
+  
+  // Form variables (dark)
+  --bs-input-bg: #2d3436;
+  --bs-input-color: #{$dark-gray-700};
+  --bs-input-border-color: #{$dark-gray-300};
+  --bs-input-disabled-bg: #{$dark-gray-200};
+  
+  // Table variables (dark)
+  --bs-table-bg: #242833;
+  --bs-table-color: #{$dark-gray-700};
+  --bs-table-border-color: #{$dark-gray-300};
+  --bs-table-striped-bg: #{$dark-gray-200};
+  --bs-table-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.1);
+  
+  // Dropdown variables (dark)
+  --bs-dropdown-bg: #242833;
+  --bs-dropdown-link-color: #{$dark-gray-600};
+  --bs-dropdown-link-hover-bg: #{$dark-gray-200};
+  --bs-dropdown-border-color: #{$dark-gray-300};
+  
+  // Modal variables (dark)
+  --bs-modal-bg: #242833;
+  --bs-modal-color: #{$dark-gray-700};
+  
+  // Box shadow variables (dark)
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(0, 0, 0, 0.2);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(0, 0, 0, 0.3);
+}
+
 // Social colors
 $social-colors: (
   "facebook": #3b5998,
@@ -152,13 +274,13 @@ $social-colors: (
   "flickr": #0063dc,
   "bitbucket": #0052cc) !default;
 
-// Body
-$body-bg: #efefef !default;
-$body-color: $gray-700 !default;
-
+// Body - Use CSS custom properties
+$body-bg: var(--bs-body-bg) !default;
+$body-color: var(--bs-body-color) !default;
 
 $btn-color: $white !default;
 $btn-link-color: $white !default;
+
 // Links
 $link-decoration: none !default;
 $link-hover-decoration: none !default;
@@ -184,23 +306,22 @@ $h6-font-size: $font-size-base !default;
 $headings-color: $dark_blue !default;
 $headings-font-weight: 700 !default;
 
-
 // Progress
 $progress-height: 1rem !default;
 $progress-height-sm: .5rem !default;
 $progress-height-lg: 1.5rem !default;
 
-// Shadows
-$box-shadow-sm: 0 0.05rem 0.2rem rgba($black, .05) !default;
-$box-shadow: 0 0.1rem 0.2rem rgba($black, .05) !default;
-$box-shadow-lg: 0 0.2rem 0.2rem rgba($black, .05) !default;
+// Shadows - Use CSS custom properties
+$box-shadow-sm: var(--bs-box-shadow-sm) !default;
+$box-shadow: var(--bs-box-shadow) !default;
+$box-shadow-lg: var(--bs-box-shadow-lg) !default;
 
 // Border radius
 $border-radius-sm: .1rem !default;
 $border-radius: .2rem !default;
 $border-radius-lg: .3rem !default;
 
-// Navbar
+// Navbar - Use CSS custom properties
 $navbar-padding-y: $spacer*0.875 !default;
 $navbar-padding-x: $spacer*1.375 !default;
 $navbar-nav-link-padding-x: .5rem !default;
@@ -210,7 +331,7 @@ $navbar-box-shadow: 0 0 2rem 0 rgba($dark, .1) !default;
 // Navbar brand
 $navbar-brand-padding-y: $spacer*0.875 !default;
 $navbar-brand-padding-x: 0 !default;
-$navbar-brand-color: $dark !default;
+$navbar-brand-color: var(--bs-navbar-brand-color) !default;
 $navbar-brand-font-weight: $font-weight-normal !default;
 $navbar-brand-font-size: 1.15rem !default;
 $navbar-brand-icon-color: $primary !default;
@@ -218,11 +339,11 @@ $navbar-brand-icon-color: $primary !default;
 $navbar-toggler-padding-y: 0.5rem;
 $navbar-toggler-padding-x: 1rem;
 $navbar-toggler-border-radius: 0.5rem;
-$navbar-toggler-border-color: rgba(255, 0, 0, 0.1); // Reddish border
-$navbar-bg: $white !default;
+$navbar-toggler-border-color: rgba(255, 0, 0, 0.1);
+$navbar-bg: var(--bs-navbar-bg) !default;
 
 // Footer
-$footer-bg: $white !default;
+$footer-bg: var(--bs-card-bg) !default;
 
 // Alerts
 $alert-padding-y: .95rem !default;
@@ -233,25 +354,20 @@ $alert-border-width: 0 !default;
 $list-group-item-padding-y: .75rem !default;
 $list-group-item-padding-x: 1.25rem !default;
 $list-group-border-width: none !default;
-
-$list-group-bg: $white !default;
-
+$list-group-bg: var(--bs-card-bg) !default;
 $list-group-hover-bg: $primary !default;
 $list-group-active-color: $white !default;
 $list-group-active-bg: $primary !default;
 $list-group-active-border-color: $list-group-active-bg !default;
-
-
 $list-group-action-color: $gray-800 !default;
 $list-group-action-hover-color: $white !default;
-
 $list-group-action-active-color: $white !default;
 $list-group-action-active-bg: $primary !default;
 
-// Forms
-$input-bg: $white !default;
-$input-disabled-bg: $gray-200 !default;
-$input-color: $gray-700 !default;
+// Forms - Use CSS custom properties
+$input-bg: var(--bs-input-bg) !default;
+$input-disabled-bg: var(--bs-input-disabled-bg) !default;
+$input-color: var(--bs-input-color) !default;
 $input-btn-border-width: $border-width !default;
 $input-btn-line-height: $line-height-base !default;
 $input-btn-line-height-sm: $line-height-sm !default;
@@ -263,29 +379,23 @@ $input-btn-padding-y-lg: .35rem !default;
 $input-btn-padding-x: .7rem !default;
 $input-border-width: $input-btn-border-width !default;
 $input-height-border: $input-border-width * 2 !default;
-$input-height-inner: (
-  $font-size-base * $input-btn-line-height) + ($input-btn-padding-y * 2) !default;
+$input-height-inner: ($font-size-base * $input-btn-line-height) + ($input-btn-padding-y * 2) !default;
 $input-height: calc(#{$input-height-inner} + #{$input-height-border}) !default;
-$input-height-inner-sm: (
-  $font-size-sm * $input-btn-line-height-sm) + ($input-btn-padding-y-sm * 2) !default;
+$input-height-inner-sm: ($font-size-sm * $input-btn-line-height-sm) + ($input-btn-padding-y-sm * 2) !default;
 $input-height-sm: calc(#{$input-height-inner-sm} + #{$input-height-border}) !default;
-$input-height-inner-lg: (
-  $font-size-lg * $input-btn-line-height-lg) + ($input-btn-padding-y-lg * 2) !default;
+$input-height-inner-lg: ($font-size-lg * $input-btn-line-height-lg) + ($input-btn-padding-y-lg * 2) !default;
 $input-height-lg: calc(#{$input-height-inner-lg} + #{$input-height-border}) !default;
 
-// Dropdowns
-$dropdown-link-color: $gray-700 !default;
-$dropdown-link-hover-bg: $gray-100 !default;
+// Dropdowns - Use CSS custom properties
+$dropdown-link-color: var(--bs-dropdown-link-color) !default;
+$dropdown-link-hover-bg: var(--bs-dropdown-link-hover-bg) !default;
 $dropdown-item-padding-y: .35rem !default;
 $dropdown-item-padding-x: 1.5rem !default;
-
-$dropdown-bg: $white !default;
-$dropdown-border-color: $white !default;
+$dropdown-bg: var(--bs-dropdown-bg) !default;
+$dropdown-border-color: var(--bs-dropdown-border-color) !default;
 $dropdown-divider-bg: $gray-100 !default;
 
 // Tooltips
-
-// scss-docs-start tooltip-variables
 $tooltip-font-size: $font-size-base * 0.8 !default;
 $tooltip-max-width: 200px !default;
 $tooltip-color: $gray-700 !default;
@@ -294,40 +404,39 @@ $tooltip-border-radius: $border-radius-lg !default;
 $tooltip-opacity: .9 !default;
 $tooltip-padding-y: $spacer * .25 !default;
 $tooltip-padding-x: $spacer * .5 !default;
-$tooltip-margin: null !default; // TODO: remove this in v6
-
+$tooltip-margin: null !default;
 $tooltip-arrow-width: .8rem !default;
 $tooltip-arrow-height: .4rem !default;
 $tooltip-arrow-color: $gray-400 !default;
 
-
-// Cards
-$card-bg: $white !default;
+// Cards - Use CSS custom properties
+$card-bg: var(--bs-card-bg) !default;
 $card-border-radius: .25rem !default;
 $card-inner-border-radius: $card-border-radius !default;
 $card-border-width: 0 !default;
 $card-border-color: transparent !default;
-$card-cap-bg: $white !default;
-$card-shadow: 0 0 .875rem 0 rgba($dark, 0.05) !default;
+$card-cap-bg: var(--bs-card-cap-bg) !default;
+$card-shadow: var(--bs-card-shadow) !default;
 $card-title-font-weight: $font-weight-normal !default;
 $card-spacer-y: 1.25rem !default;
 $card-spacer-x: 1.25rem !default;
 $card-cap-padding-y: 1rem !default;
 $card-cap-padding-x: $card-spacer-x !default;
-$card-box-shadow: -8px 12px 18px 0 rgba(25, 42, 70, .13
-);
+$card-box-shadow: var(--bs-card-shadow);
 $card-title-font-size: 1.2rem;
 $modal-header-font-size: 1.1rem;
-// Tables
+
+// Tables - Use CSS custom properties
 $table-cell-padding-y: .75rem !default;
 $table-cell-padding-x: .75rem !default;
 $table-cell-padding-y-sm: .3rem !default;
 $table-cell-padding-x-sm: .3rem !default;
-$table-cell-vertical-align:   center !default;
+$table-cell-vertical-align: center !default;
+
 // Sidebar general
 $sidebar-width: 210px !default;
 $sidebar-transition: margin-inline-start .35s ease-in-out, inset-inline-start .35s ease-in-out, margin-inline-end .35s ease-in-out, inset-inline-end .35s ease-in-out !default;
-$sidebar-bg: $dark_blue !default;
+$sidebar-bg: var(--bs-sidebar-bg) !default;
 
 // Sidebar brand
 $sidebar-brand-padding-y: 1.15rem !default;
@@ -342,15 +451,15 @@ $sidebar-header-font-size: $font-size-sm !default;
 $sidebar-header-color: $gray-400 !default;
 
 // Sidebar link
-$sidebar-link-padding:  .625rem  !default;
+$sidebar-link-padding: .625rem !default;
 $sidebar-link-font-weight: 400 !default;
 $sidebar-link-bg: $gray-100 !default;
-$sidebar-link-color: $white !default;
+$sidebar-link-color: var(--bs-sidebar-link-color) !default;
 $sidebar-link-border-left-color: transparent !default;
 
 $sidebar-link-hover-font-weight: $font-weight-normal !default;
-$sidebar-link-hover-bg: $white !default;
-$sidebar-link-hover-color: $dark_blue !default;
+$sidebar-link-hover-bg: var(--bs-sidebar-link-hover-bg) !default;
+$sidebar-link-hover-color: var(--bs-sidebar-link-hover-color) !default;
 $sidebar-link-hover-border-left-color: transparent !default;
 
 $sidebar-link-active-font-weight: $font-weight-normal !default;
@@ -362,7 +471,6 @@ $sidebar-link-active-border-left-color: $dark_blue !default;
 $sidebar-link-child-padding: .625rem 1.5rem .625rem 3.25rem !default;
 $sidebar-link-child-font-size: 90% !default;
 $sidebar-link-child-font-weight: 400 !default;
-
 $sidebar-link-child-color: $gray-500 !default;
 $sidebar-link-child-bg: transparent !default;
 $sidebar-link-child-hover-color: $gray-200 !default;
@@ -387,7 +495,7 @@ $transition-appearance: background .4s ease-in-out, color .4s ease-in-out !defau
 $transition-appearance-slow: background .6s ease-in-out, color .6s ease-in-out !default;
 $transition-appearance-fast: background .1s ease-in-out, color .1s ease-in-out !default;
 
-// Modals
+// Modals - Use CSS custom properties
 $modal-content-border-width: 0 !default;
 $modal-header-border-width: 1px !default;
 $modal-footer-border-width: 1px !default;
@@ -402,8 +510,7 @@ $tab-content-padding: $spacer * 1.25 !default;
 $tab-content-box-shadow: 0 0.2rem 0.1rem -0.1rem rgba(0, 0, 0, 0.15) !default;
 $tab-content-border-radius: 0 0 $border-radius $border-radius !default;
 $tab-link-color: $gray-800 !default;
-$tab-link-padding: (
-  $spacer * 0.75) $spacer !default;
+$tab-link-padding: ($spacer * 0.75) $spacer !default;
 $tab-link-bg: transparent !default;
 $tab-link-active-color: $gray-800 !default;
 $tab-link-active-bg: $white !default;
@@ -424,12 +531,10 @@ $pagination-color: $gray-600 !default;
 $pagination-hover-color: $gray-800 !default;
 
 // Main
-$main-box-shadow: inset .75rem 0px 1.5rem 0px rgba($black, 0.075
-);
+$main-box-shadow: inset .75rem 0px 1.5rem 0px rgba($black, 0.075);
 
-
-// table
-$text-muted: #7c8db5 !default;
+// Table
+$text-muted: var(--bs-text-muted) !default;
 $table-cell-padding-y: .5rem !default;
 $table-cell-padding-x: .5rem !default;
 $table-cell-padding-y-sm: .25rem !default;
@@ -437,14 +542,14 @@ $table-cell-padding-x-sm: .25rem !default;
 
 $table-cell-vertical-align: top !default;
 
-$table-color: $body-color !default;
-$table-bg: transparent !default;
+$table-color: var(--bs-table-color) !default;
+$table-bg: var(--bs-table-bg) !default;
 
 $table-th-font-weight: null !default;
 
 $table-striped-color: $table-color !default;
 $table-striped-bg-factor: .05 !default;
-$table-striped-bg: rgba($black, $table-striped-bg-factor) !default;
+$table-striped-bg: var(--bs-table-striped-bg) !default;
 
 $table-active-color: $table-color !default;
 $table-active-bg-factor: .1 !default;
@@ -452,11 +557,11 @@ $table-active-bg: rgba($black, $table-active-bg-factor) !default;
 
 $table-hover-color: $table-color !default;
 $table-hover-bg-factor: .075 !default;
-$table-hover-bg: rgba($black, $table-hover-bg-factor) !default;
+$table-hover-bg: var(--bs-table-hover-bg) !default;
 
 $table-border-factor: .1 !default;
 $table-border-width: $border-width !default;
-$table-border-color: #eee !default;
+$table-border-color: var(--bs-table-border-color) !default;
 
 $table-striped-order: odd !default;
 
@@ -475,21 +580,13 @@ $table-variants: (
   "danger": shift-color($danger, $table-bg-scale),
   "light": $light,
   "dark": $dark,
-  ) !default;
+) !default;
+
 // Content
-// Button Variables for Light Theme
-
-
-$content-padding-desktop: 1.5rem 2rem 0.9rem !default;
-$content-padding-mobile: 1.5rem 1.5rem .75rem !default;
-
-
-
-
+$content-padding-desktop: 4.5rem 2rem 0.9rem !default;
+$content-padding-mobile: 4.5rem 1.5rem .75rem !default;
 
 // Breadcrumbs
-
-// scss-docs-start breadcrumb-variables
 $breadcrumb-font-size: 1rem !default;
 $breadcrumb-padding-y: 0 !default;
 $breadcrumb-padding-x: 0 !default;
@@ -501,9 +598,11 @@ $breadcrumb-active-color: $gray-700 !default;
 $breadcrumb-divider: quote("/") !default;
 $breadcrumb-divider-flipped: $breadcrumb-divider !default;
 $breadcrumb-border-radius: null !default;
-.ms-6{
-  margin-inline-start:4rem !important;
+
+.ms-6 {
+  margin-inline-start: 4rem !important;
 }
+
 .bg-brown {
   background-color: $brown;
 }
@@ -532,9 +631,7 @@ $breadcrumb-border-radius: null !default;
   background-color: $red;
 }
 
-/* styles.css or styles.scss */
 .btn.btn-default.pull-right {
-  /* Example: */
   background-color: white;
   border-color: black;
   color: black;
@@ -544,6 +641,7 @@ $breadcrumb-border-radius: null !default;
   display: flex;
   justify-content: space-between;
 }
+
 .ELECTRICITY {
   background-color: $electricity-color;
 }
@@ -551,18 +649,67 @@ $breadcrumb-border-radius: null !default;
 .WATER {
   background-color: $water-color;
 }
+
 .GAS {
   background-color: $blue;
 }
+
 .meter-WATER {
   border-left-color: $water-color !important;
 }
+
 .meter-ELECTRICITY {
   border-left-color: $electricity-color !important;
 }
+
 .meter-GAS {
   border-left-color: $blue !important;
 }
+
+html[dir="rtl"] {
+  .ms-1 { margin-right: 0.25rem !important; margin-left: 0 !important; }
+  .ms-2 { margin-right: 0.5rem !important; margin-left: 0 !important; }
+  .ms-3 { margin-right: 1rem !important; margin-left: 0 !important; }
+  .ms-4 { margin-right: 1.5rem !important; margin-left: 0 !important; }
+  .ms-5 { margin-right: 3rem !important; margin-left: 0 !important; }
+  .ms-6 { margin-right: 4rem !important; margin-left: 0 !important; }
+
+  .me-1 { margin-left: 0.25rem !important; margin-right: 0 !important; }
+  .me-2 { margin-left: 0.5rem !important; margin-right: 0 !important; }
+  .me-3 { margin-left: 1rem !important; margin-right: 0 !important; }
+  .me-4 { margin-left: 1.5rem !important; margin-right: 0 !important; }
+  .me-5 { margin-left: 3rem !important; margin-right: 0 !important; }
+
+  .ps-1 { padding-right: 0.25rem !important; padding-left: 0 !important; }
+  .ps-2 { padding-right: 0.5rem !important; padding-left: 0 !important; }
+  .ps-3 { padding-right: 1rem !important; padding-left: 0 !important; }
+  .ps-4 { padding-right: 1.5rem !important; padding-left: 0 !important; }
+  .ps-5 { padding-right: 3rem !important; padding-left: 0 !important; }
+
+  .pe-1 { padding-left: 0.25rem !important; padding-right: 0 !important; }
+  .pe-2 { padding-left: 0.5rem !important; padding-right: 0 !important; }
+  .pe-3 { padding-left: 1rem !important; padding-right: 0 !important; }
+  .pe-4 { padding-left: 1.5rem !important; padding-right: 0 !important; }
+  .pe-5 { padding-left: 3rem !important; padding-right: 0 !important; }
+
+  .text-start { text-align: right !important; }
+  .text-end { text-align: left !important; }
+
+  .float-start { float: right !important; }
+  .float-end { float: left !important; }
+
+  .border-start { border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important; border-left: 0 !important; }
+  .border-end { border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important; border-right: 0 !important; }
+
+  .rounded-start { border-top-right-radius: var(--bs-border-radius) !important; border-bottom-right-radius: var(--bs-border-radius) !important; border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; }
+  .rounded-end { border-top-left-radius: var(--bs-border-radius) !important; border-bottom-left-radius: var(--bs-border-radius) !important; border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+
+  .dropdown-menu-end { right: auto !important; left: 0 !important; }
+  .dropdown-menu-start { left: auto !important; right: 0 !important; }
+
+  .flip-on-rtl { transform: scaleX(-1); }
+}
+
 @import 'bootstrap/scss/bootstrap';
 @import 'assets/scss/components/datatable';
 
@@ -573,34 +720,63 @@ $breadcrumb-border-radius: null !default;
 @import 'assets/scss/components/_sidebar.scss';
 @import 'assets/scss/components/_dropdown';
 @import 'assets/scss/components/card';
-// @import 'assets/scss/components/_button';
-// @import 'assets/scss/components/switch';
-// @import 'assets/scss/components/forms';
 @import 'assets/scss/components/utils';
 @import 'assets/scss/components/dashboard';
 
+@font-face {
+  font-family: 'Cairo';
+  src: url('assets/fonts/Cairo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo&family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cairo&family=Poppins&display=swap');
+@font-face {
+  font-family: 'Poppins';
+  src: url('assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
-html[dir="ltr"], body[dir="ltr"] {
+html[dir="ltr"],
+body[dir="ltr"] {
   font-family: 'Poppins', sans-serif;
   direction: ltr;
   text-align: left;
 }
 
-html[dir="rtl"], body[dir="rtl"] {
+html[dir="rtl"],
+body[dir="rtl"] {
   font-family: 'Cairo', sans-serif;
   direction: rtl;
   text-align: right;
 }
 
-// Custom global styles for spacing, blue theme, and micro-interactions
+html {
+  scroll-padding-top: 110px;
+}
 
+// Custom global styles for spacing, blue theme, and micro-interactions
 body {
   font-family: $font-family-sans-serif;
-  color: $body-color;
-  background-color: $body-bg;
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Dark theme headings
+.dark-theme h1, 
+.dark-theme h2, 
+.dark-theme h3, 
+.dark-theme h4, 
+.dark-theme h5, 
+.dark-theme h6,
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6 {
+  color: var(--bs-body-color);
 }
 
 // Headings (re-emphasize blue theme)
@@ -614,42 +790,56 @@ h1, h2, h3, h4, h5, h6 {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // subtle lift and shadow
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25); // focus ring with primary color
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+  }
+}
+
+// Dark theme button adjustments
+.dark-theme .btn,
+[data-bs-theme="dark"] .btn {
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 }
 
 // Cards - general micro-interactions and spacing
 .card {
-  border: 1px solid $gray-300;
+  border: 1px solid var(--bs-card-border-color);
   border-radius: $border-radius;
-  box-shadow: $box-shadow;
+  box-shadow: var(--bs-card-shadow);
+  background-color: var(--bs-card-bg);
+  color: var(--bs-body-color);
   transition: all 0.3s ease-in-out;
   margin-bottom: $spacer;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: $box-shadow-lg;
+    box-shadow: var(--bs-box-shadow-lg);
   }
 
   .card-header {
-    background-color: $gray-100;
-    border-bottom: 1px solid $gray-300;
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: 1px solid var(--bs-card-border-color);
     padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
   }
 
   .card-body {
     padding: $spacer;
+    background-color: var(--bs-card-bg);
+    color: var(--bs-body-color);
   }
 
   .card-footer {
-    background-color: $gray-100;
-    border-top: 1px solid $gray-300;
+    background-color: var(--bs-card-cap-bg);
+    border-top: 1px solid var(--bs-card-border-color);
     padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
   }
 }
 
@@ -657,25 +847,38 @@ h1, h2, h3, h4, h5, h6 {
 .form-control,
 .form-select,
 .ng-select .ng-select-container {
-  border: 1px solid $gray-400;
+  border: 1px solid var(--bs-input-border-color);
   border-radius: $border-radius-sm;
   padding: $spacer * 0.5 $spacer * 0.75;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: var(--bs-input-bg);
+  color: var(--bs-input-color);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, color 0.3s ease;
 
   &:focus {
     border-color: $primary;
     box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
     outline: none;
+    background-color: var(--bs-input-bg);
+    color: var(--bs-input-color);
+  }
+
+  &:disabled {
+    background-color: var(--bs-input-disabled-bg);
+    opacity: 0.6;
   }
 }
 
-// Tables - default styling (if not already handled by components)
+// Tables - default styling
 .table {
-  --bs-table-color: #{$gray-700};
-  --bs-table-bg: #{$white};
-  --bs-table-border-color: #{$gray-300};
-  --bs-table-striped-bg: #{$gray-100};
-  --bs-table-hover-bg: rgba($primary, 0.075);
+  --bs-table-color: var(--bs-table-color);
+  --bs-table-bg: var(--bs-table-bg);
+  --bs-table-border-color: var(--bs-table-border-color);
+  --bs-table-striped-bg: var(--bs-table-striped-bg);
+  --bs-table-hover-bg: var(--bs-table-hover-bg);
+
+  background-color: var(--bs-table-bg);
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
 
   thead {
     th {
@@ -697,6 +900,73 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+// Dropdown menu dark theme support
+.dropdown-menu {
+  background-color: var(--bs-dropdown-bg);
+  border-color: var(--bs-dropdown-border-color);
+  color: var(--bs-dropdown-link-color);
+
+  .dropdown-item {
+    color: var(--bs-dropdown-link-color);
+
+    &:hover,
+    &:focus {
+      background-color: var(--bs-dropdown-link-hover-bg);
+      color: var(--bs-dropdown-link-color);
+    }
+
+    &.active {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+
+  .dropdown-divider {
+    border-color: var(--bs-dropdown-border-color);
+  }
+}
+
+// Modal dark theme support
+.modal-content {
+  background-color: var(--bs-modal-bg);
+  color: var(--bs-modal-color);
+  border: none;
+
+  .modal-header {
+    border-bottom-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+
+  .modal-footer {
+    border-top-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+}
+
+// Navbar dark theme support
+.navbar {
+  background-color: var(--bs-navbar-bg) !important;
+  transition: background-color 0.3s ease;
+
+  .navbar-brand {
+    color: var(--bs-navbar-brand-color) !important;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--bs-navbar-color) !important;
+
+    &:hover,
+    &:focus {
+      color: $primary !important;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: var(--bs-navbar-color);
+    color: var(--bs-navbar-color);
+  }
+}
+
 // General spacing for sections/pages
 section {
   padding: $spacer * 1.5 0;
@@ -707,7 +977,48 @@ section {
   }
 }
 
-// Responsive adjustments for spacing (example)
+// Theme toggle button
+.theme-toggle {
+  border: none !important;
+  background: none !important;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: rgba(13, 110, 253, 0.1) !important;
+    color: inherit !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+    outline: none;
+  }
+
+  i {
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+  // Dark theme specific styles
+  .dark-theme & {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+// Animation for smooth icon transition
+.theme-toggle i {
+  transform: scale(1);
+}
+
+.theme-toggle:active i {
+  transform: scale(0.95);
+}
+
+// Responsive adjustments for spacing
 @media (max-width: map-get($grid-breakpoints, sm)) {
   .container-fluid {
     padding-left: $spacer * 0.5;
@@ -725,74 +1036,1305 @@ section {
 }
 
 // LTR/RTL Adaptability - Logical Properties
-/*
-  This section introduces CSS logical properties for LTR/RTL adaptability.
-  These properties automatically adjust based on the 'dir' attribute of the HTML element.
-  For example, 'margin-inline-start' will map to 'margin-left' in LTR and 'margin-right' in RTL.
-*/
-
-// General spacing and positioning
-body {
-  // Ensure text alignment respects direction
-  text-align: start;
+[dir="rtl"] ::ng-deep .pagination {
+  direction: rtl;
 }
 
-// Example of using logical properties for common scenarios
-// Replace specific left/right/margin-left/margin-right with these where appropriate
-.margin-inline-start-auto {
-  margin-inline-start: auto !important;
+[dir="rtl"] ::ng-deep .pagination .page-item:first-child .page-link,
+[dir="rtl"] ::ng-deep .pagination .page-item:last-child .page-link {
+  transform: rotate(180deg);
 }
 
-.margin-inline-end-auto {
-  margin-inline-end: auto !important;
+[dir="rtl"] ::ng-deep .pagination .page-link {
+  margin: 0 2px;
 }
 
-.padding-inline-start-0 {
-  padding-inline-start: 0 !important;
-}
-
-.padding-inline-end-0 {
-  padding-inline-end: 0 !important;
-}
-
-// For elements that might be positioned absolutely
-.start-0 {
-  inset-inline-start: 0 !important;
-}
-
-.end-0 {
-  inset-inline-end: 0 !important;
-}
-
-.start-50 {
-  inset-inline-start: 50% !important;
-}
-
-.end-50 {
-  inset-inline-end: 50% !important;
-}
-
-// Specific adjustments for RTL if logical properties are not sufficient or for older properties
-[dir="rtl"] {
-  // Example: If an icon needs to be flipped horizontally
-  .flip-on-rtl {
-    transform: scaleX(-1);
+// Dark theme text adjustments
+.dark-theme,
+[data-bs-theme="dark"] {
+  .text-muted {
+    color: var(--bs-text-muted) !important;
   }
 
-  // Example: Adjusting specific floats if not handled by logical properties
-  .float-start {
-    float: right !important;
+  .text-dark {
+    color: var(--bs-body-color) !important;
   }
-  .float-end {
-    float: left !important;
+
+  .bg-light {
+    background-color: var(--bs-card-bg) !important;
+  }
+
+  .border {
+    border-color: var(--bs-card-border-color) !important;
+  }
+
+  .alert {
+    background-color: var(--bs-card-bg);
+    border-color: var(--bs-card-border-color);
+    color: var(--bs-body-color);
+  }
+
+  // Sidebar dark theme adjustments
+  .sidebar {
+    background-color: var(--bs-sidebar-bg);
+    color: var(--bs-sidebar-color);
+
+    .nav-link {
+      color: var(--bs-sidebar-link-color);
+
+      &:hover {
+        background-color: var(--bs-sidebar-link-hover-bg);
+        color: var(--bs-sidebar-link-hover-color);
+      }
+    }
+  }
+}
+// Enhanced CSS Custom Properties for Vibrant Night Mode
+:root {
+  // Enhanced Custom Variables for Components
+  --custom-primary: #{$primary};
+  --custom-secondary: #{$orange};
+  --custom-info: #{$cyan};
+  --custom-success: #{$success};
+  --custom-warning: #{$yellow};
+  --custom-danger: #{$danger};
+
+  // Hover and interactive states
+  --custom-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.1);
+  --custom-focus-shadow: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.25);
+
+  // Light theme variables (existing ones enhanced)
+  --bs-body-bg: #{#efefef};
+  --bs-body-color: #{$gray-700};
+  --bs-text-muted: #{$gray-600};
+
+  // Card variables
+  --bs-card-bg: #{$white};
+  --bs-card-border-color: #{$gray-300};
+  --bs-card-cap-bg: #{$white};
+
+  // Navbar variables (enhanced for landing page)
+  --navbar-gradient-light: linear-gradient(to right, #ffc, #{$primary});
+  --navbar-shadow: 0 2px 12px rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.1);
+  --navbar-text-color: white;
+  --navbar-text-hover: #ccc;
+  --navbar-toggle-color: black;
+
+  // Stats section variables
+  --stats-gradient: linear-gradient(135deg, #{$primary} 0%, #{$orange} 100%);
+  --stats-overlay: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+
+  // Sidebar variables
+  --bs-sidebar-bg: #{$dark_blue};
+  --bs-sidebar-color: #{$white};
+  --bs-sidebar-link-color: #{$white};
+  --bs-sidebar-link-hover-bg: #{$white};
+  --bs-sidebar-link-hover-color: #{$dark_blue};
+
+  // Form variables
+  --bs-input-bg: #{$white};
+  --bs-input-color: #{$gray-700};
+  --bs-input-border-color: #{$gray-400};
+  --bs-input-disabled-bg: #{$gray-200};
+
+  // Table variables
+  --bs-table-bg: #{$white};
+  --bs-table-color: #{$gray-700};
+  --bs-table-border-color: #{$gray-300};
+  --bs-table-striped-bg: #{$gray-100};
+  --bs-table-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.075);
+
+  // Dropdown variables
+  --bs-dropdown-bg: #{$white};
+  --bs-dropdown-link-color: #{$gray-700};
+  --bs-dropdown-link-hover-bg: #{$gray-100};
+  --bs-dropdown-link-hover-color: #{$gray-700};
+  --bs-dropdown-link-active-bg: #{$primary};
+  --bs-dropdown-link-active-color: white;
+  --bs-dropdown-link-disabled-color: #{$gray-500};
+  --bs-dropdown-border-color: #{$gray-300};
+  --bs-dropdown-divider-bg: #{$gray-300};
+  --bs-dropdown-header-color: #{$gray-600};
+  --bs-dropdown-header-bg: transparent;
+  --bs-dropdown-footer-color: #{$gray-600};
+  --bs-dropdown-footer-bg: transparent;
+  --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.15);
+  --bs-dropdown-transition: all 0.15s ease-in-out;
+
+  // Modal variables
+  --bs-modal-bg: #{$white};
+  --bs-modal-color: #{$gray-700};
+
+  // List group variables
+  --bs-list-group-bg: #{$white};
+  --bs-list-group-color: #{$gray-700};
+  --bs-list-group-border-color: #{$gray-300};
+  --bs-list-group-hover-bg: #{$gray-100};
+
+  // Box shadow variables
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(#{red($dark)}, #{green($dark)}, #{blue($dark)}, 0.05);
+}
+
+// Enhanced Dark Theme Variables with Vibrant Night Colors
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Enhanced custom variables for dark theme
+  --custom-primary: #8a2be2; // Vibrant purple
+  --custom-secondary: #ff6b6b; // Vibrant coral/red
+  --custom-info: #4ecdc4; // Vibrant cyan
+  --custom-success: #51cf66; // Vibrant green
+  --custom-warning: #ffd43b; // Vibrant yellow
+  --custom-danger: #ff6b6b; // Vibrant red
+
+  // Enhanced hover and interactive states
+  --custom-hover-bg: rgba(138, 43, 226, 0.1);
+  --custom-focus-shadow: rgba(138, 43, 226, 0.25);
+
+  // Enhanced night mode body and text
+  --bs-body-bg: #1a1d23;
+  --bs-body-color: #e2e8f0;
+  --bs-text-muted: #a0aec0;
+
+  // Enhanced card variables for night mode
+  --bs-card-bg: #242833;
+  --bs-card-border-color: rgba(138, 43, 226, 0.3);
+  --bs-card-cap-bg: #2d3436;
+
+  // Enhanced navbar variables for night mode
+  --navbar-gradient-dark: linear-gradient(to right, #1a1d23, #8a2be2);
+  --navbar-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --navbar-shadow-hover-dark: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --navbar-text-color: white;
+  --navbar-text-hover: #cbd5e0;
+  --navbar-toggle-color: black;
+  --navbar-mobile-bg-dark: rgba(26, 29, 35, 0.98);
+  --navbar-mobile-border-dark: rgba(255, 255, 255, 0.1);
+  --navbar-mobile-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  // Enhanced stats section for night mode
+  --stats-gradient-dark: linear-gradient(135deg, #8a2be2 0%, #ff6b6b 100%);
+  --stats-overlay-dark: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+
+  // Enhanced sidebar variables for dark theme
+  --bs-sidebar-bg: #1e2329;
+  --bs-sidebar-color: #e2e8f0;
+  --bs-sidebar-link-color: #a0aec0;
+  --bs-sidebar-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-sidebar-link-hover-color: #8a2be2;
+
+  // Enhanced form variables for dark theme
+  --bs-input-bg: #2d3436;
+  --bs-input-color: #e2e8f0;
+  --bs-input-border-color: rgba(138, 43, 226, 0.3);
+  --bs-input-disabled-bg: #353b47;
+
+  // Enhanced table variables for dark theme
+  --bs-table-bg: #242833;
+  --bs-table-color: #e2e8f0;
+  --bs-table-border-color: rgba(138, 43, 226, 0.3);
+  --bs-table-striped-bg: #2d3436;
+  --bs-table-hover-bg: rgba(138, 43, 226, 0.1);
+
+  // Enhanced dropdown variables for dark theme
+  --bs-dropdown-bg: #242833;
+  --bs-dropdown-link-color: #e2e8f0;
+  --bs-dropdown-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-dropdown-link-hover-color: #e2e8f0;
+  --bs-dropdown-link-active-bg: #8a2be2;
+  --bs-dropdown-link-active-color: white;
+  --bs-dropdown-link-disabled-color: #718096;
+  --bs-dropdown-border-color: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-divider-bg: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-header-color: #a0aec0;
+  --bs-dropdown-header-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-footer-color: #a0aec0;
+  --bs-dropdown-footer-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+
+  // Enhanced modal variables for dark theme
+  --bs-modal-bg: #242833;
+  --bs-modal-color: #e2e8f0;
+
+  // Enhanced list group variables for dark theme
+  --bs-list-group-bg: #242833;
+  --bs-list-group-color: #e2e8f0;
+  --bs-list-group-border-color: rgba(138, 43, 226, 0.3);
+  --bs-list-group-hover-bg: rgba(138, 43, 226, 0.2);
+
+  // Enhanced box shadow variables for dark theme
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(0, 0, 0, 0.2);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(0, 0, 0, 0.3);
+}
+
+// Enhanced Night Mode Specific Variables
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Landing page specific night mode variables
+  --hero-bg-dark: linear-gradient(135deg, rgba(26, 29, 35, 0.95) 0%, rgba(45, 27, 105, 0.8) 100%);
+  --features-bg-dark: linear-gradient(180deg, #2d1b69 0%, #1a1d23 100%);
+  --about-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+  --contact-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+
+  // Component specific night mode colors
+  --stat-icon-bg: rgba(138, 43, 226, 0.2);
+  --meter-icon-electricity: rgba(252, 139, 0, 0.2);
+  --meter-icon-water: rgba(0, 147, 206, 0.2);
+  --meter-icon-gas: rgba(0, 50, 209, 0.2);
+
+  // Interactive element colors
+  --button-glow: 0 0 20px rgba(138, 43, 226, 0.5);
+  --card-glow: 0 0 30px rgba(138, 43, 226, 0.3);
+  --text-glow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+// Dark theme headings
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6,
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6 {
+  color: var(--bs-body-color);
+}
+
+// Dark mode only - Buttons micro-interactions
+.dark-theme .btn,
+[data-bs-theme="dark"] .btn {
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
   }
 }
 
-[dir="ltr"] {
-  .float-start {
-    float: left !important;
+// Dark mode only - Cards micro-interactions and spacing
+.dark-theme .card,
+[data-bs-theme="dark"] .card {
+  border: 1px solid var(--bs-card-border-color);
+  border-radius: $border-radius;
+  box-shadow: var(--bs-card-shadow);
+  background-color: var(--bs-card-bg);
+  color: var(--bs-body-color);
+  transition: all 0.3s ease-in-out;
+  margin-bottom: $spacer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--bs-box-shadow-lg);
   }
-  .float-end {
-    float: right !important;
+
+  .card-header {
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: 1px solid var(--bs-card-border-color);
+    padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
   }
+
+  .card-body {
+    padding: $spacer;
+    background-color: var(--bs-card-bg);
+    color: var(--bs-body-color);
+  }
+
+  .card-footer {
+    background-color: var(--bs-card-cap-bg);
+    border-top: 1px solid var(--bs-card-border-color);
+    padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
+  }
+}
+
+// Dark mode only - Forms styling and focus
+.dark-theme .form-control,
+.dark-theme .form-select,
+.dark-theme .ng-select .ng-select-container,
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select,
+[data-bs-theme="dark"] .ng-select .ng-select-container {
+  border: 1px solid var(--bs-input-border-color);
+  border-radius: $border-radius-sm;
+  padding: $spacer * 0.5 $spacer * 0.75;
+  background-color: var(--bs-input-bg);
+  color: var(--bs-input-color);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    outline: none;
+    background-color: var(--bs-input-bg);
+    color: var(--bs-input-color);
+  }
+
+  &:disabled {
+    background-color: var(--bs-input-disabled-bg);
+    opacity: 0.6;
+  }
+}
+
+// Dark mode only - Tables styling
+.dark-theme .table,
+[data-bs-theme="dark"] .table {
+  --bs-table-color: var(--bs-table-color);
+  --bs-table-bg: var(--bs-table-bg);
+  --bs-table-border-color: var(--bs-table-border-color);
+  --bs-table-striped-bg: var(--bs-table-striped-bg);
+  --bs-table-hover-bg: var(--bs-table-hover-bg);
+
+  background-color: var(--bs-table-bg);
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
+
+  thead {
+    th {
+      background-color: $primary;
+      color: $white;
+      font-weight: $font-weight-bold;
+      border-bottom: 2px solid $primary;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--bs-table-hover-bg);
+      }
+    }
+  }
+}
+
+// Dark mode only - Dropdown menu support
+.dark-theme .dropdown-menu,
+[data-bs-theme="dark"] .dropdown-menu {
+  background-color: var(--bs-dropdown-bg);
+  border-color: var(--bs-dropdown-border-color);
+  color: var(--bs-dropdown-link-color);
+
+  .dropdown-item {
+    color: var(--bs-dropdown-link-color);
+
+    &:hover,
+    &:focus {
+      background-color: var(--bs-dropdown-link-hover-bg);
+      color: var(--bs-dropdown-link-color);
+    }
+
+    &.active {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+
+  .dropdown-divider {
+    border-color: var(--bs-dropdown-border-color);
+  }
+}
+
+// Dark mode only - Modal support
+.dark-theme .modal-content,
+[data-bs-theme="dark"] .modal-content {
+  background-color: var(--bs-modal-bg);
+  color: var(--bs-modal-color);
+  border: none;
+
+  .modal-header {
+    border-bottom-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+
+  .modal-footer {
+    border-top-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+}
+
+// Dark mode only - Navbar support
+.dark-theme .navbar,
+[data-bs-theme="dark"] .navbar {
+  background-color: var(--bs-navbar-bg) !important;
+  transition: background-color 0.3s ease;
+
+  .navbar-brand {
+    color: var(--bs-navbar-brand-color) !important;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--bs-navbar-color) !important;
+
+    &:hover,
+    &:focus {
+      color: $primary !important;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: var(--bs-navbar-color);
+    color: var(--bs-navbar-color);
+  }
+}
+
+// Dark mode only - General spacing for sections/pages
+.dark-theme section,
+[data-bs-theme="dark"] section {
+  padding: $spacer * 1.5 0;
+  margin-bottom: $spacer * 1.5;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Dark mode only - Theme toggle button
+.dark-theme .theme-toggle,
+[data-bs-theme="dark"] .theme-toggle {
+  border: none !important;
+  background: none !important;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: inherit !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+    outline: none;
+  }
+
+  i {
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+  &:active i {
+    transform: scale(0.95);
+  }
+}
+
+// Dark mode only - Responsive adjustments for spacing
+@media (max-width: map-get($grid-breakpoints, sm)) {
+
+  .dark-theme .container-fluid,
+  [data-bs-theme="dark"] .container-fluid {
+    padding-left: $spacer * 0.5;
+    padding-right: $spacer * 0.5;
+  }
+
+  .dark-theme section,
+  [data-bs-theme="dark"] section {
+    padding: $spacer 0;
+    margin-bottom: $spacer;
+  }
+
+  .dark-theme .card,
+  [data-bs-theme="dark"] .card {
+    margin-bottom: $spacer * 0.75;
+  }
+}
+
+// Dark mode only - LTR/RTL Adaptability
+.dark-theme[dir="rtl"] ::ng-deep .pagination,
+[data-bs-theme="dark"][dir="rtl"] ::ng-deep .pagination {
+  direction: rtl;
+}
+
+.dark-theme[dir="rtl"] ::ng-deep .pagination .page-item:first-child .page-link,
+.dark-theme[dir="rtl"] ::ng-deep .pagination .page-item:last-child .page-link,
+[data-bs-theme="dark"][dir="rtl"] ::ng-deep .pagination .page-item:first-child .page-link,
+[data-bs-theme="dark"][dir="rtl"] ::ng-deep .pagination .page-item:last-child .page-link {
+  transform: rotate(180deg);
+}
+
+.dark-theme[dir="rtl"] ::ng-deep .pagination .page-link,
+[data-bs-theme="dark"][dir="rtl"] ::ng-deep .pagination .page-link {
+  margin: 0 2px;
+}
+
+// Dark theme text adjustments
+.dark-theme,
+[data-bs-theme="dark"] {
+  .text-muted {
+    color: var(--bs-text-muted) !important;
+  }
+
+  .text-dark {
+    color: var(--bs-body-color) !important;
+  }
+
+  .bg-light {
+    background-color: var(--bs-card-bg) !important;
+  }
+
+  .border {
+    border-color: var(--bs-card-border-color) !important;
+  }
+
+  .alert {
+    background-color: var(--bs-card-bg);
+    border-color: var(--bs-card-border-color);
+    color: var(--bs-body-color);
+  }
+
+  // Sidebar dark theme adjustments
+  .sidebar {
+    background-color: var(--bs-sidebar-bg);
+    color: var(--bs-sidebar-color);
+
+    .nav-link {
+      color: var(--bs-sidebar-link-color);
+
+      &:hover {
+        background-color: var(--bs-sidebar-link-hover-bg);
+        color: var(--bs-sidebar-link-hover-color);
+      }
+    }
+  }
+}
+
+// Enhanced Dark Theme Variables with Vibrant Night Colors
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Enhanced custom variables for dark theme
+  --custom-primary: #8a2be2; // Vibrant purple
+  --custom-secondary: #ff6b6b; // Vibrant coral/red
+  --custom-info: #4ecdc4; // Vibrant cyan
+  --custom-success: #51cf66; // Vibrant green
+  --custom-warning: #ffd43b; // Vibrant yellow
+  --custom-danger: #ff6b6b; // Vibrant red
+
+  // Enhanced hover and interactive states
+  --custom-hover-bg: rgba(138, 43, 226, 0.1);
+  --custom-focus-shadow: rgba(138, 43, 226, 0.25);
+
+  // Enhanced night mode body and text
+  --bs-body-bg: #1a1d23;
+  --bs-body-color: #e2e8f0;
+  --bs-text-muted: #a0aec0;
+
+  // Enhanced card variables for night mode
+  --bs-card-bg: #242833;
+  --bs-card-border-color: rgba(138, 43, 226, 0.3);
+  --bs-card-cap-bg: #2d3436;
+
+  // Enhanced navbar variables for night mode
+  --navbar-gradient-dark: linear-gradient(to right, #1a1d23, #8a2be2);
+  --navbar-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --navbar-shadow-hover-dark: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --navbar-text-color: white;
+  --navbar-text-hover: #cbd5e0;
+  --navbar-toggle-color: black;
+  --navbar-mobile-bg-dark: rgba(26, 29, 35, 0.98);
+  --navbar-mobile-border-dark: rgba(255, 255, 255, 0.1);
+  --navbar-mobile-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  // Enhanced stats section for night mode
+  --stats-gradient-dark: linear-gradient(135deg, #8a2be2 0%, #ff6b6b 100%);
+  --stats-overlay-dark: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+
+  // Enhanced sidebar variables for dark theme
+  --bs-sidebar-bg: #1e2329;
+  --bs-sidebar-color: #e2e8f0;
+  --bs-sidebar-link-color: #a0aec0;
+  --bs-sidebar-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-sidebar-link-hover-color: #8a2be2;
+
+  // Enhanced form variables for dark theme
+  --bs-input-bg: #2d3436;
+  --bs-input-color: #e2e8f0;
+  --bs-input-border-color: rgba(138, 43, 226, 0.3);
+  --bs-input-disabled-bg: #353b47;
+
+  // Enhanced table variables for dark theme
+  --bs-table-bg: #242833;
+  --bs-table-color: #e2e8f0;
+  --bs-table-border-color: rgba(138, 43, 226, 0.3);
+  --bs-table-striped-bg: #2d3436;
+  --bs-table-hover-bg: rgba(138, 43, 226, 0.1);
+
+  // Enhanced dropdown variables for dark theme
+  --bs-dropdown-bg: #242833;
+  --bs-dropdown-link-color: #e2e8f0;
+  --bs-dropdown-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-dropdown-link-hover-color: #e2e8f0;
+  --bs-dropdown-link-active-bg: #8a2be2;
+  --bs-dropdown-link-active-color: white;
+  --bs-dropdown-link-disabled-color: #718096;
+  --bs-dropdown-border-color: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-divider-bg: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-header-color: #a0aec0;
+  --bs-dropdown-header-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-footer-color: #a0aec0;
+  --bs-dropdown-footer-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+
+  // Enhanced modal variables for dark theme
+  --bs-modal-bg: #242833;
+  --bs-modal-color: #e2e8f0;
+
+  // Enhanced list group variables for dark theme
+  --bs-list-group-bg: #242833;
+  --bs-list-group-color: #e2e8f0;
+  --bs-list-group-border-color: rgba(138, 43, 226, 0.3);
+  --bs-list-group-hover-bg: rgba(138, 43, 226, 0.2);
+
+  // Enhanced box shadow variables for dark theme
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(0, 0, 0, 0.2);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(0, 0, 0, 0.3);
+
+  // Landing page specific night mode variables
+  --hero-bg-dark: linear-gradient(135deg, rgba(26, 29, 35, 0.95) 0%, rgba(45, 27, 105, 0.8) 100%);
+  --features-bg-dark: linear-gradient(180deg, #2d1b69 0%, #1a1d23 100%);
+  --about-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+  --contact-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+
+  // Component specific night mode colors
+  --stat-icon-bg: rgba(138, 43, 226, 0.2);
+  --meter-icon-electricity: rgba(252, 139, 0, 0.2);
+  --meter-icon-water: rgba(0, 147, 206, 0.2);
+  --meter-icon-gas: rgba(0, 50, 209, 0.2);
+
+  // Interactive element colors
+  --button-glow: 0 0 20px rgba(138, 43, 226, 0.5);
+  --card-glow: 0 0 30px rgba(138, 43, 226, 0.3);
+  --text-glow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+make this them just overrid in night mode only // Dark theme headings
+
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6,
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6 {
+  color: var(--bs-body-color);
+}
+
+
+// Headings (re-emphasize blue theme)
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $headings-color;
+}
+
+
+// Buttons - general micro-interactions
+.btn {
+  transition: all 0.3s ease-in-out;
+
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+  }
+}
+
+
+// Dark theme button adjustments
+.dark-theme .btn,
+[data-bs-theme="dark"] .btn {
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+
+// Cards - general micro-interactions and spacing
+.card {
+  border: 1px solid var(--bs-card-border-color);
+  border-radius: $border-radius;
+  box-shadow: var(--bs-card-shadow);
+  background-color: var(--bs-card-bg);
+  color: var(--bs-body-color);
+  transition: all 0.3s ease-in-out;
+  margin-bottom: $spacer;
+
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--bs-box-shadow-lg);
+  }
+
+
+  .card-header {
+    background-color: var(--bs-card-cap-bg);
+    border-bottom: 1px solid var(--bs-card-border-color);
+    padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
+  }
+
+
+  .card-body {
+    padding: $spacer;
+    background-color: var(--bs-card-bg);
+    color: var(--bs-body-color);
+  }
+
+
+  .card-footer {
+    background-color: var(--bs-card-cap-bg);
+    border-top: 1px solid var(--bs-card-border-color);
+    padding: $spacer * 0.75 $spacer;
+    color: var(--bs-body-color);
+  }
+}
+
+
+// Forms - consistent styling and focus
+.form-control,
+.form-select,
+.ng-select .ng-select-container {
+  border: 1px solid var(--bs-input-border-color);
+  border-radius: $border-radius-sm;
+  padding: $spacer * 0.5 $spacer * 0.75;
+  background-color: var(--bs-input-bg);
+  color: var(--bs-input-color);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    outline: none;
+    background-color: var(--bs-input-bg);
+    color: var(--bs-input-color);
+  }
+
+
+  &:disabled {
+    background-color: var(--bs-input-disabled-bg);
+    opacity: 0.6;
+  }
+}
+
+
+// Tables - default styling
+.table {
+  --bs-table-color: var(--bs-table-color);
+  --bs-table-bg: var(--bs-table-bg);
+  --bs-table-border-color: var(--bs-table-border-color);
+  --bs-table-striped-bg: var(--bs-table-striped-bg);
+  --bs-table-hover-bg: var(--bs-table-hover-bg);
+
+
+  background-color: var(--bs-table-bg);
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
+
+
+  thead {
+    th {
+      background-color: $primary;
+      color: $white;
+      font-weight: $font-weight-bold;
+      border-bottom: 2px solid $primary;
+    }
+  }
+
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease-in-out;
+
+
+      &:hover {
+        background-color: var(--bs-table-hover-bg);
+      }
+    }
+  }
+}
+
+
+// Dropdown menu dark theme support
+.dropdown-menu {
+  background-color: var(--bs-dropdown-bg);
+  border-color: var(--bs-dropdown-border-color);
+  color: var(--bs-dropdown-link-color);
+
+
+  .dropdown-item {
+    color: var(--bs-dropdown-link-color);
+
+
+    &:hover,
+    &:focus {
+      background-color: var(--bs-dropdown-link-hover-bg);
+      color: var(--bs-dropdown-link-color);
+    }
+
+
+    &.active {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+
+
+  .dropdown-divider {
+    border-color: var(--bs-dropdown-border-color);
+  }
+}
+
+
+// Modal dark theme support
+.modal-content {
+  background-color: var(--bs-modal-bg);
+  color: var(--bs-modal-color);
+  border: none;
+
+
+  .modal-header {
+    border-bottom-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+
+
+  .modal-footer {
+    border-top-color: var(--bs-card-border-color);
+    background-color: var(--bs-card-cap-bg);
+  }
+}
+
+
+// Navbar dark theme support
+.navbar {
+  background-color: var(--bs-navbar-bg) !important;
+  transition: background-color 0.3s ease;
+
+
+  .navbar-brand {
+    color: var(--bs-navbar-brand-color) !important;
+  }
+
+
+  .navbar-nav .nav-link {
+    color: var(--bs-navbar-color) !important;
+
+
+    &:hover,
+    &:focus {
+      color: $primary !important;
+    }
+  }
+
+
+  .navbar-toggler {
+    border-color: var(--bs-navbar-color);
+    color: var(--bs-navbar-color);
+  }
+}
+
+
+// General spacing for sections/pages
+section {
+  padding: $spacer * 1.5 0;
+  margin-bottom: $spacer * 1.5;
+
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+// Theme toggle button
+.theme-toggle {
+  border: none !important;
+  background: none !important;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+
+
+  &:hover {
+    background-color: rgba(13, 110, 253, 0.1) !important;
+    color: inherit !important;
+  }
+
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
+    outline: none;
+  }
+
+
+  i {
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+
+
+  // Dark theme specific styles
+  .dark-theme & {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+
+// Animation for smooth icon transition
+.theme-toggle i {
+  transform: scale(1);
+}
+
+
+.theme-toggle:active i {
+  transform: scale(0.95);
+}
+
+
+// Responsive adjustments for spacing
+@media (max-width: map-get($grid-breakpoints, sm)) {
+  .container-fluid {
+    padding-left: $spacer * 0.5;
+    padding-right: $spacer * 0.5;
+  }
+
+
+  section {
+    padding: $spacer 0;
+    margin-bottom: $spacer;
+  }
+
+
+  .card {
+    margin-bottom: $spacer * 0.75;
+  }
+}
+
+
+// LTR/RTL Adaptability - Logical Properties
+[dir="rtl"] ::ng-deep .pagination {
+  direction: rtl;
+}
+
+
+[dir="rtl"] ::ng-deep .pagination .page-item:first-child .page-link,
+[dir="rtl"] ::ng-deep .pagination .page-item:last-child .page-link {
+  transform: rotate(180deg);
+}
+
+
+[dir="rtl"] ::ng-deep .pagination .page-link {
+  margin: 0 2px;
+}
+
+
+// Dark theme text adjustments
+.dark-theme,
+[data-bs-theme="dark"] {
+  .text-muted {
+    color: var(--bs-text-muted) !important;
+  }
+
+
+  .text-dark {
+    color: var(--bs-body-color) !important;
+  }
+
+
+  .bg-light {
+    background-color: var(--bs-card-bg) !important;
+  }
+
+
+  .border {
+    border-color: var(--bs-card-border-color) !important;
+  }
+
+
+  .alert {
+    background-color: var(--bs-card-bg);
+    border-color: var(--bs-card-border-color);
+    color: var(--bs-body-color);
+  }
+
+
+  // Sidebar dark theme adjustments
+  .sidebar {
+    background-color: var(--bs-sidebar-bg);
+    color: var(--bs-sidebar-color);
+
+
+    .nav-link {
+      color: var(--bs-sidebar-link-color);
+
+
+      &:hover {
+        background-color: var(--bs-sidebar-link-hover-bg);
+        color: var(--bs-sidebar-link-hover-color);
+      }
+    }
+  }
+}
+
+// Enhanced CSS Custom Properties for Vibrant Night Mode
+:root {
+  // Enhanced Custom Variables for Components
+  --custom-primary: #{$primary};
+  --custom-secondary: #{$orange};
+  --custom-info: #{$cyan};
+  --custom-success: #{$success};
+  --custom-warning: #{$yellow};
+  --custom-danger: #{$danger};
+
+
+  // Hover and interactive states
+  --custom-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.1);
+  --custom-focus-shadow: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.25);
+
+
+  // Light theme variables (existing ones enhanced)
+  --bs-body-bg: #{#efefef};
+  --bs-body-color: #{$gray-700};
+  --bs-text-muted: #{$gray-600};
+
+
+  // Card variables
+  --bs-card-bg: #{$white};
+  --bs-card-border-color: #{$gray-300};
+  --bs-card-cap-bg: #{$white};
+
+
+  // Navbar variables (enhanced for landing page)
+  --navbar-gradient-light: linear-gradient(to right, #ffc, #{$primary});
+  --navbar-shadow: 0 2px 12px rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.1);
+  --navbar-text-color: white;
+  --navbar-text-hover: #ccc;
+  --navbar-toggle-color: black;
+
+
+  // Stats section variables
+  --stats-gradient: linear-gradient(135deg, #{$primary} 0%, #{$orange} 100%);
+  --stats-overlay: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+
+
+  // Sidebar variables
+  --bs-sidebar-bg: #{$dark_blue};
+  --bs-sidebar-color: #{$white};
+  --bs-sidebar-link-color: #{$white};
+  --bs-sidebar-link-hover-bg: #{$white};
+  --bs-sidebar-link-hover-color: #{$dark_blue};
+
+
+  // Form variables
+  --bs-input-bg: #{$white};
+  --bs-input-color: #{$gray-700};
+  --bs-input-border-color: #{$gray-400};
+  --bs-input-disabled-bg: #{$gray-200};
+
+
+  // Table variables
+  --bs-table-bg: #{$white};
+  --bs-table-color: #{$gray-700};
+  --bs-table-border-color: #{$gray-300};
+  --bs-table-striped-bg: #{$gray-100};
+  --bs-table-hover-bg: rgba(#{red($primary)}, #{green($primary)}, #{blue($primary)}, 0.075);
+
+
+  // Dropdown variables
+  --bs-dropdown-bg: #{$white};
+  --bs-dropdown-link-color: #{$gray-700};
+  --bs-dropdown-link-hover-bg: #{$gray-100};
+  --bs-dropdown-link-hover-color: #{$gray-700};
+  --bs-dropdown-link-active-bg: #{$primary};
+  --bs-dropdown-link-active-color: white;
+  --bs-dropdown-link-disabled-color: #{$gray-500};
+  --bs-dropdown-border-color: #{$gray-300};
+  --bs-dropdown-divider-bg: #{$gray-300};
+  --bs-dropdown-header-color: #{$gray-600};
+  --bs-dropdown-header-bg: transparent;
+  --bs-dropdown-footer-color: #{$gray-600};
+  --bs-dropdown-footer-bg: transparent;
+  --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.15);
+  --bs-dropdown-transition: all 0.15s ease-in-out;
+
+
+  // Modal variables
+  --bs-modal-bg: #{$white};
+  --bs-modal-color: #{$gray-700};
+
+
+  // List group variables
+  --bs-list-group-bg: #{$white};
+  --bs-list-group-color: #{$gray-700};
+  --bs-list-group-border-color: #{$gray-300};
+  --bs-list-group-hover-bg: #{$gray-100};
+
+
+  // Box shadow variables
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(#{red($black)}, #{green($black)}, #{blue($black)}, 0.05);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(#{red($dark)}, #{green($dark)}, #{blue($dark)}, 0.05);
+}
+
+
+// Enhanced Dark Theme Variables with Vibrant Night Colors
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Enhanced custom variables for dark theme
+  --custom-primary: #8a2be2; // Vibrant purple
+  --custom-secondary: #ff6b6b; // Vibrant coral/red
+  --custom-info: #4ecdc4; // Vibrant cyan
+  --custom-success: #51cf66; // Vibrant green
+  --custom-warning: #ffd43b; // Vibrant yellow
+  --custom-danger: #ff6b6b; // Vibrant red
+
+
+  // Enhanced hover and interactive states
+  --custom-hover-bg: rgba(138, 43, 226, 0.1);
+  --custom-focus-shadow: rgba(138, 43, 226, 0.25);
+
+
+  // Enhanced night mode body and text
+  --bs-body-bg: #1a1d23;
+  --bs-body-color: #e2e8f0;
+  --bs-text-muted: #a0aec0;
+
+
+  // Enhanced card variables for night mode
+  --bs-card-bg: #242833;
+  --bs-card-border-color: rgba(138, 43, 226, 0.3);
+  --bs-card-cap-bg: #2d3436;
+
+
+  // Enhanced navbar variables for night mode
+  --navbar-gradient-dark: linear-gradient(to right, #1a1d23, #8a2be2);
+  --navbar-shadow-dark: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --navbar-shadow-hover-dark: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --navbar-text-color: white;
+  --navbar-text-hover: #cbd5e0;
+  --navbar-toggle-color: black;
+  --navbar-mobile-bg-dark: rgba(26, 29, 35, 0.98);
+  --navbar-mobile-border-dark: rgba(255, 255, 255, 0.1);
+  --navbar-mobile-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+
+  // Enhanced stats section for night mode
+  --stats-gradient-dark: linear-gradient(135deg, #8a2be2 0%, #ff6b6b 100%);
+  --stats-overlay-dark: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+
+
+  // Enhanced sidebar variables for dark theme
+  --bs-sidebar-bg: #1e2329;
+  --bs-sidebar-color: #e2e8f0;
+  --bs-sidebar-link-color: #a0aec0;
+  --bs-sidebar-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-sidebar-link-hover-color: #8a2be2;
+
+
+  // Enhanced form variables for dark theme
+  --bs-input-bg: #2d3436;
+  --bs-input-color: #e2e8f0;
+  --bs-input-border-color: rgba(138, 43, 226, 0.3);
+  --bs-input-disabled-bg: #353b47;
+
+
+  // Enhanced table variables for dark theme
+  --bs-table-bg: #242833;
+  --bs-table-color: #e2e8f0;
+  --bs-table-border-color: rgba(138, 43, 226, 0.3);
+  --bs-table-striped-bg: #2d3436;
+  --bs-table-hover-bg: rgba(138, 43, 226, 0.1);
+
+
+  // Enhanced dropdown variables for dark theme
+  --bs-dropdown-bg: #242833;
+  --bs-dropdown-link-color: #e2e8f0;
+  --bs-dropdown-link-hover-bg: rgba(138, 43, 226, 0.2);
+  --bs-dropdown-link-hover-color: #e2e8f0;
+  --bs-dropdown-link-active-bg: #8a2be2;
+  --bs-dropdown-link-active-color: white;
+  --bs-dropdown-link-disabled-color: #718096;
+  --bs-dropdown-border-color: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-divider-bg: rgba(138, 43, 226, 0.3);
+  --bs-dropdown-header-color: #a0aec0;
+  --bs-dropdown-header-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-footer-color: #a0aec0;
+  --bs-dropdown-footer-bg: rgba(138, 43, 226, 0.1);
+  --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+
+
+  // Enhanced modal variables for dark theme
+  --bs-modal-bg: #242833;
+  --bs-modal-color: #e2e8f0;
+
+
+  // Enhanced list group variables for dark theme
+  --bs-list-group-bg: #242833;
+  --bs-list-group-color: #e2e8f0;
+  --bs-list-group-border-color: rgba(138, 43, 226, 0.3);
+  --bs-list-group-hover-bg: rgba(138, 43, 226, 0.2);
+
+
+  // Enhanced box shadow variables for dark theme
+  --bs-box-shadow-sm: 0 0.05rem 0.2rem rgba(0, 0, 0, 0.2);
+  --bs-box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+  --bs-box-shadow-lg: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.4);
+  --bs-card-shadow: 0 0 .875rem 0 rgba(0, 0, 0, 0.3);
+}
+
+
+// Enhanced Night Mode Specific Variables
+.dark-theme,
+[data-bs-theme="dark"] {
+  // Landing page specific night mode variables
+  --hero-bg-dark: linear-gradient(135deg, rgba(26, 29, 35, 0.95) 0%, rgba(45, 27, 105, 0.8) 100%);
+  --features-bg-dark: linear-gradient(180deg, #2d1b69 0%, #1a1d23 100%);
+  --about-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+  --contact-bg-dark: linear-gradient(135deg, #1a1d23 0%, #2d1b69 100%);
+
+
+  // Component specific night mode colors
+  --stat-icon-bg: rgba(138, 43, 226, 0.2);
+  --meter-icon-electricity: rgba(252, 139, 0, 0.2);
+  --meter-icon-water: rgba(0, 147, 206, 0.2);
+  --meter-icon-gas: rgba(0, 50, 209, 0.2);
+
+
+  // Interactive element colors
+  --button-glow: 0 0 20px rgba(138, 43, 226, 0.5);
+  --card-glow: 0 0 30px rgba(138, 43, 226, 0.3);
+  --text-glow: 0 0 10px rgba(138, 43, 226, 0.5);
 }
