@@ -1,12 +1,15 @@
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
   ElementRef,
   Renderer2,
   AfterViewInit,
   OnDestroy,
   ViewChild,
   OnInit,
+  HostListener,
 } from "@angular/core";
 
 import { APP_LINK, App_Navigation } from "@model/Utils/APP_LINK";
@@ -20,11 +23,13 @@ import { LanguageServiceService } from "@service/shared/language-service.service
 })
 export class SideNavComponent implements OnInit, OnDestroy {
   @Input() isCollapsed!: boolean;
+  @Output() linkClicked = new EventEmitter<void>(); // New event emitter
 
   @ViewChild("sidebarRef") sidebarRef!: ElementRef;
 
   appLink!: App_Navigation[];
   currentRoute: string = "";
+  isMobile: boolean = false;
 
   private observer!: MutationObserver;
 
@@ -32,7 +37,9 @@ export class SideNavComponent implements OnInit, OnDestroy {
     public LanguageService: LanguageServiceService,
     private auth: AuthenticationService,
     private renderer: Renderer2
-  ) {}
+  ) {
+    this.checkIfMobile();
+  }
 
   ngOnInit(): void {
     const userAccountType = this.auth.getAccountType();
@@ -46,22 +53,14 @@ export class SideNavComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ngAfterViewInit(): void {
-  //   const el = this.sidebarRef.nativeElement;
+  @HostListener("window:resize", ["$event"])
+  onResize(event: any) {
+    this.checkIfMobile();
+  }
 
-  //   // Force initial fixed padding
-  //   // this.setFixedPadding(el);
-
-  //   // Start watching for unwanted changes
-  //   this.observer = new MutationObserver(() => {
-  //     // this.setFixedPadding(el); // reset every time it changes
-  //   });
-
-  //   this.observer.observe(el, {
-  //     attributes: true,
-  //     attributeFilter: ["style"],
-  //   });
-  // }
+  private checkIfMobile(): void {
+    this.isMobile = window.innerWidth < 768;
+  }
 
   ngOnDestroy(): void {
     if (this.observer) {
@@ -69,17 +68,18 @@ export class SideNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private setFixedPadding(el: HTMLElement): void {
-  //   if (el.style.paddingTop !== "70px") {
-  //     el.style.setProperty("padding-top", "70px", "important");
-  //   }
-  // }
-
   toggleSubmenu(clickedNav: App_Navigation): void {
     clickedNav.isCollapse = !clickedNav.isCollapse;
   }
 
   isActiveLink(nav: string): boolean {
     return nav.toUpperCase() === this.currentRoute.toUpperCase();
+  }
+
+  // New method to handle link clicks
+  onLinkClick(): void {
+    if (this.isMobile) {
+      this.linkClicked.emit();
+    }
   }
 }

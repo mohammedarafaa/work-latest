@@ -11,8 +11,10 @@ import { filter } from "rxjs";
 })
 export class MainLayoutComponent implements OnInit {
   currentLanguage: string = "";
-  isCollapsed = false;
-  isMobileMenuOpen = false; // Add this for mobile menu state
+  isCollapsed = true;
+  isMobile = false;
+  isTablet = false;
+  isMobileMenuOpen = false;
   currentRoute: string = "";
 
   constructor(
@@ -22,12 +24,47 @@ export class MainLayoutComponent implements OnInit {
   ) {
     this.currentLanguage = this.LanguageService.activeCurrentLanguage;
   }
+  private checkScreenSize(): void {
+    const width = window.innerWidth;
+    this.isMobile = width < 768;
+    this.isTablet = width >= 768 && width < 992;
 
+    console.log(
+      "Screen size - Width:",
+      width,
+      "Mobile:",
+      this.isMobile,
+      "Tablet:",
+      this.isTablet
+    );
+  }
   onChangeCollapsed(eventData: any) {
     this.isCollapsed = eventData.isCollapsed;
   }
 
-  // Mobile menu methods
+  private initializeCollapseState(): void {
+    // On mobile/tablet: start collapsed
+    // On desktop: start expanded
+    if (this.isMobile || this.isTablet) {
+      this.isCollapsed = true;
+    } else {
+      this.isCollapsed = false;
+    }
+
+    console.log("Initial collapse state:", this.isCollapsed, "Device type:", {
+      mobile: this.isMobile,
+      tablet: this.isTablet,
+    });
+  }
+
+  // Handle collapse state change from navbar
+
+  // Modified method to toggle collapse state on mobile link clicks
+  onSideNavLinkClick(): void {
+    // Toggle the collapse state: if true, make it false; if false, make it true
+    this.isCollapsed = !this.isCollapsed;
+  }
+
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
@@ -36,19 +73,40 @@ export class MainLayoutComponent implements OnInit {
     this.isMobileMenuOpen = false;
   }
 
-  // Close mobile menu when window is resized to desktop size
   @HostListener("window:resize", ["$event"])
-  onResize(event: any) {
-    if (event.target.innerWidth >= 768) {
-      this.isMobileMenuOpen = false;
+  onResize(event: any): void {
+    const wasCollapsed = this.isCollapsed;
+    const wasMobile = this.isMobile;
+    const wasTablet = this.isTablet;
+
+    this.checkScreenSize();
+
+    // Handle device type transitions
+    if (!wasMobile && !wasTablet && (this.isMobile || this.isTablet)) {
+      // Switching from desktop to mobile/tablet - collapse sidebar
+      console.log("Switching to mobile/tablet - auto-collapsing");
+      this.isCollapsed = true;
+    } else if ((wasMobile || wasTablet) && !this.isMobile && !this.isTablet) {
+      // Switching from mobile/tablet to desktop - expand sidebar
+      console.log("Switching to desktop - auto-expanding");
+      this.isCollapsed = false;
     }
+
+    console.log("Resize handled - Collapsed:", this.isCollapsed);
+  }
+  get isDesktop(): boolean {
+    return !this.isMobile && !this.isTablet;
+  }
+  get shouldShowSidebar(): boolean {
+    // Show sidebar when:
+    // - On desktop and not collapsed
+    // - On mobile/tablet and not collapsed (overlay mode)
+    return !this.isCollapsed || this.isDesktop;
   }
 
-  // Close mobile menu when route changes (optional but good UX)
   @HostListener("document:click", ["$event"])
   onDocumentClick(event: Event) {
     const target = event.target as HTMLElement;
-    // Close mobile menu if clicking outside sidebar on mobile
     if (
       this.isMobileMenuOpen &&
       !target.closest(".fixed-sidebar") &&
@@ -59,12 +117,13 @@ export class MainLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkScreenSize();
+    this.initializeCollapseState();
     this.changeTitle();
-    // Close mobile menu on route changes
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.closeMobileMenu(); // Close mobile menu on navigation
+        this.closeMobileMenu();
         this.currentRoute = this.router.routerState.snapshot.url;
         this.setPageTitle();
       });
@@ -78,17 +137,6 @@ export class MainLayoutComponent implements OnInit {
         this.setPageTitle();
       });
   }
-  // @HostListener("window:scroll", [])
-  // onWindowScroll() {
-  //   const hasScrolled = window.pageYOffset > 0;
-  //   const isWide = window.innerWidth >= 768;
-
-  //   if (hasScrolled && isWide) {
-  //     document.body.classList.add("scrolled");
-  //   } else {
-  //     document.body.classList.remove("scrolled");
-  //   }
-  // }
 
   private setPageTitle() {
     const moduleName = this.currentRoute.substring(1).split("/");
@@ -104,6 +152,16 @@ export class MainLayoutComponent implements OnInit {
       );
     } else {
       this.titleService.setTitle("Madkour Client Dashboard");
+    }
+  }
+  private initializeMobileCollapse(): void {
+    const width = window.innerWidth;
+    const isMobile = width < 768;
+
+    if (isMobile) {
+      this.isCollapsed = true;
+
+      console.log("Mobile detected: Setting collapsed to true");
     }
   }
 }

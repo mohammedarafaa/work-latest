@@ -19,7 +19,7 @@
         <div class="form-group">
           <label for="compoundId">{{'compound' | translate}} </label>
           <ng-select [items]="projectList | async" bindValue="id" bindLabel="name" class="custom"
-          placeholder="{{ 'compound_place' | translate}}"
+          placeholder="{{ 'location_place' | translate}}"
           [ngClass]="{ 'is-invalid': f['compoundId'].touched && f['compoundId'].errors, 'is-valid': f['compoundId'].valid }"
           formControlName="compoundId">
         </ng-select>

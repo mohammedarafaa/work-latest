@@ -106,7 +106,7 @@
     }
 
     &.GAS {
-        --meter-color: #059669;
+        --meter-color: #dc3545;
         /* Green */
     }
 
@@ -132,7 +132,7 @@
 }
 
 .meter-info-gas {
-    background: linear-gradient(135deg, #0032D1 0%, #0028b5 100%);
+    background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
     color: white !important;
     border: none !important;
 }

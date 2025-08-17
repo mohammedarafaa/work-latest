@@ -44,7 +44,6 @@ type DashboardType = "consumption" | "billing";
 export class CustomerDashboardComponent implements OnInit, OnDestroy {
   @ViewChild("metersSection", { static: false }) metersSection!: ElementRef;
   @ViewChild("chartSection", { static: false }) chartSection!: ElementRef;
-
   private destroy$ = new Subject<void>();
   private isApplyingFiltersFlag = false;
   Highcharts: typeof Highcharts = Highcharts;
@@ -85,7 +84,7 @@ export class CustomerDashboardComponent implements OnInit, OnDestroy {
   isLoadingMeterChart = false;
   meterChartError = "";
   showMeterChart = false;
-  showTableView = true; // TABLE AS DEFAULT
+  showTableView = false; // TABLE AS DEFAULT
   dailyConsumptionTable: TableRecord[] = [];
   billingHistoryTable: BillingRecord[] = [];
 

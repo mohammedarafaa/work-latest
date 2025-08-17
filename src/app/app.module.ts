@@ -57,7 +57,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: Window, useValue: window },
-    MqttService,
+    // MqttService,
     LanguageService
   ],
   bootstrap: [AppComponent],

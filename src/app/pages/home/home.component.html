@@ -34,6 +34,7 @@
 </section>
 
 <!-- Stats Section -->
+<!-- Stats Section -->
 <section class="stats-section py-5"
          [class.dark-theme]="isDarkMode"
          [attr.data-bs-theme]="isDarkMode ? 'dark' : 'light'">
@@ -41,17 +42,14 @@
     <div class="row g-4 text-center">
       <div class="col-md-6" *ngFor="let stat of stats">
         <div class="stat-item" [class.dark-theme]="isDarkMode">
-          <div class="stat-value display-4 fw-bold"
-               [class.text-primary]="!isDarkMode"
-               [class.text-gradient-dark]="isDarkMode">{{stat.value}}</div>
-          <h3 class="stat-label h5"
-              [class.text-white]="!isDarkMode"
-              [class.text-light]="isDarkMode">{{ stat.label | translate }}</h3>
+          <div class="stat-value display-4 fw-bold text-white">{{stat.value}}</div>
+          <h3 class="stat-label h5 text-white">{{ stat.label | translate }}</h3>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- Features Section -->
 <section id="features" 

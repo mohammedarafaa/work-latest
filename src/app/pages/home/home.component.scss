@@ -59,7 +59,7 @@
 
 /* Stats Section */
 .stats-section {
-  // background: var(--gradient-primary);
+  background: var(--gradient-primary);
   color: black;
   padding: 4rem 0;
   position: relative;
@@ -1343,4 +1343,65 @@
 
 .dark-theme ::-webkit-scrollbar-thumb:hover {
   background: var(--gradient-secondary-dark);
+}
+.stats-section {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 4rem 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    inset-inline-start: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    z-index: -1;
+  }
+
+  .stat-item {
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: white; // Fixed: Use white instead of var(--bs-primary)
+
+      h5 {
+        color: white; // Fixed: Ensure nested h5 is also white
+      }
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      color: white; // Added: Explicit white color for labels
+    }
+  }
+}
+// Light mode specific overrides
+.stats-section:not(.dark-theme) {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+
+  .stat-value,
+  .stat-label {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .stat-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+  }
 }

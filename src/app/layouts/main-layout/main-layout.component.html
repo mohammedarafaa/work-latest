@@ -1,17 +1,32 @@
 <app-alerts></app-alerts>
-  <app-navbar [isCollapsed]="isCollapsed" (isCollapseChanged)="onChangeCollapsed($event)"></app-navbar>
-  <div class="wrapper">
-    <app-side-nav [isCollapsed]="isCollapsed" class="test"></app-side-nav>
-    <div class="main">  <!-- Optional class for easier CSS targeting -->
-      <ng-scrollbar class="layout-scrollbar" visibility="hover" style="height: 100%; overflow: auto;">
-        <main class="content">
-          <div class=" main-layout-container">
-            <router-outlet></router-outlet>
-          </div>
-          <app-footer></app-footer>
-        </main>
-      </ng-scrollbar>
-    </div>
+<app-navbar [isCollapsed]="isCollapsed" (isCollapseChanged)="onChangeCollapsed($event)"></app-navbar>
+
+<div class="wrapper" [class.sidebar-collapsed]="isCollapsed">
+  <!-- Sidebar with proper responsive classes -->
+  <app-side-nav 
+    [isCollapsed]="isCollapsed" 
+    (linkClicked)="onSideNavLinkClick()"
+    [class.d-none]="isCollapsed && (isMobile || isTablet)"
+    [class.sidebar-overlay]="!isCollapsed && (isMobile || isTablet)"
+    class="sidebar-container">
+  </app-side-nav>
+  
+  <!-- Overlay for mobile/tablet when sidebar is open -->
+  <div 
+    *ngIf="!isCollapsed && (isMobile || isTablet)" 
+    class="sidebar-overlay-backdrop"
+    (click)="onChangeCollapsed({isCollapsed: true})">
   </div>
   
-  <!-- </body> -->
+  <!-- Main content area -->
+  <div class="main" [class.main-expanded]="isCollapsed" [class.main-with-sidebar]="!isCollapsed">
+    <ng-scrollbar class="layout-scrollbar" visibility="hover" style="height: 100%; overflow: auto;">
+      <main class="content">
+        <div class="main-layout-container">
+          <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+      </main>
+    </ng-scrollbar>
+  </div>
+</div>

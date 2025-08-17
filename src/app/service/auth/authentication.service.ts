@@ -36,7 +36,11 @@ export class AuthenticationService {
             this.storeAuthTokens(response);
 
             // Load theme preferences after successful login
-            this.loadUserThemePreferences();
+            if (this.getAccountType() === AccountType.CUSTOMER)
+            {
+              this.loadUserThemePreferences();
+            }
+    
 
             setTimeout(() => {
               const loginEvent = new CustomEvent("userLoggedIn", {
@@ -209,8 +213,9 @@ export class AuthenticationService {
     if (!user) {
       return AccountType.CUSTOMER;
     }
-    return user.accountType || AccountType.CUSTOMER;
+    return user.accountType;
   }
+
 
   isAuthAccount(accountType: AccountType): Boolean {
     const user = this.getAuthUser();

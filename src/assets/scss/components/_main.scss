@@ -1,8 +1,386 @@
-// body,
-// html,
-// #root {
-//   height: 100vh;
-// }
+
+
+// =============================================================================
+// WRAPPER & MAIN LAYOUT
+// =============================================================================
+
+.wrapper {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  width: 100vw;
+}
+
+.main {
+  display: flex;
+  padding-top: 4rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  transition: $sidebar-transition;
+  flex-direction: column;
+  overflow: hidden;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  // Desktop layout (lg and above)
+  @media (min-width: #{map-get($grid-breakpoints, 'lg')}) {
+    // margin-inline-start: $sidebar-width;
+    flex: 1;
+
+    // When sidebar is collapsed, adjust for narrow sidebar
+    &.main-collapsed {
+      // margin-inline-start: 80px;
+    }
+  }
+
+  // Mobile/Tablet layout (below lg)
+  @media (max-width: #{map-get($grid-breakpoints, 'lg') - 0.02px}) {
+    margin-inline-start: 0;
+    width: 100%;
+    flex: 1;
+  }
+
+  .layout-scrollbar {
+    height: 100%;
+    flex: 1;
+
+    .content {
+      padding: 1rem;
+      min-height: calc(100vh - 75px);
+
+      .main-layout-container {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// SIDEBAR STYLES
+// =============================================================================
+
+.sidebar {
+  height: 100vh;
+  z-index: 1020;
+  top: 0;
+  padding-top: 75px;
+  min-width: $sidebar-width;
+  max-width: $sidebar-width;
+  transition: $sidebar-transition;
+  background: $sidebar-bg;
+  overflow-y: auto;
+  position: relative;
+  left: 0;
+
+  // Desktop behavior (lg and above)
+  @media (min-width: #{map-get($grid-breakpoints, 'lg')}) {
+    position: relative;
+    margin-inline-start: 0;
+
+    // Desktop collapsed state - slide to narrow width
+    &.collapsed {
+      min-width: 80px;
+      max-width: 80px;
+      margin-inline-start: 0;
+
+      .sidebar-content {
+        .sidebar-nav {
+          .sidebar-link {
+            span.align-middle {
+              opacity: 0;
+              visibility: hidden;
+              width: 0;
+              overflow: hidden;
+            }
+
+            i {
+              margin-inline-end: 0;
+              text-align: center;
+              width: 100%;
+            }
+          }
+
+          // Hide submenu when collapsed
+          .sidebar-dropdown .collapse {
+            display: none !important;
+          }
+        }
+      }
+
+      // Hide chevron when collapsed
+      [data-toggle="collapse"]:after {
+        display: none;
+      }
+    }
+  }
+
+  // Mobile/Tablet behavior (below lg)
+  @media (max-width: #{map-get($grid-breakpoints, 'lg') - 0.02px}) {
+    position: fixed;
+    margin-inline-start: -$sidebar-width;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+
+    // When sidebar should be visible (not collapsed)
+    &:not(.collapsed) {
+      margin-inline-start: 0;
+    }
+
+    // When sidebar should be hidden (collapsed)
+    &.collapsed {
+      margin-inline-start: -$sidebar-width;
+    }
+  }
+}
+
+// =============================================================================
+// SIDEBAR CONTENT
+// =============================================================================
+
+.sidebar-content {
+  transition: $sidebar-transition;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  background: $sidebar-bg;
+  -webkit-user-select: none;
+  -webkit-touch-callout: default;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sidebar-nav {
+  margin-bottom: 0;
+  list-style: none;
+  flex-grow: 1;
+}
+
+// =============================================================================
+// SIDEBAR LINKS
+// =============================================================================
+
+.sidebar-link,
+a.sidebar-link {
+  display: block;
+  padding: $sidebar-link-padding;
+  font-weight: $sidebar-link-font-weight;
+  transition: background 0.1s ease-in-out;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  border-inline-start-style: solid;
+  border-inline-start-width: 3px;
+  color: $sidebar-link-color;
+  border-inline-start-color: $sidebar-link-border-left-color;
+
+  i,
+  svg {
+    margin-inline-end: 0.75rem;
+    font-size: 0.8rem;
+    color: $sidebar-link-icon-color;
+    transition: all 0.3s ease;
+  }
+
+  span.align-middle {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    color: $sidebar-link-hover-color;
+    background: $sidebar-link-hover-bg;
+    border-inline-start-color: $sidebar-link-hover-border-left-color;
+
+    i,
+    svg {
+      color: $sidebar-link-icon-hover-color;
+    }
+  }
+}
+
+// Active states
+.sidebar-item.active>.sidebar-link,
+.sidebar-item.active .sidebar-link:hover {
+  color: $sidebar-link-active-color;
+  background: #fff;
+  border-inline-start-color: $sidebar-link-active-border-left-color;
+
+  i,
+  svg {
+    color: $sidebar-link-icon-active-color;
+  }
+}
+
+// =============================================================================
+// SIDEBAR DROPDOWN LINKS (CHILDREN)
+// =============================================================================
+
+.sidebar-dropdown .sidebar-link {
+  padding: $sidebar-link-child-padding;
+  font-weight: $sidebar-link-child-font-weight;
+  font-size: $sidebar-link-child-font-size;
+  border-inline-start: 0;
+  color: $sidebar-link-child-color;
+  background: $sidebar-link-child-bg;
+
+  &:before {
+    content: "→";
+    display: inline-block;
+    position: relative;
+    inset-inline-start: -14px;
+    transition: all 0.1s ease;
+    transform: translateX(0);
+  }
+
+  &:hover {
+    font-weight: $sidebar-link-hover-font-weight;
+    border-inline-start: 0;
+    color: $sidebar-link-child-hover-color;
+    background: $sidebar-link-child-hover-bg;
+
+    &:before {
+      transform: translateX(4px);
+    }
+  }
+}
+
+.sidebar-dropdown .sidebar-item.active .sidebar-link {
+  font-weight: $sidebar-link-active-font-weight;
+  border-inline-start: 0;
+  color: $sidebar-link-child-active-color;
+  background: $sidebar-link-child-active-bg;
+}
+
+// =============================================================================
+// COLLAPSE CHEVRON
+// =============================================================================
+
+.sidebar [data-toggle="collapse"] {
+  position: relative;
+
+  &:after {
+    content: " ";
+    border: solid;
+    border-width: 0 0.075rem 0.075rem 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 1.2rem;
+    transition: all 0.2s ease-out;
+  }
+}
+
+.sidebar[dir="ltr"] [data-toggle="collapse"]:after {
+  inset-inline-end: 1.5rem;
+}
+
+.sidebar[dir="rtl"] [data-toggle="collapse"]:after {
+  inset-inline-start: 1.5rem;
+}
+
+.sidebar [aria-expanded="true"]:after,
+.sidebar [data-toggle="collapse"]:not(.collapsed):after {
+  transform: rotate(-135deg);
+  top: 1.4rem;
+}
+
+// =============================================================================
+// SIDEBAR COMPONENTS
+// =============================================================================
+
+.sidebar-brand {
+  font-weight: $sidebar-brand-font-weight;
+  font-size: $sidebar-brand-font-size;
+  padding: $sidebar-brand-padding-y $sidebar-brand-padding-x;
+  display: block;
+  color: $sidebar-brand-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: $sidebar-brand-color;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.sidebar-toggle {
+  cursor: pointer;
+  font-size: 19px;
+  color: $gray-800;
+  margin-inline-end: $spacer;
+}
+
+.sidebar-header {
+  background: transparent;
+  padding: $sidebar-header-padding;
+  font-size: $sidebar-header-font-size;
+  color: $sidebar-header-color;
+}
+
+.sidebar-badge {
+  position: absolute;
+  inset-inline-end: 15px;
+  top: 14px;
+  z-index: 1;
+}
+
+.sidebar-cta-content {
+  padding: $sidebar-cta-padding;
+  margin: $sidebar-cta-margin;
+  border-radius: $sidebar-cta-border-radius;
+  background: $sidebar-cta-bg;
+  color: $sidebar-cta-color;
+}
+
+.sidebar-item ul {
+  font-size: 15px;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px 0;
+  position: relative;
+}
+
+.sidebar-item .sidebar-sublink {
+  display: block;
+  font-size: 15px;
+  padding: 7px 10px 7px 45px;
+  position: relative;
+}
+
+// =============================================================================
+// OVERLAY BACKDROP (Mobile/Tablet)
+// =============================================================================
+
+.sidebar-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1019;
+  cursor: pointer;
+
+  // Only show on mobile/tablet
+  @media (min-width: #{map-get($grid-breakpoints, 'lg')}) {
+    display: none !important;
+  }
+}
+
+// =============================================================================
+// BODY STYLES
+// =============================================================================
 
 body {
   overflow-y: auto;
@@ -18,29 +396,32 @@ body {
   }
 }
 
-.wrapper {
-  align-items: stretch;
-  display: flex;
-  width: 100vw;
+// =============================================================================
+// RTL SUPPORT
+// =============================================================================
+
+[dir="rtl"] {
+  .wrapper {
+    @media (min-width: #{map-get($grid-breakpoints, 'lg')}) {
+      .main {
+        margin-inline-start: 0;
+        // margin-inline-end: $sidebar-width;
+
+        &.main-collapsed {
+          // margin-inline-end: 80px;
+          margin-inline-start: 0;
+        }
+      }
+    }
+  }
 }
 
-// .wrapper {
-//   padding-top: 60px;
-// }
+// =============================================================================
+// DARK THEME SUPPORT
+// =============================================================================
 
-.main {
-  // margin-left: $sidebar-width;
-  display: flex;
-  width: 100%;
-  min-width: 0;
-  min-height: 100vh;
-  transition: $sidebar-transition;
-  flex-direction: column;
-  overflow: hidden;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-
-  @include media-breakpoint-up(lg) {
-    // box-shadow: $main-box-shadow;
+.dark-theme {
+  .sidebar-overlay-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
   }
 }

@@ -29,12 +29,12 @@
       <form [formGroup]="filterForm" class="row g-3">
         <!-- Independent Compound Filter -->
         <div class="col-12 col-sm-6 col-lg-4">
-          <label class="form-label">{{ 'compound' | translate }}</label>
+          <label class="form-label">{{ 'location' | translate }}</label>
           <ng-select
             [items]="compoundsList"
             bindValue="id"
             bindLabel="name"
-            placeholder="{{ 'Select_Compound' | translate }}"
+            placeholder="{{ 'location_place' | translate }}"
             formControlName="compoundId"
             [clearable]="true"
           >

@@ -1,4 +1,5 @@
-<section class="main-content px-5">
+<section class="main-content">
+
   <div class="header">
     <div class="header-title">
       <h3>
@@ -73,9 +74,9 @@
                   {{ meter.type | translate }}
                 </span>
               </td>
-              <td class="text-center">{{meter.consumption | number}}</td>
+              <td class="text-center">{{ (meter.consumption ?? 0) | number }}</td>
               <td class="text-center">
-                <span class="fw-bold">{{meter.availableCredit | number}} EGP</span>
+                <span class="fw-bold">{{ (meter.availableCredit ?? 0) | number }} EGP</span>
               </td>
               <td class="text-center">
                 <button class="btn btn-primary text-white" (click)="chargeMeter(meter)">
@@ -123,7 +124,8 @@
                     <i class="fa-solid fa-chart-line"></i>
                     {{ 'consumption' | translate }}:
                   </strong> 
-                  {{ meter.consumption | number }}
+                  <td class="text-center">{{ (meter.consumption ?? 0) | number }}</td>
+
                 </p>
 
                 <p class="card-text">
@@ -131,7 +133,8 @@
                     <i class="fa-solid fa-wallet"></i>
                     {{ 'Available_Credit' | translate }}:
                   </strong> 
-                  <span class="fw-bold">{{ meter.availableCredit | number }} EGP</span>
+                  <span class="fw-bold">{{ (meter.availableCredit ?? 0) | number }} EGP</span>
+
                 </p>
 
                 <div class="d-flex justify-content-between mt-3">

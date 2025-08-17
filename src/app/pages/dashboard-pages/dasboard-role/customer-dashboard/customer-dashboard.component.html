@@ -27,12 +27,12 @@
     <form class="row g-3 align-items-end" [formGroup]="form" autocomplete="off">
       <!-- Compound Filter -->
       <div class="col-12 col-md-6 col-lg-3">
-        <label for="compoundId" class="form-label">{{ 'compound' | translate }}</label>
+        <label for="compoundId" class="form-label">{{ 'location' | translate }}</label>
         <ng-select [items]="projectList | async" 
           bindValue="id" 
           bindLabel="name" 
           class="custom"
-          placeholder="{{ 'compound_place' | translate }}" 
+          placeholder="{{ 'location_place' | translate }}" 
           formControlName="compoundId" 
           [clearable]="true">
           <ng-option *ngFor="let project of (projectList | async)" [value]="project.id">
@@ -184,7 +184,7 @@
             <div class="balance-section">
               <div class="balance-content d-flex justify-content-between align-items-center">
                 <div class="balance-label">{{ 'currentBalance' | translate }}</div>
-                <div class="balance-value">{{ meter.availableCredit | number }} {{ 'EGP' | translate }}</div>
+                <div class="balance-value">{{ (meter.availableCredit)?? 0 | number }} {{ 'EGP' | translate }}</div>
               </div>
             </div>
             
@@ -203,7 +203,7 @@
               <div class="consumption-content d-flex justify-content-between align-items-center">
                 <span class="consumption-label">{{ 'Meter_Reading'  | translate }}</span>
                 <span class="consumption-value">
-                  {{ meter.meterReading| number }} {{ getUnitOfMeasure(meter.type) }}
+                  {{ (meter.meterReading)??0| number }} {{ getUnitOfMeasure(meter.type) }}
                 </span>
               </div>
             </div>
@@ -405,7 +405,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let record of paginatedTableData; trackBy: trackByDate">
-                      <td class="fw-medium">{{ record.date }}</td>
+                      <td class="fw-medium">{{ record.date  | date: 'yyyy-MM-dd hh:mm:ss'  }}</td>
                       <td>
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
                           {{ record.meterReading | number : "1.2-2" }}
@@ -441,7 +441,7 @@
                           <div class="d-flex justify-content-between align-items-center">
                             <h6 class="card-title mb-0 text-primary">
                               <i class="fas fa-calendar me-1"></i>
-                              {{ record.date }}
+                              {{ record.date | date: 'yyyy-MM-dd hh:mm:ss'  }}
                             </h6>
                             <span class="badge bg-primary fs-6">
                               {{ record.meterReading | number : "1.2-2" }}

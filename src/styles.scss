@@ -651,7 +651,7 @@ $breadcrumb-border-radius: null !default;
 }
 
 .GAS {
-  background-color: $blue;
+  background-color: #dc3545;
 }
 
 .meter-WATER {
@@ -2337,4 +2337,52 @@ section {
   --button-glow: 0 0 20px rgba(138, 43, 226, 0.5);
   --card-glow: 0 0 30px rgba(138, 43, 226, 0.3);
   --text-glow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+  /* block horizontal scroll completely */
+  overflow-y: auto !important;
+  /* show vertical scrollbar only when needed */
+}
+/* ===== Light mode (Blue scrollbar) ===== */
+[data-bs-theme="light"]::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-bs-theme="light"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-bs-theme="light"]::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  /* Bootstrap primary blue */
+  border-radius: 4px;
+}
+
+/* ===== Dark mode (Purple scrollbar) ===== */
+[data-bs-theme="dark"]::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-thumb {
+  background-color: #6f42c1;
+  /* Bootstrap purple */
+  border-radius: 4px;
+}
+
+/* Optional: scrollbar hover effect */
+[data-bs-theme="light"]::-webkit-scrollbar-thumb:hover {
+  background-color: #0056b3;
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-thumb:hover {
+  background-color: #5a32a3;
 }

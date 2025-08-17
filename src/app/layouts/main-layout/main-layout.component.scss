@@ -1,3 +1,13 @@
 .main-layout-container {
   min-height: 100vh;
 }
+.sidebar {
+  @media (max-width: 767.98px) {
+    &.collapsed {
+      display: none; // or transform: translateX(-100%);
+    }
+  }
+}
+.mobile-hidden {
+  display: none;
+}

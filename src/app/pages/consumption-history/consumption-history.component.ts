@@ -47,7 +47,7 @@ export class ConsumptionHistoryComponent implements OnInit, OnDestroy {
   meterChartOptions: Highcharts.Options = {};
   isLoadingMeterChart = false;
   meterChartError = "";
-  showTableView = true;
+  showTableView = false;
   dailyConsumptionTable: TableRecord[] = [];
   private destroy$ = new Subject<void>();
   private isApplyingFiltersFlag = false;

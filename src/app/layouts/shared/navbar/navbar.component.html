@@ -11,17 +11,27 @@
         <img src="./assets/img/image.svg" width="130" height="30" alt="Madkour">
       </a>
       
-      <!-- Toggle comes SECOND (after logo) -->
       <a class="sidebar-toggle" (click)="collapse()">
         <span class="toggler-wrapper">
-          <i *ngIf="isCollapsed" class="bi bi-list fa-2xl toggler-icon"
+              
+      <!-- <i *ngIf="isCollapsed" class="bi bi-toggle-off"></i>
+      <i *ngIf="!isCollapsed" class="bi bi-toggle-on"></i> -->
+          <!-- Show hamburger when sidebar is CLOSED (isCollapsed = true) -->
+          <i *ngIf="isCollapsed" 
+             class="bi bi-list fa-2xl toggler-icon"
              [class.text-black]="!isDarkMode"
-             [class.text-black]="isDarkMode"></i>
-          <i *ngIf="!isCollapsed" class="bi bi-x-lg fa-2xl toggler-icon"
+             [class.text-white]="isDarkMode"></i>
+          
+          <!-- Show X when sidebar is OPEN (isCollapsed = false) -->
+          <i *ngIf="!isCollapsed" 
+             class="bi bi-x-lg fa-2xl toggler-icon"
              [class.text-black]="!isDarkMode"
-             [class.text-black]="isDarkMode"></i>
+             [class.text-white]="isDarkMode"></i>
         </span>
       </a>
+      
+      
+      
       
       <!-- Search comes THIRD (after toggle) -->
       <div class="navbar-search-inline d-none mx-5 d-lg-block">
@@ -53,7 +63,7 @@
       <ul class="navbar-nav navbar-nav-items">
         
         <!-- Theme Toggle -->
-        <li class="nav-item ms-3">
+        <li *ngIf="showThemeToggler" class="nav-item ms-3">
           <button 
             class="nav-btn theme-toggle" 
             (click)="toggleDarkMode()"
@@ -63,7 +73,7 @@
             [attr.data-theme-status]="currentThemeStatus">
             <i *ngIf="!isThemeLoading" 
                [class]="isDarkMode ? 'fas fa-moon' : 'fas fa-sun'"></i>
-            <span class="btn-text d-none d-lg-inline">
+            <span class="btn-text">
 
                 {{(isDarkMode ? ('Dark' | translate) : ('Light' | translate)) }}
             </span>

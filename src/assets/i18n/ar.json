@@ -18,7 +18,7 @@
     "reliable": "موثوق",
     "secure": "يؤمن",
     "help": "يساعد",
-      "resources": "الموارد",
+    "resources": "الموارد",
     "support": "يدعم",
     "blog": "مدونة",
     "helpCenter": "مركز المساعدة",
@@ -38,6 +38,8 @@
       "learnMore": "يتعلم أكثر"
     },
     "features": {
+      "title": "ميزات قوية",
+      "description": "كل ما تحتاجه لإدارة مرافقك بكفاءة",
       "easyPayments": "دفعات سهلة",
       "easyPaymentsDesc": "ادفع فواتيرك بسرعة وأمان ببضع نقرات فقط.",
       "smartNotifications": "إشعارات ذكية",
@@ -45,9 +47,7 @@
       "usageAnalytics": "تحليلات الاستخدام",
       "usageAnalyticsDesc": "تابع أنماط الاستخدام لديك وقم بتحسين الاستهلاك.",
       "realTimeMonitoring": "مراقبة لحظية",
-      "realTimeMonitoringDesc": "راقب حالة خدمتك بشكل مباشر في أي وقت.",
-      "title": "ميزات قوية",
-      "description": "كل ما تحتاجه لإدارة مرافقك بكفاءة"
+      "realTimeMonitoringDesc": "راقب حالة خدمتك بشكل مباشر في أي وقت."
     },
     "about": {
       "title": "لماذا تختار منصتنا",
@@ -75,7 +75,7 @@
       "callCardTitle": "كلمنا على التليفون",
       "testimonialText": "خدمة عملاء ممتازة وسرعة في الرد. الفريق محترف ودائمًا جاهز للمساعدة. أنصح بيهم بشدة!",
       "testimonialAuthor": "أحمد م.",
-      "address":"بيزنس بارك، مبنى رقم 8، كمباوند زيزينيا، الحي الخامس، القاهرة الجديدة."
+      "address": "بيزنس بارك، مبنى رقم 8، كمباوند زيزينيا، الحي الخامس، القاهرة الجديدة."
     }
   },
   "dashboardTemp": {
@@ -99,6 +99,8 @@
     "waterGas": "عدادات الغاز",
     "location": " العنوان"
   },
+  "location": " العنوان",
+  "location_place": "ادخل العنوان",
   "dashboardThree": {
     "title": "لوحة القيادة ثلاثة",
     "refreshData": "تحديث البيانات",
@@ -202,7 +204,7 @@
   "Set_Charging_Limit": "تحديد حد الشحن",
   "Password_Req": "كلمة المرور مطلوبة",
   "compound": "الكمبوند",
-  "compound_place": "أدخل الكمبوند",
+  "compound_place": "أدخل الموقع",
   "property": "العقار",
   "property_place": "أدخل العقار",
   "meterType_place": "اختر نوع العداد",
@@ -404,7 +406,7 @@
   "Try_Different_Filters_Or_Reset": "جرب فلترات مختلفة أو إعادة ضبط",
   "Amount_Required": "المبلغ المطلوب",
   "Personal_Details": "البيانات الشخصية",
-  "Select_property_to_filter_meters": "Select a property to filter meters",
+  "Select_property_to_filter_meters": "رقم العقار",
   "Filter_Transactions": "تصفية المعاملات",
   "Show_Filters": "عرض الفلاتر",
   "Hide_Filters": "إخفاء الفلاتر",
@@ -415,7 +417,7 @@
   "remember_pass": "تذكر كلمة المرور",
   "Username_Place": "أدخل اسم المستخدم",
   "Cancel_Payment": "إلغاء الدفع",
-  "Payment_Secured_By_Mastercard": "الدفع مؤمَّن بواسطة ماستركارد",
+  "Payment_Secured_By_Mastercard": "الدفع مؤمَّن بواسطة ماستركارد",
   "Secure_Payment": "دفع آمن",
   "E_Mail_Req": "مطلوب بريد الكتروني",
   "Login": "تسجيل الدخول",
@@ -437,7 +439,7 @@
       "overviewTitle": " نظرة عامة",
       "overviewText": "توفر مدكور للمرافق خدمة شحن العدادات الذكية للكهرباء والمياه بطريقة مريحة من خلال البوابة الإلكترونية والتطبيق المحمول.",
       "paymentTitle": "طرق الدفع",
-      "paymentText": "<strong>الدفع النقدي:</strong> من خلال زيارة مكتب خدمة العملاء.<br><strong>الدفع الإلكتروني:</strong> باستخدام بطاقة بنكية (ائتمان أو خصم) عبر البوابة أو التطبيق.",
+      "paymentText": "&lt;strong&gt;الدفع النقدي:&lt;/strong&gt; من خلال زيارة مكتب خدمة العملاء.&lt;br&gt;&lt;strong&gt;الدفع الإلكتروني:&lt;/strong&gt; باستخدام بطاقة بنكية (ائتمان أو خصم) عبر البوابة أو التطبيق.",
       "activationTitle": "وقت التفعيل",
       "activationText": "بمجرد إتمام عملية الدفع بنجاح، يتم شحن وتفعيل العداد فورًا، بحد أقصى خلال 5 دقائق.",
       "experienceTitle": " تجربة العملاء",
@@ -472,7 +474,6 @@
   "Enter_total_amount_charge_calculated": "أدخل المبلغ الإجمالي - سيتم حساب مبلغ الشحن",
   "Charge_Mode": "نمط الشحن",
   "Total_Mode": "النمط الإجمالي",
-
   "Calculated_from_total": "محسوب من المبلغ الإجمالي",
   "User_entered": "مُدخل من المستخدم",
   "Calculated_with_fees": "محسوب مع الرسوم",
@@ -482,13 +483,10 @@
   "Enter_Total_Amount": "أدخل إجمالي المبلغ المطلوب دفعه",
   "Pay": "ادفع",
   "Total_Amount": "إجمالي المبلغ",
-
   "Loading_Secure_Payment": "جاري تحميل الدفع الآمن",
   "Please_Wait_Loading_Payment_Form": "يرجى الانتظار أثناء تحميل نموذج الدفع",
   "Preparing_Payment_Form": "جاري تحضير نموذج الدفع",
-
   "Mode": "النمط",
-
   "Payment_Failed": "فشل في الدفع",
   "Payment_Failed_Message": "حدث خطأ أثناء معالجة دفعتك. يرجى المحاولة مرة أخرى.",
   "Retry_Payment": "إعادة المحاولة",
